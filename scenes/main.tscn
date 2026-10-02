@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://oj28tbgn86dc"]
+
+[ext_resource type="PackedScene" uid="uid://b3ymdrv6o7tqe" path="res://scenes/calm_place/calm_place.tscn" id="calm_place"]
+[ext_resource type="Script" uid="uid://c1aky232pgoqv" path="res://scripts/camera/isometric_camera.gd" id="camera_script"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+
+[node name="Main" type="Node3D" unique_id=105096008]
+
+[node name="CalmPlace" parent="." unique_id=794326984 instance=ExtResource("calm_place")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09283161, -0.08766174, 0.056386948)
+
+[node name="Player" parent="." unique_id=219509989 instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 9)
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1593650602]
+script = ExtResource("camera_script")
+target_path = NodePath("../Player")
+focus_path = NodePath("../CalmPlace/house")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=301302880]
+transform = Transform3D(1, 0, 0, 0, 0.57357633, 0.819152, 0, -0.819152, 0.57357633, 0, 16, 11.472)
+projection = 1
+current = true
+size = 6.0
