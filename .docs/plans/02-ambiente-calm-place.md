@@ -62,7 +62,7 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
   - `forest_fill` (sem colisão, fora do alcance do player): árvores, arbustos, pedras e grama `forest_nature` até as bordas do mapa; árvores maiores (Tree_1_C, 2_D, 2_E, 3_C, 4_C) só longe da área jogável.
   - Itens soltos reorganizados nos grupos certos (pedras → `rocks`, arbustos → `bush`, grama → `grass_flowers`, árvores Tree_2 → `tree_simple_large`, Tree_4 → `tree_especie_large`); itens dentro da área jogável sem colisão receberam colisão (formas `Col_<asset>`).
 - **Bordas invisíveis**: `MapBounds` (4× `StaticBody3D`, `x/z = ±17.5`, altura 4) — o player não sai dos 34×34 do chão.
-- **Câmera** (`scripts/camera/isometric_camera.gd`, configurada em `scenes/calm_place/outside/outside.tscn`): top-down fixa, sem rotação. O rig segue o jogador; o `Camera3D` é recuado ao longo do próprio eixo, então o jogador fica sempre centralizado. Inclinação por `pitch_degrees` (55°, sobrescreve a rotação do editor). Zoom ortogonal abre de `size 6` → `10` ao se aproximar da casa (`focus_radius = 10`).
+- **Câmera** (`scripts/camera/isometric_camera.gd`, configurada em `scenes/calm_place/outside/outside.tscn`): top-down fixa, sem rotação. O rig segue o jogador; o `Camera3D` é recuado ao longo do próprio eixo, então o jogador fica sempre centralizado. Inclinação por `pitch_degrees`: **70°** no Calm Place (quase top-down: área aberta, o chão é o destaque; o padrão do script é 55°). Zoom ortogonal abre de `size 6` → `10` ao se aproximar da casa (`focus_radius = 10`).
 
 ## Avisos
 
@@ -91,8 +91,8 @@ Fumaça da chaminé: `house/ChimneySmoke` (`scripts/environment/chimney_smoke.gd
 
 ## Flores bioluminescentes
 
-No `wind_sway.gdshader` (`bio_glow`, `bio_pulse_speed`): as pétalas emitem luz na própria cor, pulsando devagar e fora de sincronia entre flores. O caule não brilha (máscara: pixels onde o verde domina). O `WindApplier` aplica em todo `flower_*` (tipo `FLOWER`), ajuste por `flower_glow` (1,2) e `flower_pulse_speed`. O glow do `Environment` faz o halo.
+No `wind_sway.gdshader` (`bio_glow`, `bio_pulse_speed`): as pétalas emitem luz na própria cor, pulsando devagar e fora de sincronia entre flores. O caule não brilha (máscara: pixels onde o verde domina). O `WindApplier` aplica em metade das `flower_*` (`flower_glow_chance` 0,5; o resto só balança), ajuste por `flower_glow` (0,7) e `flower_pulse_speed`. O glow do `Environment` faz o halo.
 
 ## Poeira dos passos
 
-`Player/FootstepDust` (`scripts/player/footstep_dust.gd`): partículas com o mesh `smoke_puff` (tamanho ~0,2), cor lavanda clara, soltas enquanto o personagem anda no chão (`min_speed`). Ficam no mundo (`local_coords = false`) e somem encolhendo em 0,6 s.
+`Player/FootstepDust` (`scripts/player/footstep_dust.gd`): 5 partículas com o mesh `smoke_puff` (nasce com ~0,3 e encolhe até sumir), lavanda clara semitransparente (alpha 0,4, sem sombreamento), soltas enquanto o personagem anda no chão (`min_speed`). Ficam no mundo (`local_coords = false`) e somem encolhendo em 0,6 s.

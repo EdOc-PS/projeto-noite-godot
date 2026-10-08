@@ -7,6 +7,7 @@ Todos os assets de terceiros usados no projeto são **CC0** (domínio público):
 | Pacote | Autor | Pasta | Licença |
 |---|---|---|---|
 | KayKit: City Builder Bits (1.0) | Kay Lousberg ([kaylousberg.com](https://www.kaylousberg.com)) | `models/city/` | CC0 |
+| KayKit: Character Animations (1.1) — **provisório, desenvolvimento** | Kay Lousberg ([kaylousberg.com](https://www.kaylousberg.com)) | `models/characters/mannequin/` (boneco) + `animations/rig_medium/` (animações) | CC0 |
 | KayKit: Forest Nature Pack (1.0) | Kay Lousberg ([kaylousberg.com](https://www.kaylousberg.com)) | `models/calm_place/forest_nature/` | CC0 |
 | Tiny Treats: Homely House (1.0) | Isa Lousberg ([isalousberg.com](https://www.isalousberg.com)) | `models/calm_place/homely_house/` | CC0 |
 | Tiny Treats: Pleasant Picnic (1.0) | Isa Lousberg ([isalousberg.com](https://www.isalousberg.com)) | `models/calm_place/pleasant_picnic/` | CC0 |

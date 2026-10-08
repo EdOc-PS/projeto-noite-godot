@@ -32,6 +32,7 @@ projeto-noite/
 │   └── ui/
 ├── assets/
 │   ├── models/                # modelos 3D, um subdiretório por kit/conjunto
+│   │   ├── characters/         # personagens (mannequin/: boneco provisório do KayKit)
 │   │   ├── city/               # kit da cidade
 │   │   └── calm_place/         # kits da área tranquila fora da cidade
 │   │       ├── homely_house/
@@ -40,6 +41,7 @@ projeto-noite/
 │   │       ├── fun_playground/
 │   │       ├── forest_nature/
 │   │       └── house_plants/
+│   ├── animations/            # animações separadas do modelo, por esqueleto (ex.: rig_medium/ do KayKit)
 │   ├── skyboxes/              # panoramas equiretangulares (2:1) pra PanoramaSkyMaterial
 │   │   ├── basic/              # dia, manhã, noite, alien, espaço
 │   │   └── space/              # nebulosa, galáxia, faixa, escuro, dia
