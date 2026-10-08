@@ -1,6 +1,6 @@
-# Interações do cenário
+# Plano 04 — Interações do cenário
 
-Referência: [PROJETO-NOITE.md](PROJETO-NOITE.md) · Prompt de interação: [plans/03-ui.md](plans/03-ui.md) · Passagens: [TRANSICOES.md](TRANSICOES.md)
+Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Prompt de interação: [03-ui.md](03-ui.md) · Passagens: [TRANSICOES.md](../TRANSICOES.md)
 
 Catálogo de coisas que o jogador pode fazer no **Calm Place** (casa do personagem, noite). Serve de cardápio: escolher, implementar e marcar o status.
 
@@ -52,7 +52,7 @@ Catálogo de coisas que o jogador pode fazer no **Calm Place** (casa do personag
 | Pegar o pacote na porta | Coleta + Leitura | `package` | Item da história (ex.: primeiro equipamento pra noite). |
 | Calçar as botas | Reação | `boots` | Desbloqueia corrida ou som de passo diferente. |
 | Pegar vagalume | Coleta | perto do poste | Vagalume vai num pote; vira luz que segue o jogador na dungeon. |
-| **Dormir na cama** | Passagem (pesada) | dentro da casa | Sequência de "cair no sono" → mundo da noite (ver [CARREGAMENTO.md](CARREGAMENTO.md)). |
+| **Dormir na cama** | Passagem (pesada) | dentro da casa | Sequência de "cair no sono" → mundo da noite (ver [CARREGAMENTO.md](../CARREGAMENTO.md)). |
 
 ## O que precisa existir antes
 
