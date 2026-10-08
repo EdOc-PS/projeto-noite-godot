@@ -1,0 +1,8 @@
+{
+	// Gerador de mensagem de commit do Copilot (botão ✨ no Source Control): só neste projeto
+	"github.copilot.chat.commitMessageGeneration.instructions": [
+		{
+			"text": "Escreva a mensagem de commit em português do Brasil, no formato Conventional Commits (feat:, fix:, docs:, refactor:, chore:...). Título curto no presente (ex.: 'feat: adiciona fumaça na chaminé'), sem ponto final. Se houver várias mudanças, adicione um corpo com uma lista de itens em português."
+		}
+	]
+}
