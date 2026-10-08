@@ -20,6 +20,10 @@ const WIND_SHADER := preload("res://shaders/wind_sway.gdshader")
 @export var grass_height: float = 0.4
 @export var grass_push: float = 0.08  ## quanto abre quando o player passa
 
+@export_group("Flores (bioluminescentes)")
+@export var flower_glow: float = 1.2         ## brilho das pétalas (0 = sem brilho)
+@export var flower_pulse_speed: float = 0.8  ## velocidade do pulso
+
 @export_group("Arbustos")
 @export var bush_strength: float = 0.025
 @export var bush_speed: float = 0.9
@@ -38,7 +42,7 @@ const WIND_SHADER := preload("res://shaders/wind_sway.gdshader")
 @export var tree_start: float = 1.0   ## tronco parado até essa altura
 @export var tree_height: float = 3.0
 
-enum Kind { NONE, GRASS, FOLIAGE, BUSH, TREE }
+enum Kind { NONE, GRASS, FLOWER, FOLIAGE, BUSH, TREE }
 
 var _materials := {}  ## "kind|textura" -> ShaderMaterial (compartilhado)
 var _center := Vector3.ZERO
@@ -68,7 +72,9 @@ func _scan(node: Node) -> void:
 		_scan(child)
 
 func _kind_for(file: String) -> Kind:
-	if file.begins_with("grass") or file.begins_with("flower") \
+	if file.begins_with("flower"):
+		return Kind.FLOWER
+	if file.begins_with("grass") \
 			or file.begins_with("succulent") or file.contains("_leaf_"):
 		return Kind.GRASS
 	if file.begins_with("foliage"):
@@ -103,6 +109,10 @@ func _material_for(kind: Kind, dir: String) -> ShaderMaterial:
 	match kind:
 		Kind.GRASS:
 			_params(mat, grass_strength, grass_speed, 0.0, grass_height, 0.5, grass_push)
+		Kind.FLOWER:
+			_params(mat, grass_strength, grass_speed, 0.0, grass_height, 0.5, grass_push)
+			mat.set_shader_parameter(&"bio_glow", flower_glow)
+			mat.set_shader_parameter(&"bio_pulse_speed", flower_pulse_speed)
 		Kind.FOLIAGE:
 			_params(mat, foliage_strength, foliage_speed, 0.0, foliage_height, 0.5, foliage_push)
 		Kind.BUSH:

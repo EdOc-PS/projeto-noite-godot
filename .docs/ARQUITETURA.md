@@ -13,6 +13,7 @@ projeto-noite/
 │   ├── ARQUITETURA.md        # este arquivo
 │   ├── TRANSICOES.md         # regra de transição de cenário (iris wipe)
 │   ├── CARREGAMENTO.md       # boas práticas pra esconder loading
+│   ├── INTERACOES.md         # catálogo de interações do cenário
 │   └── plans/                # planos de implementação por etapa
 ├── project.godot
 ├── scenes/

@@ -25,10 +25,17 @@ uniform vec4 rim_color : source_color = vec4(0.62, 0.7, 1.0, 1.0);
 uniform float rim_power = 3.0;
 uniform float rim_strength = 0.35;
 
+// Bioluminescência (flores): pétalas brilham na própria cor, pulsando devagar.
+// O caule/folha (pixels onde o verde domina) não brilha. 0 = desligado.
+uniform float bio_glow = 0.0;
+uniform float bio_pulse_speed = 0.8;
+varying float v_phase;
+
 void vertex() {
 	// fase pela posição no mundo: cada planta balança um pouco fora de sincronia
 	vec3 world_origin = MODEL_MATRIX[3].xyz;
 	float phase = TIME * sway_speed + dot(world_origin.xz, vec2(0.35, 0.21));
+	v_phase = dot(world_origin.xz, vec2(1.7, 2.3));
 	float s = sin(phase) + 0.4 * sin(phase * 2.3 + 1.7);
 	float w = smoothstep(sway_start, sway_start + sway_height, VERTEX.y);
 	VERTEX.xz += normalize(wind_dir) * s * sway_strength * w;
@@ -47,9 +54,15 @@ void vertex() {
 }
 
 void fragment() {
-	ALBEDO = texture(albedo_tex, UV).rgb;
+	vec3 albedo = texture(albedo_tex, UV).rgb;
+	ALBEDO = albedo;
 	ROUGHNESS = roughness_value;
 	METALLIC = 0.0;
 	float fresnel = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), rim_power);
 	EMISSION = rim_color.rgb * fresnel * rim_strength;
+	if (bio_glow > 0.0) {
+		float petal = 1.0 - smoothstep(0.0, 0.08, albedo.g - max(albedo.r, albedo.b));
+		float pulse = 0.65 + 0.35 * sin(TIME * bio_pulse_speed + v_phase);
+		EMISSION += albedo * bio_glow * petal * pulse;
+	}
 }

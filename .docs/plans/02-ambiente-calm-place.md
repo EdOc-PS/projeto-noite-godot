@@ -11,9 +11,9 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
 1. Luar (luz direcional + ambiente + fog) — ✅
 2. Postes (luz quente + emissão + tremulação) — ✅
 3. Pós-processamento (tonemap, SSAO, glow, cor, tilt-shift) — ✅
-4. Atmosfera (janelas acesas, vento, vagalumes, névoa nas bordas) — ✅ (flores bioluminescentes: pendente, opcional)
+4. Atmosfera (janelas acesas, vento, vagalumes, névoa nas bordas) — ✅ (flores bioluminescentes ✅, poeira dos passos ✅)
 5. Materiais vinil (roughness + rim light) — ✅
-6. Iluminação baked (LightmapGI) — pendente, etapa final
+6. Iluminação baked (LightmapGI) — configurado; falta clicar **Bake Lightmaps** no editor
 
 ## 1. Luar
 
@@ -88,3 +88,11 @@ Como os jogos modernos fazem: a **lua é a luz principal** (forte o bastante pra
 Escolhido no lugar de nuvens 3D projetando sombra: a câmera nunca mostra o céu, então só a sombra importa, e o Decal dá sombra mais macia, barata e controlável. Os modelos `assets/models/custom/clouds/` ficam pra cenas que mostrem o céu.
 
 Fumaça da chaminé: `house/ChimneySmoke` (`scripts/environment/chimney_smoke.gd`, mesh `custom/smoke/smoke_puff.gltf`).
+
+## Flores bioluminescentes
+
+No `wind_sway.gdshader` (`bio_glow`, `bio_pulse_speed`): as pétalas emitem luz na própria cor, pulsando devagar e fora de sincronia entre flores. O caule não brilha (máscara: pixels onde o verde domina). O `WindApplier` aplica em todo `flower_*` (tipo `FLOWER`), ajuste por `flower_glow` (1,2) e `flower_pulse_speed`. O glow do `Environment` faz o halo.
+
+## Poeira dos passos
+
+`Player/FootstepDust` (`scripts/player/footstep_dust.gd`): partículas com o mesh `smoke_puff` (tamanho ~0,2), cor lavanda clara, soltas enquanto o personagem anda no chão (`min_speed`). Ficam no mundo (`local_coords = false`) e somem encolhendo em 0,6 s.
