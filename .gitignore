@@ -2,5 +2,3 @@
 .godot/
 /android/
 
-# Material original dos kits de assets (fbx/obj/licenças), não usado pelo Godot
-_source/

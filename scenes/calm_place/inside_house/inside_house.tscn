@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="Script" path="res://scripts/camera/isometric_camera.gd" id="camera_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/interaction_prompt.tscn" id="interaction_prompt"]
+[ext_resource type="Script" path="res://scripts/world/scene_exit.gd" id="scene_exit"]
+
+[sub_resource type="Environment" id="Environment_black"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.4
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(40, 1, 40)
+
+[node name="InsideHouse" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_black")
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.8660254, 0, -0.8660254, 0.5, 0, 6, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorShape")
+
+[node name="Entrance" type="Marker3D" parent="." groups=["spawn_point"]]
+
+[node name="DoorPrompt" parent="." instance=ExtResource("interaction_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 3)
+action_radius = 0.8
+
+[node name="DoorExit" type="Node" parent="."]
+script = ExtResource("scene_exit")
+prompt_path = NodePath("../DoorPrompt")
+target_scene = "res://scenes/calm_place/outside/outside.tscn"
+spawn_id = &"HouseDoor"
+
+[node name="Player" parent="." instance=ExtResource("player")]
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("camera_script")
+target_path = NodePath("../Player")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+projection = 1
+current = true
+size = 6.0

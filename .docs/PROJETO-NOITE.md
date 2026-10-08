@@ -61,12 +61,14 @@ Sistemas de dungeon, progressão e cutscenes vêm em etapas posteriores.
 Kits gratuitos de terceiros, formato glTF, organizados em `assets/models/`:
 
 - **Cidade**: KayKit — City Builder Bits (Kay Lousberg) — prédios, ruas, carros, mobiliário urbano
-- **Calm Place** (campo/área tranquila fora da cidade): Tiny Treats (Kay Lousberg), packs:
+- **Calm Place** (campo/área tranquila fora da cidade): Tiny Treats (Isa Lousberg), packs:
   - Homely House
   - Pleasant Picnic
   - Pretty Park
   - Fun Playground
 - **Calm Place** (natureza/floresta): KayKit — Forest Nature Pack (Kay Lousberg) — árvores, arbustos e rochas low-poly
-- **Calm Place** (folhagem de chão): Tiny Treats — House Plants (Kay Lousberg) — usado apenas pelas folhas soltas (monstera, sansevieria, zzplant) espalhadas no chão
+- **Calm Place** (folhagem de chão): Tiny Treats — House Plants (Isa Lousberg) — usado apenas pelas folhas soltas (monstera, sansevieria, zzplant) espalhadas no chão
 
 Ver [ARQUITETURA.md](ARQUITETURA.md) para a organização de pastas desses assets.
+
+Créditos e licenças completos: [CREDITOS.md](CREDITOS.md).

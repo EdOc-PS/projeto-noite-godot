@@ -2,7 +2,7 @@
 
 Referência: [.docs/PROJETO-NOITE.md](../PROJETO-NOITE.md)
 
-Objetivo: noite estilizada tipo diorama (Stylized Toy Aesthetic, Link's Awakening remake) em `scenes/calm_place/calm_place.tscn` — contraste quente (postes/casa) contra frio (luar), cores vibrantes e materiais "vinil".
+Objetivo: noite estilizada tipo diorama (Stylized Toy Aesthetic, Link's Awakening remake) em `scenes/calm_place/outside/outside_environment.tscn` — contraste quente (postes/casa) contra frio (luar), cores vibrantes e materiais "vinil".
 
 Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
 
@@ -18,7 +18,7 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
 ## 1. Luar
 
 - **`DirectionalLight3D`**: luz de sol/lua (raios paralelos, direção pela rotação). `light_color` azul-lavanda `#9fb4ff`, `light_energy = 0.4`, `shadow_blur = 3.0` (sombra macia).
-- **`Environment_1`** (no `WorldEnvironment`, config global da cena): céu `ProceduralSkyMaterial` noturno, luz ambiente vinda do céu (`ambient_light_energy = 0.7`), fog de profundidade azul-marinho `#1b2340` (`fog_density = 0.015`, `fog_depth_curve = 1.5`) que apaga a borda do mapa ao longe.
+- **`Environment_1`** (no `WorldEnvironment`, config global da cena): céu `PanoramaSkyMaterial` com `assets/skyboxes/space/skybox-space-nebula.png` (`energy_multiplier = 0.6`), luz ambiente vinda do céu (`ambient_light_energy = 0.7`), fog de profundidade azul-marinho `#1b2340` (`fog_density = 0.015`, `fog_depth_curve = 1.5`) que apaga a borda do mapa ao longe.
 
 ## 2. Postes
 
@@ -37,7 +37,9 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
 ## 4. Atmosfera
 
 - **Janelas e luzes da casa** (filhos do nó `house`): coração do frontão (`HeartWindowGlow`/`Light`), janela da porta (`DoorWindowGlow`), janelas laterais (`SideWindowLeft`/`SideWindowRigth`), lanternas da varanda (`PorchLanternLeft/Right`), fogo da chaminé (`ChimneyFireGlow`/`Light`). Quads/formas emissivas com `WindowGlowMaterial` + `OmniLight3D` fraca; lanternas e chaminé usam `lantern_flicker.gd`.
-- **Vento**: `shaders/wind_sway.gdshader` — balança só a parte alta do mesh (base parada), fase pela posição no mundo. Via `material_override` em ~65% da grama/flores (o resto parado, pra ficar natural), em toda folhagem e em todas as árvores. Materiais: `WindGrassMaterial`, `WindFoliageMaterial`, `WindTreeForestMaterial`, `WindTreeHouseMaterial` — ajuste com `sway_strength`/`sway_speed`.
+- **Vento**: `shaders/wind_sway.gdshader` — balança só a parte alta do mesh (base parada), fase pela posição no mundo. Aplicado ao iniciar pelo node `WindApplier` (`scripts/environment/wind_applier.gd`), que classifica pelo nome do glTF: grama/flores (~65%, `grass_chance`; o resto parado pra ficar natural), folhagem (`foliage_*`) e árvores (`tree*`, tronco parado até `tree_start`). Um material compartilhado por tipo e textura atlas do kit. Ajuste pelos exports do `WindApplier`.
+- **Toque do jogador**: no mesmo shader. Ao passar perto, a planta achata (inclina só um pouco pra longe do jogador). O `player.gd` atualiza a variável global de shader `player_pos` (registrada em `project.godot` → `[shader_globals]`). Força por tipo nos exports `*_push` do `WindApplier` (árvores não reagem). Arbustos: vento e toque mais leves. Vegetação a mais de `far_radius` (20 m) da casa fica parada, exceto árvores.
+- **Vagalumes dos postes**: o poste perto do banco (`StreetLantern2`) tem um `LanternFireflies` (12 partículas emitidas num anel em volta do poste, `local_coords`), girando devagar com `scripts/environment/slow_spin.gd`, que faz eles rodearem a luz.
 - **Vagalumes**: nó `Fireflies` (`GPUParticles3D`) — 45 esferas emissivas amarelo-esverdeadas (emissão 12) sobre o mapa, sem gravidade, turbulência e fade in/out. Ajuste: `amount`, `emission_box_extents` (`FireflyProcess`), `radius` (`FireflyMesh`).
 - **Névoa nas bordas**: nó `EdgeFog` — planos horizontais em duas alturas (0.35 / 1.0), faixas de 16 de largura (entram ~8 no mapa), ao longo das 4 bordas do mapa (onde estão as paredes invisíveis), com `shaders/fog_card.gdshader` (ruído rolando devagar, bordas suaves, fade ao encostar em objetos). Ajuste: `density`, `fog_color`, `noise_scale` no `FogCardMaterial`.
 
@@ -60,7 +62,7 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
   - `forest_fill` (sem colisão, fora do alcance do player): árvores, arbustos, pedras e grama `forest_nature` até as bordas do mapa; árvores maiores (Tree_1_C, 2_D, 2_E, 3_C, 4_C) só longe da área jogável.
   - Itens soltos reorganizados nos grupos certos (pedras → `rocks`, arbustos → `bush`, grama → `grass_flowers`, árvores Tree_2 → `tree_simple_large`, Tree_4 → `tree_especie_large`); itens dentro da área jogável sem colisão receberam colisão (formas `Col_<asset>`).
 - **Bordas invisíveis**: `MapBounds` (4× `StaticBody3D`, `x/z = ±17.5`, altura 4) — o player não sai dos 34×34 do chão.
-- **Câmera** (`scripts/camera/isometric_camera.gd`, configurada em `scenes/main.tscn`): top-down fixa, sem rotação. O rig segue o jogador; o `Camera3D` é recuado ao longo do próprio eixo, então o jogador fica sempre centralizado. Inclinação por `pitch_degrees` (55°, sobrescreve a rotação do editor). Zoom ortogonal abre de `size 6` → `10` ao se aproximar da casa (`focus_radius = 10`).
+- **Câmera** (`scripts/camera/isometric_camera.gd`, configurada em `scenes/calm_place/outside/outside.tscn`): top-down fixa, sem rotação. O rig segue o jogador; o `Camera3D` é recuado ao longo do próprio eixo, então o jogador fica sempre centralizado. Inclinação por `pitch_degrees` (55°, sobrescreve a rotação do editor). Zoom ortogonal abre de `size 6` → `10` ao se aproximar da casa (`focus_radius = 10`).
 
 ## Avisos
 
@@ -68,4 +70,21 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
 - **Edições por fora do editor**: salvar a cena no Godot com uma versão antiga aberta sobrescreve mudanças feitas direto no `.tscn` (já aconteceu com overrides de material). Reabra a cena no editor antes de salvar após edições externas.
 ## Créditos dos assets
 
-Todos KayKit / Tiny Treats, de Kay Lousberg (kaylousberg.com), CC0 — inclusive `forest_nature` e `city` (conferido nos `License.txt`).
+Ver [CREDITOS.md](../CREDITOS.md).
+
+## Sombras da noite (ajuste de 2026-10-08)
+
+Como os jogos modernos fazem: a **lua é a luz principal** (forte o bastante pra desenhar sombras), o **ambiente é baixo** e a sombra é suave e azulada, nunca recorte preto. Brilho geral parecido, mas com sombras que se leem.
+
+- Lua (`DirectionalLight3D`): energia 0,4 → **0,8**, `shadow_opacity` 0,9, `shadow_blur` 1,5, `directional_shadow_max_distance` 35 m (o mapa é pequeno: concentrar a resolução da sombra deixa o contorno nítido).
+- Ambiente (`ambient_light_energy`): 0,7 → **0,45**, compensando a lua mais forte.
+- SSAO: raio 1,2 → 2,0, intensidade 2,0, `ssao_light_affect` 0,3 (escurece cantos também sob a luz da lua e dos postes).
+- **Sombra de contato** (`ContactShadows`, `scripts/environment/contact_shadows.gd`): Decal com mancha radial escura embaixo de cada árvore, arbusto, folhagem, pedra e toco, do tamanho da base. O SSAO de tela não pega bem a base de objetos vistos de cima (câmera ortogonal) e sem isso eles parecem flutuar. Ajuste: `color` (alpha = força) e `size_factor`.
+
+## Sombra das nuvens
+
+`CloudShadows`: um `Decal` de 120 × 120 m (`scripts/environment/cloud_shadow_decal.gd`) com a textura `assets/textures/effects/cloud_shadows.png` (gerada por `tools/gen_cloud_shadows.py`: 2 manchas macias a cada 40 m, repetindo). Desliza na direção do vento e, a cada período, volta ao início sem emenda. Não depende da luz da lua nem do lightmap. Ajuste: `modulate` (cor e força; alpha 0,6), `speed`, `wind_dir`.
+
+Escolhido no lugar de nuvens 3D projetando sombra: a câmera nunca mostra o céu, então só a sombra importa, e o Decal dá sombra mais macia, barata e controlável. Os modelos `assets/models/custom/clouds/` ficam pra cenas que mostrem o céu.
+
+Fumaça da chaminé: `house/ChimneySmoke` (`scripts/environment/chimney_smoke.gd`, mesh `custom/smoke/smoke_puff.gltf`).

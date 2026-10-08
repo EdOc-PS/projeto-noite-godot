@@ -1,0 +1,134 @@
+{
+ "asset": {
+  "version": "2.0",
+  "generator": "projeto-noite tools/gen_models.py"
+ },
+ "scene": 0,
+ "scenes": [
+  {
+   "name": "Scene",
+   "nodes": [
+    0
+   ]
+  }
+ ],
+ "nodes": [
+  {
+   "name": "cloud_a",
+   "mesh": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "cloud_a",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 0,
+      "NORMAL": 1,
+      "TEXCOORD_0": 2
+     },
+     "indices": 3,
+     "material": 0
+    }
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "name": "tiny_treats_1",
+   "pbrMetallicRoughness": {
+    "baseColorTexture": {
+     "index": 0
+    },
+    "metallicFactor": 0,
+    "roughnessFactor": 0.5
+   }
+  }
+ ],
+ "textures": [
+  {
+   "sampler": 0,
+   "source": 0
+  }
+ ],
+ "samplers": [
+  {
+   "magFilter": 9729,
+   "minFilter": 9987
+  }
+ ],
+ "images": [
+  {
+   "uri": "../../calm_place/homely_house/tiny_treats_texture_1.png"
+  }
+ ],
+ "buffers": [
+  {
+   "uri": "cloud_a.bin",
+   "byteLength": 85248
+  }
+ ],
+ "bufferViews": [
+  {
+   "buffer": 0,
+   "byteOffset": 0,
+   "byteLength": 23328,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 23328,
+   "byteLength": 23328,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 46656,
+   "byteLength": 15552,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 62208,
+   "byteLength": 23040,
+   "target": 34963
+  }
+ ],
+ "accessors": [
+  {
+   "bufferView": 0,
+   "componentType": 5126,
+   "count": 1944,
+   "type": "VEC3",
+   "min": [
+    -6.9471821220562004,
+    0.10729935416716319,
+    -3.1050429694714365
+   ],
+   "max": [
+    7.297882551959935,
+    4.680000000000001,
+    2.6082645077239976
+   ]
+  },
+  {
+   "bufferView": 1,
+   "componentType": 5126,
+   "count": 1944,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 2,
+   "componentType": 5126,
+   "count": 1944,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 3,
+   "componentType": 5123,
+   "count": 11520,
+   "type": "SCALAR"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://oj28tbgn86dc"]
+[gd_scene format=3 uid="uid://bu2m7blkfgeos"]
 
-[ext_resource type="PackedScene" uid="uid://b3ymdrv6o7tqe" path="res://scenes/calm_place/calm_place.tscn" id="calm_place"]
+[ext_resource type="PackedScene" uid="uid://ua3ekhbqh1br" path="res://scenes/calm_place/calm_place.tscn" id="calm_place"]
 [ext_resource type="Script" uid="uid://c1aky232pgoqv" path="res://scripts/camera/isometric_camera.gd" id="camera_script"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
 

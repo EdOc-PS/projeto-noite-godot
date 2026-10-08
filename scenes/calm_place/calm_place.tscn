@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b3ymdrv6o7tqe"]
+[gd_scene format=3 uid="uid://ua3ekhbqh1br"]
 
 [ext_resource type="PackedScene" uid="uid://cwtat35jyr1d3" path="res://assets/models/calm_place/pretty_park/trashcan.gltf" id="2_k6ypa"]
 [ext_resource type="PackedScene" uid="uid://c4e63f6fqfi32" path="res://assets/models/calm_place/homely_house/mailbox.gltf" id="3_taj60"]
@@ -64,6 +64,7 @@
 [ext_resource type="Shader" uid="uid://3mel5eil551c" path="res://shaders/fog_card.gdshader" id="fog_shader"]
 [ext_resource type="PackedScene" uid="uid://doer8woki851m" path="res://assets/models/calm_place/pleasant_picnic/grapes.gltf" id="grapes"]
 [ext_resource type="PackedScene" uid="uid://cbdgblqn4d02m" path="res://assets/models/calm_place/homely_house/house.gltf" id="house"]
+[ext_resource type="PackedScene" path="res://scenes/ui/interaction_prompt.tscn" id="interaction_prompt"]
 [ext_resource type="PackedScene" uid="uid://dyklw5ka2w63r" path="res://assets/models/calm_place/house_plants/monstera_leaf_small_A.gltf" id="leaf_monstera_a"]
 [ext_resource type="PackedScene" uid="uid://csveh0h2lky7c" path="res://assets/models/calm_place/house_plants/monstera_leaf_small_B.gltf" id="leaf_monstera_b"]
 [ext_resource type="PackedScene" uid="uid://cm4dia23l6ydy" path="res://assets/models/calm_place/house_plants/sansevieria_leaf_small_A.gltf" id="leaf_sansevieria_a"]
@@ -73,6 +74,7 @@
 [ext_resource type="PackedScene" uid="uid://cwxxdcfu5sjl0" path="res://assets/models/calm_place/forest_nature/Rock_2_C_Color1.gltf" id="rock_2_c"]
 [ext_resource type="PackedScene" uid="uid://c36swb2r02uta" path="res://assets/models/calm_place/forest_nature/Rock_3_A_Color1.gltf" id="rock_3_a"]
 [ext_resource type="PackedScene" uid="uid://chb5mpwmxxt64" path="res://assets/models/calm_place/forest_nature/Rock_3_D_Color1.gltf" id="rock_3_d"]
+[ext_resource type="Texture2D" uid="uid://bxe48fqybjud7" path="res://assets/skyboxes/space/skybox-space-nebula.png" id="skybox_space_nebula"]
 [ext_resource type="PackedScene" uid="uid://b4xhn41d1c7ov" path="res://assets/models/calm_place/pretty_park/street_lantern.gltf" id="street_lantern"]
 [ext_resource type="PackedScene" uid="uid://cqc3t0a280uby" path="res://assets/models/calm_place/house_plants/succulent_A.gltf" id="succulent_a"]
 [ext_resource type="PackedScene" uid="uid://c7jtd5sxobeth" path="res://assets/models/calm_place/house_plants/succulent_B.gltf" id="succulent_b"]
@@ -104,13 +106,25 @@ turbulence_enabled = true
 turbulence_noise_strength = 0.6
 turbulence_noise_scale = 3.0
 
+[sub_resource type="Gradient" id="FireflyDotGradient"]
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.6, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="FireflyDotTex"]
+gradient = SubResource("FireflyDotGradient")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="StandardMaterial3D" id="FireflyMaterial"]
 transparency = 1
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.85, 1, 0.4, 1)
+albedo_texture = SubResource("FireflyDotTex")
 emission_enabled = true
 emission = Color(0.8, 1, 0.3, 1)
 emission_energy_multiplier = 12.0
+emission_texture = SubResource("FireflyDotTex")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -119,7 +133,7 @@ particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="FireflyMesh"]
 material = SubResource("FireflyMaterial")
-size = Vector2(0.08, 0.08)
+size = Vector2(0.14, 0.14)
 
 [sub_resource type="BoxShape3D" id="MapBoundsShapeNS"]
 size = Vector3(36, 4, 1)
@@ -208,7 +222,13 @@ material = SubResource("WindowGlowMaterial")
 size = Vector3(0.6, 0.6, 0.6)
 
 [sub_resource type="BoxShape3D" id="HouseShape"]
-size = Vector3(6, 5.6, 6.5)
+size = Vector3(5.9, 5.6, 5.039917)
+
+[sub_resource type="BoxShape3D" id="PorchRampShape"]
+size = Vector3(2.7267823, 0.2, 1.3)
+
+[sub_resource type="BoxShape3D" id="PorchLandingShape"]
+size = Vector3(2.2, 0.1, 0.6)
 
 [sub_resource type="CylinderShape3D" id="LanternShape"]
 height = 3.0
@@ -268,15 +288,9 @@ size = Vector3(0.85, 0.5, 0.7)
 height = 2.5
 radius = 0.35
 
-[sub_resource type="ProceduralSkyMaterial" id="NightSkyMaterial"]
-sky_top_color = Color(0.03529412, 0.05490196, 0.12156863, 1)
-sky_horizon_color = Color(0.21568628, 0.24313726, 0.44705883, 1)
-sky_energy_multiplier = 0.6
-ground_bottom_color = Color(0.023529412, 0.03137255, 0.078431375, 1)
-ground_horizon_color = Color(0.21568628, 0.24313726, 0.44705883, 1)
-ground_curve = 0.15
-ground_energy_multiplier = 0.6
-sun_angle_max = 4.0
+[sub_resource type="PanoramaSkyMaterial" id="NightSkyMaterial"]
+panorama = ExtResource("skybox_space_nebula")
+energy_multiplier = 0.6
 
 [sub_resource type="Sky" id="NightSky"]
 sky_material = SubResource("NightSkyMaterial")
@@ -303,6 +317,7 @@ glow_blend_mode = 2
 fog_enabled = true
 fog_light_color = Color(0.10588235, 0.13725491, 0.24705882, 1)
 fog_density = 0.015
+fog_sky_affect = 0.0
 fog_depth_curve = 1.5
 adjustment_enabled = true
 adjustment_contrast = 1.12
@@ -326,7 +341,11 @@ shader_parameter/density = 0.7
 shader_parameter/noise_scale = 0.08
 shader_parameter/scroll = Vector2(0.015, 0.008)
 shader_parameter/edge_softness = 0.35
+shader_parameter/edge_softness_v = 0.35
 shader_parameter/soft_distance = 0.8
+shader_parameter/fog_base = 0.0
+shader_parameter/fog_top = 3.0
+shader_parameter/noise_height_scale = 4.0
 
 [sub_resource type="PlaneMesh" id="FogStripNS"]
 material = SubResource("FogCardMaterial")
@@ -335,6 +354,31 @@ size = Vector2(40, 16)
 [sub_resource type="PlaneMesh" id="FogStripEW"]
 material = SubResource("FogCardMaterial")
 size = Vector2(16, 40)
+
+[sub_resource type="ShaderMaterial" id="FogWallMaterial"]
+render_priority = 2
+shader = ExtResource("fog_shader")
+shader_parameter/fog_color = Color(0.22, 0.26, 0.42, 1)
+shader_parameter/noise_tex = SubResource("FogNoiseTex")
+shader_parameter/density = 0.6
+shader_parameter/noise_scale = 0.12
+shader_parameter/scroll = Vector2(0.015, 0.008)
+shader_parameter/edge_softness = 0.25
+shader_parameter/edge_softness_v = 0.001
+shader_parameter/soft_distance = 0.8
+shader_parameter/fog_base = 0.0
+shader_parameter/fog_top = 3.0
+shader_parameter/noise_height_scale = 4.0
+
+[sub_resource type="PlaneMesh" id="FogWallNS"]
+material = SubResource("FogWallMaterial")
+size = Vector2(40, 3)
+orientation = 2
+
+[sub_resource type="PlaneMesh" id="FogWallEW"]
+material = SubResource("FogWallMaterial")
+size = Vector2(40, 3)
+orientation = 0
 
 [sub_resource type="CylinderShape3D" id="Col_fn_rock_1_e"]
 height = 1.13
@@ -448,8 +492,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.186675, 0, 6.612569)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
 shape = SubResource("BushShape")
 
+[node name="Bush5" parent="bush" unique_id=1830239024 instance=ExtResource("bush_2")]
+transform = Transform3D(0.95684624, 0, -0.29059476, 0, 1, 0, 0.29059476, 0, 0.95684624, 6.274389, 0, -3.3313894)
+
+[node name="BushCollision" type="StaticBody3D" parent="bush/Bush5" unique_id=159032222]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="bush/Bush5/BushCollision" unique_id=1468393440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("BushShape")
+
 [node name="Bush4" parent="bush" unique_id=105330525 instance=ExtResource("bush_2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0722933, 0, -3.291581)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8372955, 0, -3.7320719)
 
 [node name="BushCollision" type="StaticBody3D" parent="bush/Bush4" unique_id=1802125627]
 
@@ -485,7 +538,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
 shape = SubResource("BushShape")
 
 [node name="Bush_2_F_Color12" parent="bush" unique_id=666518503 instance=ExtResource("7_ouwt4")]
-transform = Transform3D(0.25527078, 0, 0.9668696, 0, 1, 0, -0.9668696, 0, 0.25527078, 4.935266, 0, -1.256824)
+transform = Transform3D(0.25527078, 0, 0.9668696, 0, 1, 0, -0.9668696, 0, 0.25527078, 5.3696313, 0, -0.5064311)
 
 [node name="BushCollision" type="StaticBody3D" parent="bush/Bush_2_F_Color12" unique_id=1369430671]
 transform = Transform3D(1.471, 0, 0, 0, 2, 0, 0, 0, 1.471, 0, 0, 0)
@@ -652,7 +705,7 @@ transform = Transform3D(-0.5195191, -0.025348596, -0.85408294, 0, 0.99956024, -0
 [node name="FenceCollision" type="StaticBody3D" parent="fence/fence_corner2" unique_id=1760151621]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="fence/fence_corner2/FenceCollision" unique_id=721455910]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+transform = Transform3D(0.99989164, 0.007128932, -0.012884349, -0.0071109333, 0.99997354, 0.0014425302, 0.012894273, -0.0013507702, 0.99991596, 1, 0.9999999, -4.7683716e-07)
 shape = SubResource("FenceCornerShape")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="fence/fence_corner2/FenceCollision" unique_id=271351960]
@@ -1162,6 +1215,18 @@ transform = Transform3D(-0.0121, 0, -0.8499, 0, 0.85, 0, 0.8499, 0, -0.0121, 0.4
 
 [node name="flower_B_3" parent="grass_flowers/cluster_10" unique_id=1871517670 instance=ExtResource("14_u3ktf")]
 transform = Transform3D(1.0568, 0, 0.0824, 0, 1.06, 0, -0.0824, 0, 1.0568, -0.3658, 0, 0.4322)
+
+[node name="cluster_25" type="Node3D" parent="grass_flowers" unique_id=371562537]
+transform = Transform3D(-0.98810506, 0, 0.15378016, 0, 1, 0, -0.15378016, 0, -0.98810506, -1.5768981, 0, -6.7824078)
+
+[node name="flower_A_1" parent="grass_flowers/cluster_25" unique_id=662183612 instance=ExtResource("13_1ta1l")]
+transform = Transform3D(-1.0399, 0, 0.0133, 0, 1.04, 0, -0.0133, 0, -1.0399, 0, 0, 0)
+
+[node name="flower_A_2" parent="grass_flowers/cluster_25" unique_id=1284155269 instance=ExtResource("13_1ta1l")]
+transform = Transform3D(0.9399, 0, -0.6798, 0, 1.16, 0, 0.6798, 0, 0.9399, 0.2717, 0, -0.4994)
+
+[node name="flower_A_3" parent="grass_flowers/cluster_25" unique_id=2080711363 instance=ExtResource("13_1ta1l")]
+transform = Transform3D(0.8173, 0, 0.865, 0, 1.19, 0, -0.865, 0, 0.8173, 0.2743, 0, 0.4542)
 
 [node name="cluster_11" type="Node3D" parent="grass_flowers" unique_id=426643687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2968125, 0, 2.0396395)
@@ -2327,11 +2392,18 @@ light_color = Color(1, 0.45, 0.1, 1)
 omni_range = 2.5
 
 [node name="HouseCollision" type="StaticBody3D" parent="house" unique_id=42284072]
-transform = Transform3D(0.85119724, 0, 0.5248461, 0, 1, 0, -0.5248461, 0, 0.85119724, -4.411434, 2.8000004, -3.029914)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="house/HouseCollision" unique_id=1579879584]
-transform = Transform3D(0.8460301, 0, -0.533135, 0, 1, 0, 0.533135, 0, 0.8460301, 1.5785724, 0, 5.7950935)
+[node name="HouseShape" type="CollisionShape3D" parent="house/HouseCollision" unique_id=1579879584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3841858e-07, 2.8, 0.2949581)
 shape = SubResource("HouseShape")
+
+[node name="PorchRamp" type="CollisionShape3D" parent="house/HouseCollision" unique_id=243572955]
+transform = Transform3D(1, 0, -1.1920929e-07, 0, 0.9487, -0.3162, 0, 0.3162, 0.94870025, -0.008410692, 0.105, 3.6679993)
+shape = SubResource("PorchRampShape")
+
+[node name="PorchLanding" type="CollisionShape3D" parent="house/HouseCollision" unique_id=922248191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 2.8)
+shape = SubResource("PorchLandingShape")
 
 [node name="PorchLanternRigthGlow" type="MeshInstance3D" parent="house" unique_id=687766835]
 transform = Transform3D(-0.69988185, -0.023325413, -0.71387774, 0.021037428, 0.99835974, -0.053245638, 0.71394867, -0.05228381, -0.6982433, 1.9212258, 2.3205998, 1.8021479)
@@ -2342,6 +2414,10 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 light_color = Color(1, 0.6, 0.2, 1)
 light_energy = 1.2
 omni_range = 3.0
+
+[node name="DoorPrompt" parent="house" unique_id=882502596 instance=ExtResource("interaction_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 3.3)
+action_radius = 0.8
 
 [node name="lantern" type="Node3D" parent="." unique_id=755924725]
 
@@ -2384,7 +2460,7 @@ light_energy = 2.5
 omni_range = 6.5
 
 [node name="StreetLantern" parent="lantern" unique_id=2017108223 instance=ExtResource("street_lantern")]
-transform = Transform3D(0.81162167, 0, -0.5841834, 0, 1, 0, 0.5841834, 0, 0.81162167, 7.38727, 0, 2.6216393)
+transform = Transform3D(0.81162167, 0, -0.5841834, 0.0023740164, 0.9999917, 0.0032982847, 0.58417857, -0.0040638205, 0.81161493, 8.026642, 0, 1.6493423)
 
 [node name="LanternCollision" type="StaticBody3D" parent="lantern/StreetLantern" unique_id=1520052172]
 
@@ -2467,7 +2543,7 @@ shape = SubResource("Col_56_isjdn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.497023, 0, 4.108394)
 
 [node name="Rock_3_O_Color13" parent="rocks" unique_id=1467244502 instance=ExtResource("64_mqpa4")]
-transform = Transform3D(0.49192983, 0, 0.089470886, 0, 0.5, 0, -0.089470886, 0, 0.49192983, 7.083317, 2.8527093, -2.5083108)
+transform = Transform3D(0.49192983, 0, 0.089470886, 0, 0.5, 0, -0.089470886, 0, 0.49192983, 6.5272923, 0, -2.4022348)
 
 [node name="Collision" type="StaticBody3D" parent="rocks/Rock_3_O_Color13" unique_id=381001110]
 
@@ -2577,7 +2653,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 shape = SubResource("StumpSmallShape")
 
 [node name="stepping_stumps_B_medium_new3" parent="stepping" unique_id=1813618082 instance=ExtResource("22_7jsdg")]
-transform = Transform3D(0.1017, 0, -0.9948, 0, 1, 0, 0.9948, 0, 0.1017, 2.3824527, 0.9368906, 7.2261252)
+transform = Transform3D(0.1017, 0, -0.9948, 0, 1, 0, 0.9948, 0, 0.1017, 2.7578192, 0, 6.953188)
 
 [node name="StumpCollision" type="StaticBody3D" parent="stepping/stepping_stumps_B_medium_new3" unique_id=162288247]
 
@@ -2662,7 +2738,7 @@ shape = SubResource("BootsShape")
 [node name="tree_especie" type="Node3D" parent="." unique_id=14573026]
 
 [node name="tree_small3" parent="tree_especie" unique_id=963468222 instance=ExtResource("12_ygdck")]
-transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 6.3054047, 0.38399914, -1.3684573)
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 6.305, 0, -1.368)
 
 [node name="TreeCollision" type="StaticBody3D" parent="tree_especie/tree_small3" unique_id=1739591159]
 
@@ -2730,10 +2806,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.621129, 5.9604645e-08, 0.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2264867, 0.3565212, 12.761625)
 
 [node name="Tree_4_B_Color12" parent="tree_especie_large" unique_id=1813083412 instance=ExtResource("49_mqpa4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8799534, 0.3763888, 12.992826)
+transform = Transform3D(0.45568445, 0, 0.8901414, 0, 1, 0, -0.8901414, 0, 0.45568445, 4.8799534, 0.3763888, 13.911491)
 
 [node name="Tree_4_A_Color12" parent="tree_especie_large" unique_id=315311164 instance=ExtResource("10_gk5sr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6748343, 0.342124, 9.632748)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.261357, 0.342124, 9.632748)
 
 [node name="tree_pine" type="Node3D" parent="." unique_id=2020050360]
 
@@ -2920,6 +2996,15 @@ shape = SubResource("TrunkShape")
 [node name="Tree14" parent="tree_simple_large" unique_id=703310319 instance=ExtResource("tree_large")]
 transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, -8, 0, -15)
 
+[node name="Tree_2_C_Color14" parent="tree_simple_large" unique_id=1134745424 instance=ExtResource("51_0qfc5")]
+transform = Transform3D(0.21417624, 0, -0.6664297, 0, 0.7, 0, 0.6664297, 0, 0.21417624, 0.6481755, 0.78649247, -6.045088)
+
+[node name="TreeCollision" type="StaticBody3D" parent="tree_simple_large/Tree_2_C_Color14" unique_id=742534076]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="tree_simple_large/Tree_2_C_Color14/TreeCollision" unique_id=4639215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("TrunkShape")
+
 [node name="Tree_2_C_Color12" parent="tree_simple_large" unique_id=1051367938 instance=ExtResource("51_0qfc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7604399, 0.39324623, 8.07617)
 
@@ -2982,7 +3067,7 @@ cast_shadow = 0
 mesh = SubResource("FogStripNS")
 
 [node name="East1" type="MeshInstance3D" parent="EdgeFog" unique_id=155384119]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.857252, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.793606, 1, 0)
 cast_shadow = 0
 mesh = SubResource("FogStripEW")
 
@@ -2995,6 +3080,26 @@ mesh = SubResource("FogStripEW")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 12.122515)
 cast_shadow = 0
 mesh = SubResource("FogStripNS")
+
+[node name="FogWallNorth" type="MeshInstance3D" parent="EdgeFog" unique_id=1900000001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -12.5)
+cast_shadow = 0
+mesh = SubResource("FogWallNS")
+
+[node name="FogWallSouth" type="MeshInstance3D" parent="EdgeFog" unique_id=1900000002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 13.5)
+cast_shadow = 0
+mesh = SubResource("FogWallNS")
+
+[node name="FogWallEast" type="MeshInstance3D" parent="EdgeFog" unique_id=1900000003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 1.5, 0)
+cast_shadow = 0
+mesh = SubResource("FogWallEW")
+
+[node name="FogWallWest" type="MeshInstance3D" parent="EdgeFog" unique_id=1900000004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.5, 0)
+cast_shadow = 0
+mesh = SubResource("FogWallEW")
 
 [node name="forest_ring" type="Node3D" parent="." unique_id=160107888]
 

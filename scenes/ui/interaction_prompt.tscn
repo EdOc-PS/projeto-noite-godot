@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/interaction_prompt.gd" id="1_script"]
+[ext_resource type="Shader" path="res://shaders/ui_icon_glow.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" path="res://assets/ui/input_prompts/generic/generic_button_square.png" id="3_kb_generic"]
+[ext_resource type="Texture2D" path="res://assets/ui/input_prompts/keyboard/keyboard_e_outline.png" id="4_kb_outline"]
+[ext_resource type="Texture2D" path="res://assets/ui/input_prompts/keyboard/keyboard_e.png" id="5_kb_filled"]
+[ext_resource type="Texture2D" path="res://assets/ui/input_prompts/generic/generic_button_circle.png" id="6_pad_generic"]
+[ext_resource type="Texture2D" path="res://assets/ui/input_prompts/xbox/xbox_button_a_outline.png" id="7_pad_outline"]
+[ext_resource type="Texture2D" path="res://assets/ui/input_prompts/xbox/xbox_button_a.png" id="8_pad_filled"]
+
+[sub_resource type="ShaderMaterial" id="IconMaterial"]
+resource_local_to_scene = true
+render_priority = 10
+shader = ExtResource("2_shader")
+shader_parameter/tex = ExtResource("3_kb_generic")
+shader_parameter/glow = 2.5
+shader_parameter/alpha = 0.0
+
+[sub_resource type="QuadMesh" id="IconMesh"]
+resource_local_to_scene = true
+material = SubResource("IconMaterial")
+
+[node name="InteractionPrompt" type="Node3D"]
+script = ExtResource("1_script")
+keyboard_generic = ExtResource("3_kb_generic")
+keyboard_action_outline = ExtResource("4_kb_outline")
+keyboard_action_filled = ExtResource("5_kb_filled")
+controller_generic = ExtResource("6_pad_generic")
+controller_action_outline = ExtResource("7_pad_outline")
+controller_action_filled = ExtResource("8_pad_filled")
+
+[node name="Icon" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("IconMesh")
