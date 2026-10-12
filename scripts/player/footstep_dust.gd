@@ -1,18 +1,21 @@
 extends GPUParticles3D
 ## Poeirinha nos pés enquanto o personagem anda: nuvenzinhas semitransparentes
-## (mesmo mesh da fumaça da chaminé) que nascem no chão, sobem e somem encolhendo.
+## (mesmo mesh da fumaça da chaminé) que nascem no chão, sobem, encolhem e no
+## fim se deformam e esfarelam (`shaders/dust_dissolve.gdshader`).
 ## Configurada toda aqui pra ficar autocontida; ajuste pelos exports.
 
 @export var min_speed: float = 1.0       ## velocidade horizontal mínima pra soltar poeira
-@export var puff_size: float = 0.3
+@export var puff_size: float = 0.45
 @export var puff_color: Color = Color(0.78, 0.8, 0.9, 0.4)  ## lavanda clara; alpha = transparência
 @export var puff_scene: PackedScene = preload("res://assets/models/custom/smoke/smoke_puff.gltf")
+
+const DISSOLVE_SHADER := preload("res://shaders/dust_dissolve.gdshader")
 
 @onready var _body := get_parent() as CharacterBody3D
 
 func _ready() -> void:
-	amount = 5
-	lifetime = 0.6
+	amount = 3
+	lifetime = 0.9
 	local_coords = false  # a poeira fica no lugar, o personagem segue andando
 	emitting = false
 	visibility_aabb = AABB(Vector3(-3, -1, -3), Vector3(6, 3, 6))
@@ -22,18 +25,16 @@ func _ready() -> void:
 	if not found.is_empty():
 		draw_pass_1 = (found[0] as MeshInstance3D).mesh
 	inst.free()
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = puff_color
-	mat.roughness = 1.0
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED  # sem sombra interna: parece poeira, não pedra
+	var mat := ShaderMaterial.new()
+	mat.shader = DISSOLVE_SHADER
+	mat.set_shader_parameter(&"color", puff_color)
 	material_override = mat
 	cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 	var curve := Curve.new()
-	# nasce no tamanho máximo e vai encolhendo até sumir
+	# nasce no tamanho máximo e encolhe; o fim quem faz é o shader (esfarela)
 	curve.add_point(Vector2(0.0, 1.0))
-	curve.add_point(Vector2(1.0, 0.0), -1.2, 0.0)
+	curve.add_point(Vector2(1.0, 0.4), -0.6, 0.0)
 	var curve_tex := CurveTexture.new()
 	curve_tex.curve = curve
 

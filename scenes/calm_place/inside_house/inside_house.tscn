@@ -1,54 +1,2147 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://v821t1c2n6cs"]
 
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
-[ext_resource type="Script" path="res://scripts/camera/isometric_camera.gd" id="camera_script"]
+[ext_resource type="PackedScene" path="res://scenes/effects/fire.tscn" id="fire"]
+[ext_resource type="Script" path="res://scripts/environment/lantern_pulse.gd" id="lantern_pulse"]
+[ext_resource type="PackedScene" path="res://assets/models/calm_place/house_plants/zzplant_plant_large_potted.gltf" id="zzplant_plant_large_potted"]
+[ext_resource type="PackedScene" uid="uid://dpnyrbuegtjih" path="res://assets/models/tools/anvil.gltf" id="anvil"]
+[ext_resource type="PackedScene" uid="uid://cbhwfeb54w6an" path="res://assets/models/home/furniture/armchair_pillows.gltf" id="armchair_pillows"]
+[ext_resource type="PackedScene" uid="uid://bm4cn5iprrsde" path="res://assets/models/weapons/axe_B.gltf" id="axe_B"]
+[ext_resource type="PackedScene" uid="uid://d1b0lw12yf4mb" path="res://assets/models/dungeon/banner_shield_red.gltf" id="banner_shield_red"]
+[ext_resource type="PackedScene" uid="uid://c61kqe5ai0o1n" path="res://assets/models/dungeon/barrel_small_stack.gltf" id="barrel_small_stack"]
+[ext_resource type="PackedScene" uid="uid://cvr1bxsf77tt3" path="res://assets/models/dungeon/bottle_A_brown.gltf" id="bottle_A_brown"]
+[ext_resource type="PackedScene" uid="uid://dyx2dcnb2sum2" path="res://assets/models/dungeon/bottle_A_labeled_green.gltf" id="bottle_A_labeled_green"]
+[ext_resource type="PackedScene" uid="uid://dofcxb8l68bj1" path="res://assets/models/dungeon/bottle_B_brown.gltf" id="bottle_B_brown"]
+[ext_resource type="PackedScene" uid="uid://d0373ic5tvdq0" path="res://assets/models/dungeon/bottle_B_green.gltf" id="bottle_B_green"]
+[ext_resource type="PackedScene" uid="uid://cihrkmpjdfkxc" path="res://assets/models/dungeon/bottle_C_brown.gltf" id="bottle_C_brown"]
+[ext_resource type="PackedScene" uid="uid://ct8nhhu8brui4" path="res://assets/models/dungeon/box_small.gltf" id="box_small"]
+[ext_resource type="PackedScene" uid="uid://dbugsygr4m8ud" path="res://assets/models/dungeon/box_small_decorated.gltf" id="box_small_decorated"]
+[ext_resource type="PackedScene" uid="uid://yuqkiwlnh6ti" path="res://assets/models/tools/bucket_metal.gltf" id="bucket_metal"]
+[ext_resource type="PackedScene" uid="uid://dn2skqjd5u2hb" path="res://assets/models/calm_place/house_plants/cacti_plant_pot_small.gltf" id="cacti_plant_pot_small"]
+[ext_resource type="Script" uid="uid://c1aky232pgoqv" path="res://scripts/camera/isometric_camera.gd" id="camera_script"]
+[ext_resource type="PackedScene" uid="uid://byr4jsyu5o5f0" path="res://assets/models/dungeon/candle.gltf" id="candle"]
+[ext_resource type="PackedScene" uid="uid://bdt806dct5k8y" path="res://assets/models/dungeon/candle_triple.gltf" id="candle_triple"]
+[ext_resource type="PackedScene" path="res://scenes/props/ceiling_lamp.tscn" id="ceiling_lamp"]
+[ext_resource type="PackedScene" uid="uid://ccwj5tu2xt14" path="res://assets/models/home/kitchen/chair.gltf" id="chair"]
+[ext_resource type="PackedScene" uid="uid://cc0r80jxsyhlg" path="res://assets/models/dungeon/chest_gold.gltf" id="chest_gold"]
+[ext_resource type="PackedScene" uid="uid://d1cerbal6wv3w" path="res://assets/models/dungeon/coin_stack_large.gltf" id="coin_stack_large"]
+[ext_resource type="PackedScene" uid="uid://cu3rlatsew8p0" path="res://assets/models/dungeon/coin_stack_small.gltf" id="coin_stack_small"]
+[ext_resource type="PackedScene" uid="uid://bl1d1576pqgpb" path="res://assets/models/home/kitchen/countertop_corner_inner.gltf" id="countertop_corner_inner"]
+[ext_resource type="PackedScene" uid="uid://dxwerwyn3oo4e" path="res://assets/models/home/kitchen/countertop_sink.gltf" id="countertop_sink"]
+[ext_resource type="PackedScene" uid="uid://b5qg5maa5tgom" path="res://assets/models/home/kitchen/countertop_straight_B.gltf" id="countertop_straight_B"]
+[ext_resource type="PackedScene" uid="uid://dae2bxoovr7ss" path="res://assets/models/dungeon/crates_stacked.gltf" id="crates_stacked"]
+[ext_resource type="PackedScene" uid="uid://qcuembygex6u" path="res://assets/models/cooking/crate_potatoes.gltf" id="crate_potatoes"]
+[ext_resource type="PackedScene" uid="uid://cepggxij2k1kc" path="res://assets/models/home/kitchen/cuttingboard.gltf" id="cuttingboard"]
+[ext_resource type="PackedScene" uid="uid://fkurxeko3o3i" path="res://assets/models/home/kitchen/extractor_hood.gltf" id="extractor_hood"]
+[ext_resource type="PackedScene" path="res://scenes/props/fireplace.tscn" id="fireplace"]
+[ext_resource type="PackedScene" uid="uid://bruv8i6pjo1pm" path="res://assets/models/shops/bakery/floor_wood.gltf" id="floor_wood"]
+[ext_resource type="PackedScene" uid="uid://cngr14s54an7r" path="res://assets/models/calm_place/pretty_park/flower_A.gltf" id="flower_A"]
+[ext_resource type="Script" uid="uid://c54trgxeph60e" path="res://scripts/world/focus_view.gd" id="focus_view"]
+[ext_resource type="PackedScene" uid="uid://duv60pimb1xdt" path="res://assets/models/cooking/food_ingredient_cheese.gltf" id="food_ingredient_cheese"]
+[ext_resource type="PackedScene" uid="uid://dn7d5qao8jor7" path="res://assets/models/cooking/food_ingredient_lettuce.gltf" id="food_ingredient_lettuce"]
+[ext_resource type="PackedScene" uid="uid://cr2s0vdh8c526" path="res://assets/models/cooking/food_ingredient_onion.gltf" id="food_ingredient_onion"]
+[ext_resource type="PackedScene" uid="uid://brguwhstmr2hs" path="res://assets/models/cooking/food_ingredient_tomato.gltf" id="food_ingredient_tomato"]
+[ext_resource type="PackedScene" uid="uid://bpopj7sg1jpnj" path="res://assets/models/cooking/food_stew.gltf" id="food_stew"]
+[ext_resource type="PackedScene" uid="uid://chu0qanidd7do" path="res://assets/models/home/kitchen/fridge.gltf" id="fridge"]
+[ext_resource type="PackedScene" uid="uid://05fqyr3xpdw5" path="res://assets/models/custom/grass/grass_tuft_A.gltf" id="grass_tuft_A"]
+[ext_resource type="PackedScene" uid="uid://d0anosu3ubyek" path="res://assets/models/custom/grass/grass_tuft_B.gltf" id="grass_tuft_B"]
+[ext_resource type="PackedScene" uid="uid://cvw460xu472kw" path="res://assets/models/tools/grindstone.gltf" id="grindstone"]
+[ext_resource type="PackedScene" uid="uid://cb4rylajgt7f1" path="res://assets/models/weapons/halberd.gltf" id="halberd"]
+[ext_resource type="PackedScene" uid="uid://57blmnqrf2rl" path="res://assets/models/tools/hammer.gltf" id="hammer"]
+[ext_resource type="PackedScene" uid="uid://dpd8u8ddwg2ft" path="res://assets/models/weapons/hammer_A.gltf" id="hammer_A"]
 [ext_resource type="PackedScene" path="res://scenes/ui/interaction_prompt.tscn" id="interaction_prompt"]
-[ext_resource type="Script" path="res://scripts/world/scene_exit.gd" id="scene_exit"]
+[ext_resource type="PackedScene" uid="uid://iau3db4dqu51" path="res://assets/models/cooking/jar_A_medium.gltf" id="jar_A_medium"]
+[ext_resource type="PackedScene" uid="uid://b48iyy0fy6uw2" path="res://assets/models/cooking/jar_B_small.gltf" id="jar_B_small"]
+[ext_resource type="PackedScene" uid="uid://b8rcrhssayomd" path="res://assets/models/home/kitchen/kettle.gltf" id="kettle"]
+[ext_resource type="PackedScene" uid="uid://djeavofii2fgf" path="res://assets/models/dungeon/keyring.gltf" id="keyring"]
+[ext_resource type="PackedScene" uid="uid://bl6bm8qvmxgo8" path="res://assets/models/home/furniture/lamp_standing.gltf" id="lamp_standing"]
+[ext_resource type="PackedScene" uid="uid://df0usxpfxdxoi" path="res://assets/models/tools/lantern.gltf" id="lantern"]
+[ext_resource type="Script" uid="uid://b3vwbebn0bdw8" path="res://scripts/environment/lantern_flicker.gd" id="lantern_flicker"]
+[ext_resource type="PackedScene" uid="uid://c4e63f6fqfi32" path="res://assets/models/calm_place/homely_house/mailbox.gltf" id="mailbox"]
+[ext_resource type="PackedScene" uid="uid://ckqu27x2xlxyn" path="res://assets/models/tools/map_rolled.gltf" id="map_rolled"]
+[ext_resource type="PackedScene" uid="uid://bofh62hw48iwt" path="res://assets/models/calm_place/homely_house/package.gltf" id="package"]
+[ext_resource type="PackedScene" uid="uid://dsvfynwebq1i" path="res://assets/models/cooking/pan_A.gltf" id="pan_A"]
+[ext_resource type="PackedScene" uid="uid://chvuoujdyel4b" path="res://assets/models/home/furniture/pictureframe_large_A.gltf" id="pictureframe_large_A"]
+[ext_resource type="PackedScene" uid="uid://puj72t3ofljv" path="res://assets/models/dungeon/plate_stack.gltf" id="plate_stack"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]
+[ext_resource type="PackedScene" uid="uid://ckhoabobqjxfi" path="res://assets/models/home/kitchen/pot.gltf" id="pot"]
+[ext_resource type="PackedScene" uid="uid://bu3xcgq2e076k" path="res://assets/models/calm_place/house_plants/pot_A_small.gltf" id="pot_A_small"]
+[ext_resource type="PackedScene" uid="uid://dh6td6odc73va" path="res://assets/models/custom/props/rug_medieval_red.gltf" id="rug_medieval_red"]
+[ext_resource type="PackedScene" uid="uid://g723lxt0pkc4" path="res://assets/models/home/furniture/rug_oval_A.gltf" id="rug_oval_A"]
+[ext_resource type="PackedScene" uid="uid://rhxmjachicjy" path="res://assets/models/home/furniture/rug_rectangle_A.gltf" id="rug_rectangle_A"]
+[ext_resource type="PackedScene" uid="uid://cku1kc5mowwij" path="res://assets/models/calm_place/house_plants/sansevieria_plant_small_potted.gltf" id="sansevieria_plant_small_potted"]
+[ext_resource type="Script" uid="uid://di5aobamfshq4" path="res://scripts/world/scene_exit.gd" id="scene_exit"]
+[ext_resource type="PackedScene" uid="uid://ckifi8uoh5vlc" path="res://assets/models/dungeon/shelves.gltf" id="shelves"]
+[ext_resource type="PackedScene" uid="uid://c38tcyb27348p" path="res://assets/models/weapons/shield_A.gltf" id="shield_A"]
+[ext_resource type="Script" uid="uid://bdvt3b3di6sgh" path="res://scripts/environment/silhouette_applier.gd" id="silhouette_applier"]
+[ext_resource type="PackedScene" uid="uid://bl4vnnmp8uaso" path="res://assets/models/weapons/spear_A.gltf" id="spear_A"]
+[ext_resource type="PackedScene" uid="uid://e78onycoscw0" path="res://assets/models/home/kitchen/stove.gltf" id="stove"]
+[ext_resource type="PackedScene" uid="uid://85kl0aef86rf" path="res://assets/models/weapons/sword_A.gltf" id="sword_A"]
+[ext_resource type="PackedScene" uid="uid://bw6vkle3yjjrj" path="res://assets/models/weapons/sword_B.gltf" id="sword_B"]
+[ext_resource type="PackedScene" uid="uid://bwjafm0cpbm0u" path="res://assets/models/home/kitchen/table_A.gltf" id="table_A"]
+[ext_resource type="PackedScene" uid="uid://7vuq2m36iejh" path="res://assets/models/dungeon/table_long.gltf" id="table_long"]
+[ext_resource type="PackedScene" path="res://scenes/effects/tilt_shift.tscn" id="tilt_shift"]
+[ext_resource type="PackedScene" uid="uid://d0qe363485i57" path="res://assets/models/tools/tongs.gltf" id="tongs"]
+[ext_resource type="PackedScene" uid="uid://b8qvwopoutjsy" path="res://assets/models/dungeon/torch_mounted.gltf" id="torch_mounted"]
+[ext_resource type="PackedScene" uid="uid://2tsyoors3ux5" path="res://assets/models/calm_place/forest_nature/Tree_1_A_Color1.gltf" id="Tree_1_A_Color1"]
+[ext_resource type="PackedScene" uid="uid://clwjrvsxmrgyd" path="res://assets/models/calm_place/forest_nature/Tree_2_A_Color1.gltf" id="Tree_2_A_Color1"]
+[ext_resource type="PackedScene" uid="uid://dmm478onxvq1f" path="res://assets/models/calm_place/forest_nature/Tree_2_C_Color1.gltf" id="Tree_2_C_Color1"]
+[ext_resource type="PackedScene" uid="uid://cl7ii5wlfom1r" path="res://assets/models/calm_place/forest_nature/Tree_4_A_Color1.gltf" id="Tree_4_A_Color1"]
+[ext_resource type="PackedScene" uid="uid://cey4sh7cbuax1" path="res://assets/models/home/kitchen/utensils_cup.gltf" id="utensils_cup"]
+[ext_resource type="PackedScene" uid="uid://bktq00sc1vef0" path="res://assets/models/home/kitchen/wall_cabinet_straight.gltf" id="wall_cabinet_straight"]
+[ext_resource type="PackedScene" uid="uid://dc2xbow4edp3r" path="res://assets/models/shops/bakery/wall_panelled_bakery_doorway.gltf" id="wall_panelled_bakery_doorway"]
+[ext_resource type="PackedScene" uid="uid://wtcvxa4i1rsx" path="res://assets/models/shops/bakery/wall_panelled_bakery_straight.gltf" id="wall_panelled_bakery_straight"]
+[ext_resource type="PackedScene" uid="uid://bcy08eyf5ksuf" path="res://assets/models/shops/bakery/wall_panelled_bakery_window_small.gltf" id="wall_panelled_bakery_window_small"]
+[ext_resource type="PackedScene" uid="uid://cr03pbfet4eto" path="res://assets/models/home/kitchen/wall_shelf_kitchen_hooks_decorated.gltf" id="wall_shelf_kitchen_hooks_decorated"]
+[ext_resource type="PackedScene" uid="uid://bwdlw0506h2au" path="res://assets/models/calm_place/house_plants/zzplant_plant_small_potted.gltf" id="zzplant_plant_small_potted"]
 
-[sub_resource type="Environment" id="Environment_black"]
+[sub_resource type="StandardMaterial3D" id="PostMat"]
+albedo_color = Color(0.975, 0.94, 0.918, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="PostTall"]
+material = SubResource("PostMat")
+size = Vector3(0.62, 4, 0.62)
+
+[sub_resource type="BoxMesh" id="PostLow"]
+material = SubResource("PostMat")
+size = Vector3(0.62, 1.2, 0.62)
+
+[sub_resource type="BoxShape3D" id="FloorMain"]
+size = Vector3(18, 1, 10)
+
+[sub_resource type="BoxShape3D" id="FloorExt"]
+size = Vector3(8, 1, 4)
+
+[sub_resource type="BoxShape3D" id="WallBack"]
+size = Vector3(18.5, 4, 0.5)
+
+[sub_resource type="BoxShape3D" id="WallLeft"]
+size = Vector3(0.5, 4, 14.5)
+
+[sub_resource type="BoxShape3D" id="WallRight"]
+size = Vector3(0.5, 4, 10.5)
+
+[sub_resource type="BoxShape3D" id="WallFrontL"]
+size = Vector3(1.75, 4, 0.5)
+
+[sub_resource type="BoxShape3D" id="WallFrontR"]
+size = Vector3(5.75, 4, 0.5)
+
+[sub_resource type="BoxShape3D" id="FloorCorridor"]
+size = Vector3(2.5, 1, 2.6)
+
+[sub_resource type="BoxShape3D" id="CorridorSide"]
+size = Vector3(0.5, 4, 2.6)
+
+[sub_resource type="BoxShape3D" id="CorridorEnd"]
+size = Vector3(3, 4, 0.5)
+
+[sub_resource type="BoxShape3D" id="WallExtFront"]
+size = Vector3(8.5, 4, 0.5)
+
+[sub_resource type="BoxShape3D" id="WallExtSide"]
+size = Vector3(0.5, 4, 4.5)
+
+[sub_resource type="BoxShape3D" id="KitchenCornerShape"]
+size = Vector3(1.75, 3, 1.75)
+
+[sub_resource type="BoxShape3D" id="StoveShape"]
+size = Vector3(2, 3, 1.6)
+
+[sub_resource type="BoxShape3D" id="KitchenCounterBackShape"]
+size = Vector3(2, 3, 1.6)
+
+[sub_resource type="BoxShape3D" id="KitchenSinkShape"]
+size = Vector3(1.6, 3, 2)
+
+[sub_resource type="BoxShape3D" id="KitchenCounterSideShape"]
+size = Vector3(1.6, 3, 2)
+
+[sub_resource type="BoxShape3D" id="FridgeShape"]
+size = Vector3(1.6, 3, 2.1)
+
+[sub_resource type="BoxShape3D" id="CratePotatoesShape"]
+size = Vector3(2.22222, 2.66667, 2.22222)
+
+[sub_resource type="BoxShape3D" id="DiningTableShape"]
+size = Vector3(4, 1.2, 1.6)
+
+[sub_resource type="BoxShape3D" id="ArmchairShape"]
+size = Vector3(1.8, 1.2, 1.6)
+
+[sub_resource type="BoxShape3D" id="FireplaceShape"]
+size = Vector3(1.6, 3, 3)
+
+[sub_resource type="BoxShape3D" id="ForgeTableShape"]
+size = Vector3(4, 1.2, 2)
+
+[sub_resource type="BoxShape3D" id="AnvilShape"]
+size = Vector3(1.8, 1.5, 1.6)
+
+[sub_resource type="BoxShape3D" id="GrindstoneShape"]
+size = Vector3(2.57143, 2.14286, 2.28571)
+
+[sub_resource type="BoxShape3D" id="WeaponRackShape"]
+size = Vector3(3.4, 1.5, 0.8)
+
+[sub_resource type="BoxShape3D" id="ChestGoldShape"]
+size = Vector3(1.81818, 2.18182, 1.81818)
+
+[sub_resource type="BoxShape3D" id="CratesStackedShape"]
+size = Vector3(2.54545, 2.72727, 2.72727)
+
+[sub_resource type="BoxShape3D" id="BarrelStackShape"]
+size = Vector3(2.33333, 2.5, 2.5)
+
+[sub_resource type="Environment" id="Env"]
 background_mode = 1
-background_color = Color(0, 0, 0, 1)
+background_color = Color(0.012, 0.016, 0.045, 1)
 ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.4
+ambient_light_color = Color(0.55, 0.47, 0.42, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 4
+ssao_enabled = true
+ssao_intensity = 1.5
 glow_enabled = true
+glow_intensity = 0.6
+glow_blend_mode = 2
+adjustment_enabled = true
+adjustment_contrast = 1.12
+adjustment_saturation = 1.3
 
-[sub_resource type="BoxShape3D" id="FloorShape"]
-size = Vector3(40, 1, 40)
+[sub_resource type="BoxShape3D" id="DoorPlantShape"]
+size = Vector3(1.4, 2, 1.4)
 
-[node name="InsideHouse" type="Node3D"]
+[node name="InsideHouse" type="Node3D" unique_id=1904728130]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_black")
+[node name="Room" type="Node3D" parent="." unique_id=1542319205]
 
-[node name="Light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.8660254, 0, -0.8660254, 0.5, 0, 6, 0)
+[node name="Structure" type="Node3D" parent="Room" unique_id=1786911800]
 
-[node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="Floor_1_1" parent="Room/Structure" unique_id=311783201 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-shape = SubResource("FloorShape")
+[node name="Floor_1_3" parent="Room/Structure" unique_id=1903897632 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
 
-[node name="Entrance" type="Marker3D" parent="." groups=["spawn_point"]]
+[node name="Floor_1_5" parent="Room/Structure" unique_id=2106900242 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2)
 
-[node name="DoorPrompt" parent="." instance=ExtResource("interaction_prompt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 3)
-action_radius = 0.8
+[node name="Floor_1_7" parent="Room/Structure" unique_id=58275324 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 
-[node name="DoorExit" type="Node" parent="."]
+[node name="Floor_1_9" parent="Room/Structure" unique_id=644275897 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
+
+[node name="Floor_3_1" parent="Room/Structure" unique_id=1746606309 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="Floor_3_3" parent="Room/Structure" unique_id=1807727194 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+
+[node name="Floor_3_5" parent="Room/Structure" unique_id=1665231226 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+
+[node name="Floor_3_7" parent="Room/Structure" unique_id=557900623 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="Floor_3_9" parent="Room/Structure" unique_id=1211877278 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
+
+[node name="Floor_5_1" parent="Room/Structure" unique_id=1165192960 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -6)
+
+[node name="Floor_5_3" parent="Room/Structure" unique_id=1201991671 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="Floor_5_5" parent="Room/Structure" unique_id=1415706965 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
+
+[node name="Floor_5_7" parent="Room/Structure" unique_id=1206239854 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="Floor_5_9" parent="Room/Structure" unique_id=197535016 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+
+[node name="Floor_7_1" parent="Room/Structure" unique_id=550143142 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -6)
+
+[node name="Floor_7_3" parent="Room/Structure" unique_id=807287200 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+
+[node name="Floor_7_5" parent="Room/Structure" unique_id=1612455968 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="Floor_7_7" parent="Room/Structure" unique_id=195613797 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="Floor_7_9" parent="Room/Structure" unique_id=98441275 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="Floor_9_1" parent="Room/Structure" unique_id=1955728934 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Floor_9_3" parent="Room/Structure" unique_id=630069219 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="Floor_9_5" parent="Room/Structure" unique_id=671759329 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Floor_9_7" parent="Room/Structure" unique_id=1721477995 instance=ExtResource("floor_wood")]
+
+[node name="Floor_9_9" parent="Room/Structure" unique_id=937352023 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Floor_11_1" parent="Room/Structure" unique_id=1974124561 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -6)
+
+[node name="Floor_11_3" parent="Room/Structure" unique_id=329884891 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
+
+[node name="Floor_11_5" parent="Room/Structure" unique_id=511989779 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="Floor_11_7" parent="Room/Structure" unique_id=847124191 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Floor_11_9" parent="Room/Structure" unique_id=404418313 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="Floor_13_1" parent="Room/Structure" unique_id=1657985701 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -6)
+
+[node name="Floor_13_3" parent="Room/Structure" unique_id=1001434655 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="Floor_13_5" parent="Room/Structure" unique_id=1275926133 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+
+[node name="Floor_13_7" parent="Room/Structure" unique_id=1291033845 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="Floor_13_9" parent="Room/Structure" unique_id=791292602 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+
+[node name="Floor_15_1" parent="Room/Structure" unique_id=1560113405 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+
+[node name="Floor_15_3" parent="Room/Structure" unique_id=524345347 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="Floor_15_5" parent="Room/Structure" unique_id=1035866056 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
+
+[node name="Floor_15_7" parent="Room/Structure" unique_id=1032392817 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="Floor_15_9" parent="Room/Structure" unique_id=237761852 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+
+[node name="Floor_17_1" parent="Room/Structure" unique_id=544857479 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -6)
+
+[node name="Floor_17_3" parent="Room/Structure" unique_id=564684032 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="Floor_17_5" parent="Room/Structure" unique_id=1239348871 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -2)
+
+[node name="Floor_17_7" parent="Room/Structure" unique_id=1489501955 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="Floor_17_9" parent="Room/Structure" unique_id=850861146 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 2)
+
+[node name="FloorExt_1_11" parent="Room/Structure" unique_id=1826168313 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 4)
+
+[node name="FloorExt_1_13" parent="Room/Structure" unique_id=466125569 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 6)
+
+[node name="FloorExt_3_11" parent="Room/Structure" unique_id=258199991 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+
+[node name="FloorExt_3_13" parent="Room/Structure" unique_id=1580712247 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="FloorExt_5_11" parent="Room/Structure" unique_id=1597947845 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="FloorExt_5_13" parent="Room/Structure" unique_id=945704907 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 6)
+
+[node name="FloorExt_7_11" parent="Room/Structure" unique_id=525372771 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+
+[node name="FloorExt_7_13" parent="Room/Structure" unique_id=359535200 instance=ExtResource("floor_wood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 6)
+
+[node name="WallBack_0" parent="Room/Structure" unique_id=999161012 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -7)
+
+[node name="WallBack_1" parent="Room/Structure" unique_id=440286688 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -7)
+
+[node name="WallBack_2" parent="Room/Structure" unique_id=375278887 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -7)
+
+[node name="WallBackDoorLeft" parent="Room/Structure" unique_id=1214571831 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -7)
+
+[node name="WallBack_3" parent="Room/Structure" unique_id=268444913 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -7)
+
+[node name="WallBack_4" parent="Room/Structure" unique_id=1777723024 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -7)
+
+[node name="WallBack_5" parent="Room/Structure" unique_id=1208995794 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -7)
+
+[node name="WallBack_6" parent="Room/Structure" unique_id=2000707597 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -7)
+
+[node name="WallBackDoorway" parent="Room/Structure" unique_id=490446465 instance=ExtResource("wall_panelled_bakery_doorway")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -7)
+
+[node name="WallBackDoorRight" parent="Room/Structure" instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -7)
+
+[node name="WallLeft_0" parent="Room/Structure" unique_id=813268947 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -9, 0, -6)
+
+[node name="WallLeft_1" parent="Room/Structure" unique_id=997454309 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -9, 0, -4)
+
+[node name="WallLeft_2" parent="Room/Structure" unique_id=1877359100 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -9, 0, -2)
+
+[node name="WallLeft_3" parent="Room/Structure" unique_id=467380627 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -9, 0, 0)
+
+[node name="WallLeft_4" parent="Room/Structure" unique_id=1270336122 instance=ExtResource("wall_panelled_bakery_window_small")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -9, 0, 2)
+
+[node name="WallLeft_5" parent="Room/Structure" unique_id=1443065582 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 0.3, 0, -1, 0, 3.1391647e-07, -9, 0, 4)
+
+[node name="WallLeft_6" parent="Room/Structure" unique_id=1107129913 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 0.3, 0, -1, 0, 3.1391647e-07, -9, 0, 6)
+
+[node name="WallRight_B0" parent="Room/Structure" unique_id=849412614 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, 9, 0, -6)
+
+[node name="WallRight_B1" parent="Room/Structure" unique_id=1107888325 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, 9, 0, -4)
+
+[node name="WallRight_0" parent="Room/Structure" unique_id=153305072 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, 9, 0, -2)
+
+[node name="WallRight_1" parent="Room/Structure" unique_id=1667328315 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, 9, 0, 0)
+
+[node name="WallRight_2" parent="Room/Structure" unique_id=662228998 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, 9, 0, 2)
+
+[node name="WallFront_0" parent="Room/Structure" unique_id=1396074464 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-0.875, 0, -2.851e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, -0.125, 0, 3)
+
+[node name="WallFront_1" parent="Room/Structure" unique_id=303411938 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-0.875, 0, -2.851e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, 4.125, 0, 3)
+
+[node name="WallFront_2" parent="Room/Structure" unique_id=55057745 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, 6, 0, 3)
+
+[node name="WallFront_3" parent="Room/Structure" unique_id=441158656 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, 8, 0, 3)
+
+[node name="WallExtFront_0" parent="Room/Structure" unique_id=430508173 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, -8, 0, 7)
+
+[node name="WallExtFront_1" parent="Room/Structure" unique_id=414544769 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, -6, 0, 7)
+
+[node name="WallExtFront_2" parent="Room/Structure" unique_id=1590736498 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, -4, 0, 7)
+
+[node name="WallExtFront_3" parent="Room/Structure" unique_id=365141095 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 0.3, 0, 3.2584137e-07, 0, -1, -2, 0, 7)
+
+[node name="WallExtSide_0" parent="Room/Structure" unique_id=199987824 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, -1, 0, 4)
+
+[node name="WallExtSide_1" parent="Room/Structure" unique_id=856967347 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, -1, 0, 6)
+
+[node name="PostBackLeft" type="MeshInstance3D" parent="Room/Structure" unique_id=1832952959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2, -7)
+mesh = SubResource("PostTall")
+
+[node name="PostBackRight" type="MeshInstance3D" parent="Room/Structure" unique_id=1515932748]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, -7)
+mesh = SubResource("PostTall")
+
+[node name="PostLeftMid" type="MeshInstance3D" parent="Room/Structure" unique_id=902363944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2, 3)
+mesh = SubResource("PostTall")
+
+[node name="PostFrontRight" type="MeshInstance3D" parent="Room/Structure" unique_id=117930947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.6, 3)
+mesh = SubResource("PostLow")
+
+[node name="PostNotch" type="MeshInstance3D" parent="Room/Structure" unique_id=2021115308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.6, 3)
+mesh = SubResource("PostLow")
+
+[node name="PostExtRight" type="MeshInstance3D" parent="Room/Structure" unique_id=2022318772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.6, 7)
+mesh = SubResource("PostLow")
+
+[node name="PostExtLeft" type="MeshInstance3D" parent="Room/Structure" unique_id=939214015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.6, 7)
+mesh = SubResource("PostLow")
+
+[node name="PostEntranceL" type="MeshInstance3D" parent="Room/Structure" unique_id=972958292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.6, 3)
+mesh = SubResource("PostLow")
+
+[node name="PostEntranceR" type="MeshInstance3D" parent="Room/Structure" unique_id=1403132834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.25, 0.6, 3)
+mesh = SubResource("PostLow")
+
+[node name="FloorCorridor" parent="Room/Structure" unique_id=1478793443 instance=ExtResource("floor_wood")]
+transform = Transform3D(1.25, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="WallCorridorL" parent="Room/Structure" unique_id=591705464 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 0.3, 0, -1, 0, 3.1391647e-07, 0.75, 0, 4)
+
+[node name="WallCorridorR" parent="Room/Structure" unique_id=1772375744 instance=ExtResource("wall_panelled_bakery_straight")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 0.3, 0, 1, 0, 3.1391647e-07, 3.25, 0, 4)
+
+[node name="PostCorridorL" type="MeshInstance3D" parent="Room/Structure" unique_id=855164284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.6, 5)
+mesh = SubResource("PostLow")
+
+[node name="PostCorridorR" type="MeshInstance3D" parent="Room/Structure" unique_id=72462431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.25, 0.6, 5)
+mesh = SubResource("PostLow")
+
+[node name="Collision" type="StaticBody3D" parent="Room/Structure" unique_id=1455100038]
+
+[node name="FloorMain" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1151208065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -2)
+shape = SubResource("FloorMain")
+
+[node name="FloorExt" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1331387689]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -0.5, 5)
+shape = SubResource("FloorExt")
+
+[node name="WallBack" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=548903157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -7.1)
+shape = SubResource("WallBack")
+
+[node name="WallLeft" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1169334240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.1, 2, 0)
+shape = SubResource("WallLeft")
+
+[node name="WallRight" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1514940291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1, 2, -2)
+shape = SubResource("WallRight")
+
+[node name="WallFrontL" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=321690609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375, 2, 3.2)
+shape = SubResource("WallFrontL")
+
+[node name="WallFrontR" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1446595537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.375, 2, 3.2)
+shape = SubResource("WallFrontR")
+
+[node name="FloorCorridor" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1809984706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5, 4)
+shape = SubResource("FloorCorridor")
+
+[node name="CorridorL" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=213205514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 2, 4)
+shape = SubResource("CorridorSide")
+
+[node name="CorridorR" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=923319146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45, 2, 4)
+shape = SubResource("CorridorSide")
+
+[node name="CorridorEnd" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1708179489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 5.3)
+shape = SubResource("CorridorEnd")
+
+[node name="WallExtFront" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=1706403632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 7.2)
+shape = SubResource("WallExtFront")
+
+[node name="WallExtSide" type="CollisionShape3D" parent="Room/Structure/Collision" unique_id=2080377515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 2, 5)
+shape = SubResource("WallExtSide")
+
+[node name="Kitchen" type="Node3D" parent="Room" unique_id=1825972725]
+
+[node name="KitchenCorner" parent="Room/Kitchen" unique_id=891112141 instance=ExtResource("countertop_corner_inner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.25, 0, -6.25)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/KitchenCorner" unique_id=1832413175]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/KitchenCorner/Collision" unique_id=1561683268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125, 1.5, 0.125)
+shape = SubResource("KitchenCornerShape")
+
+[node name="Stove" parent="Room/Kitchen" unique_id=888156333 instance=ExtResource("stove")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25, 0, -6.25)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/Stove" unique_id=1633680796]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/Stove/Collision" unique_id=919459884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.05)
+shape = SubResource("StoveShape")
+
+[node name="ExtractorHood" parent="Room/Kitchen" unique_id=1505511394 instance=ExtResource("extractor_hood")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25, 2.3, -6.72)
+
+[node name="KitchenCounterBack" parent="Room/Kitchen" unique_id=1684472918 instance=ExtResource("countertop_straight_B")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.25, 0, -6.25)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/KitchenCounterBack" unique_id=705624011]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/KitchenCounterBack/Collision" unique_id=1061261649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.05)
+shape = SubResource("KitchenCounterBackShape")
+
+[node name="KitchenShelf" parent="Room/Kitchen" unique_id=565923767 instance=ExtResource("wall_shelf_kitchen_hooks_decorated")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.72, 3, -4.25)
+
+[node name="KitchenCabinetB" parent="Room/Kitchen" unique_id=1597711272 instance=ExtResource("wall_cabinet_straight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.25, 2, -6.7)
+
+[node name="KitchenCabinetSide" parent="Room/Kitchen" unique_id=1905086241 instance=ExtResource("wall_cabinet_straight")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.7, 2, -2.25)
+
+[node name="KitchenSink" parent="Room/Kitchen" unique_id=48766876 instance=ExtResource("countertop_sink")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.25, 0, -4.25)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/KitchenSink" unique_id=1455977294]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/KitchenSink/Collision" unique_id=114301042]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 1.5, 0)
+shape = SubResource("KitchenSinkShape")
+
+[node name="KitchenCounterSide" parent="Room/Kitchen" unique_id=1792564513 instance=ExtResource("countertop_straight_B")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.25, 0, -2.25)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/KitchenCounterSide" unique_id=1138465749]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/KitchenCounterSide/Collision" unique_id=1776451455]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 1.5, 0)
+shape = SubResource("KitchenCounterSideShape")
+
+[node name="Fridge" parent="Room/Kitchen" unique_id=45033356 instance=ExtResource("fridge")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.45, 0, -0.2)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/Fridge" unique_id=91581044]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/Fridge/Collision" unique_id=981763081]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 1.5, 0.2)
+shape = SubResource("FridgeShape")
+
+[node name="Pot" parent="Room/Kitchen" unique_id=1966941913 instance=ExtResource("pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85, 1.11, -6.4)
+
+[node name="Pan" parent="Room/Kitchen" unique_id=1703595169 instance=ExtResource("pan_A")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, -6.7, 1.11, -6.3)
+
+[node name="UtensilsCup" parent="Room/Kitchen" unique_id=1053516566 instance=ExtResource("utensils_cup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.65, 1, -6.4)
+
+[node name="Kettle" parent="Room/Kitchen" unique_id=719961725 instance=ExtResource("kettle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 1, -5.95)
+
+[node name="CuttingBoard" parent="Room/Kitchen" unique_id=774119465 instance=ExtResource("cuttingboard")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -8.2, 1, -2.35)
+
+[node name="JarA" parent="Room/Kitchen" unique_id=537277125 instance=ExtResource("jar_A_medium")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -8.45, 1, -6.55)
+
+[node name="JarB" parent="Room/Kitchen" unique_id=880531543 instance=ExtResource("jar_B_small")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -8, 1, -6.6)
+
+[node name="Tomato" parent="Room/Kitchen" unique_id=369452464 instance=ExtResource("food_ingredient_tomato")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -3.8, 1, -6.05)
+
+[node name="Onion" parent="Room/Kitchen" unique_id=1826488529 instance=ExtResource("food_ingredient_onion")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -3.5, 1, -6.45)
+
+[node name="Cheese" parent="Room/Kitchen" unique_id=195528811 instance=ExtResource("food_ingredient_cheese")]
+transform = Transform3D(0, 0, 0.4, 0, 0.4, 0, -0.4, 0, 0, -8.25, 1, -1.65)
+
+[node name="Lettuce" parent="Room/Kitchen" unique_id=1690254998 instance=ExtResource("food_ingredient_lettuce")]
+transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -8.25, 1, -3.75)
+
+[node name="CratePotatoes" parent="Room/Kitchen" unique_id=1897237062 instance=ExtResource("crate_potatoes")]
+transform = Transform3D(1.412624e-07, 0, 0.45, 0, 0.45, 0, -0.45, 0, 1.412624e-07, -8.3, 0, 1.2)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Kitchen/CratePotatoes" unique_id=5834163]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Kitchen/CratePotatoes/Collision" unique_id=901777258]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 1.33333, 0)
+shape = SubResource("CratePotatoesShape")
+
+[node name="KitchenLamp" parent="Room/Kitchen" unique_id=294052144 instance=ExtResource("ceiling_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+
+[node name="Dining" type="Node3D" parent="Room" unique_id=772704202]
+
+[node name="DiningTable" parent="Room/Dining" unique_id=60374595 instance=ExtResource("table_A")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4.6)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Dining/DiningTable" unique_id=2134278715]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Dining/DiningTable/Collision" unique_id=119191582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("DiningTableShape")
+
+[node name="DiningChairA" parent="Room/Dining" unique_id=155367269 instance=ExtResource("chair")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -6.4, 0, 4.6)
+
+[node name="DiningChairB" parent="Room/Dining" unique_id=526603938 instance=ExtResource("chair")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 1, 0, 1, 0, 3.1391647e-07, -3.6, 0, 4.6)
+
+[node name="FlowerVase" parent="Room/Dining" unique_id=1808143376 instance=ExtResource("pot_A_small")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 4.6)
+
+[node name="FlowerVaseBloom" parent="Room/Dining" unique_id=767921516 instance=ExtResource("flower_A")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -5, 1.38, 4.6)
+
+[node name="StewBowl" parent="Room/Dining" unique_id=234343925 instance=ExtResource("food_stew")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -5.65, 1, 4.55)
+
+[node name="PictureFrame" parent="Room/Dining" unique_id=1657114817 instance=ExtResource("pictureframe_large_A")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, -8.72, 2.6, 5)
+
+[node name="LampStanding" parent="Room/Dining" unique_id=166858904 instance=ExtResource("lamp_standing")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 0, 6.2)
+
+[node name="LampLight" type="OmniLight3D" parent="Room/Dining/LampStanding" unique_id=1213822503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+light_color = Color(1, 0.78, 0.5, 1)
+light_energy = 0.8
+omni_range = 4.0
+
+[node name="DiningLamp" parent="Room/Dining" unique_id=1182516172 instance=ExtResource("ceiling_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4.6)
+
+[node name="Living" type="Node3D" parent="Room" unique_id=600945606]
+
+[node name="RugLiving" parent="Room/Living" unique_id=1972817470 instance=ExtResource("rug_oval_A")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, 6.5, 0, 0.8)
+
+[node name="Armchair" parent="Room/Living" unique_id=1310404082 instance=ExtResource("armchair_pillows")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, 5, 0, 0.8)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Living/Armchair" unique_id=1674816576]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Living/Armchair/Collision" unique_id=1475785475]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0.6, 0)
+shape = SubResource("ArmchairShape")
+
+[node name="MantelCactus" parent="Room/Living" unique_id=250722247 instance=ExtResource("cacti_plant_pot_small")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 7.85, 2.36, 2)
+
+[node name="LivingLamp" parent="Room/Living" unique_id=6052548 instance=ExtResource("ceiling_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8, 0, 0.8)
+
+[node name="Fireplace" parent="Room/Living" unique_id=1092980167 instance=ExtResource("fireplace")]
+transform = Transform3D(3.1391647e-07, 0, -1, 0, 1, 0, 1, 0, 3.1391647e-07, 8.2, 0, 0.8)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Living/Fireplace" unique_id=823068894]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Living/Fireplace/Collision" unique_id=389060139]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 1.5, 0)
+shape = SubResource("FireplaceShape")
+
+[node name="Store" type="Node3D" parent="Room" unique_id=684544773]
+
+[node name="ForgeRug" parent="Room/Store" unique_id=1486573928 instance=ExtResource("rug_medieval_red")]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 1.2, 5.2, 0, -4)
+
+[node name="ForgeShelvesLeft" parent="Room/Store" unique_id=1075120169 instance=ExtResource("shelves")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 0, -6.95)
+
+[node name="ForgeShelvesRight" parent="Room/Store" unique_id=749567247 instance=ExtResource("shelves")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7, 0, -6.95)
+
+[node name="ForgeTable" parent="Room/Store" unique_id=1056364417 instance=ExtResource("table_long")]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, 5.2, 0, -4)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/ForgeTable" unique_id=725390734]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/ForgeTable/Collision" unique_id=1278311476]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 0.6, 0)
+shape = SubResource("ForgeTableShape")
+
+[node name="TableCoins" parent="Room/Store" unique_id=1483167246 instance=ExtResource("coin_stack_large")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 6.5, 1, -4.1)
+
+[node name="TableShield" parent="Room/Store" unique_id=1404621867 instance=ExtResource("shield_A")]
+transform = Transform3D(0.72504634, -0.33809438, 1.0613339e-07, 0, 2.5113317e-07, 0.8, -0.33809438, -0.72504634, 2.2760399e-07, 5.6, 1.13, -4.2)
+
+[node name="CounterMap" parent="Room/Store" unique_id=1594073999 instance=ExtResource("map_rolled")]
+transform = Transform3D(2.5113317e-07, 0, 0.8, 0, 0.8, 0, -0.8, 0, 2.5113317e-07, 4.4, 1.12, -4)
+
+[node name="CounterLantern" parent="Room/Store" unique_id=1264063224 instance=ExtResource("lantern")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 3.6, 1, -3.9)
+
+[node name="Anvil" parent="Room/Store" unique_id=751242351 instance=ExtResource("anvil")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2, 0, -5.7)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/Anvil" unique_id=235584223]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/Anvil/Collision" unique_id=1032493945]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.75, -0.1)
+shape = SubResource("AnvilShape")
+
+[node name="Hammer" parent="Room/Store" unique_id=194482032 instance=ExtResource("hammer")]
+transform = Transform3D(2.3598798e-07, -0.75175405, 0.27361622, 0.8, 2.5113317e-07, 0, -8.5892644e-08, 0.27361622, 0.75175405, 6, 1.02, -5.75)
+
+[node name="Tongs" parent="Room/Store" unique_id=1571434949 instance=ExtResource("tongs")]
+transform = Transform3D(2.4257605e-07, -0.7727408, -0.20705496, 0.8, 2.5113317e-07, 0, 6.499796e-08, -0.20705496, 0.7727408, 6.5, 0.97, -5.6)
+
+[node name="Grindstone" parent="Room/Store" unique_id=1509420096 instance=ExtResource("grindstone")]
+transform = Transform3D(-0.7, 0, -2.2808895e-07, 0, 0.7, 0, 2.2808895e-07, 0, -0.7, 8, 0, -5.2)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/Grindstone" unique_id=825875617]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/Grindstone/Collision" unique_id=1395731348]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.142857, 1.07143, 0.857143)
+shape = SubResource("GrindstoneShape")
+
+[node name="BucketMetal" parent="Room/Store" unique_id=2135313225 instance=ExtResource("bucket_metal")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 7.2, 0, -6)
+
+[node name="WeaponRack" type="Node3D" parent="Room/Store" unique_id=808930396]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0, -6.45)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/WeaponRack" unique_id=1498126166]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/WeaponRack/Collision" unique_id=15174138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.15)
+shape = SubResource("WeaponRackShape")
+
+[node name="WeaponSwordA" parent="Room/Store/WeaponRack" unique_id=1355256003 instance=ExtResource("sword_A")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -1.4, 0.25, 0)
+
+[node name="WeaponSwordB" parent="Room/Store/WeaponRack" unique_id=1825629579 instance=ExtResource("sword_B")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -0.85, 0.26, 0)
+
+[node name="WeaponAxe" parent="Room/Store/WeaponRack" unique_id=451733532 instance=ExtResource("axe_B")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -0.25, 0.29, 0)
+
+[node name="WeaponSpear" parent="Room/Store/WeaponRack" unique_id=2121479175 instance=ExtResource("spear_A")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.3, 0.72, 0)
+
+[node name="WeaponHalberd" parent="Room/Store/WeaponRack" unique_id=1138964126 instance=ExtResource("halberd")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.9, 0.65, 0)
+
+[node name="WeaponHammer" parent="Room/Store/WeaponRack" unique_id=266083892 instance=ExtResource("hammer_A")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.45, 0.27, 0.05)
+
+[node name="Banner" parent="Room/Store" unique_id=1595858432 instance=ExtResource("banner_shield_red")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0, -7)
+
+[node name="TorchLeft" parent="Room/Store" unique_id=1074625748 instance=ExtResource("torch_mounted")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8, 2.4, -6.7)
+
+[node name="TorchLight" type="OmniLight3D" parent="Room/Store/TorchLeft" unique_id=2037044730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.5)
+light_color = Color(1, 0.5, 0.15, 1)
+omni_range = 4.5
+script = ExtResource("lantern_pulse")
+base_energy = 1.6
+flicker_amount = 0.5
+flicker_speed = 7.0
+pulse_speed = 0.9
+
+[node name="Fire" parent="Room/Store/TorchLeft" instance=ExtResource("fire")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.6, 0.42)
+with_light = false
+
+[node name="TorchRight" parent="Room/Store" unique_id=1234521789 instance=ExtResource("torch_mounted")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6, 2.4, -6.7)
+
+[node name="TorchLight" type="OmniLight3D" parent="Room/Store/TorchRight" unique_id=754421665]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.5)
+light_color = Color(1, 0.5, 0.15, 1)
+omni_range = 4.5
+script = ExtResource("lantern_pulse")
+base_energy = 1.6
+flicker_amount = 0.5
+flicker_speed = 7.0
+pulse_speed = 0.9
+
+[node name="Fire" parent="Room/Store/TorchRight" instance=ExtResource("fire")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.6, 0.42)
+with_light = false
+
+[node name="ChestGold" parent="Room/Store" unique_id=399830006 instance=ExtResource("chest_gold")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 1.3, 0, -6.55)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/ChestGold" unique_id=798725137]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/ChestGold/Collision" unique_id=280497790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09091, 0.636364)
+shape = SubResource("ChestGoldShape")
+
+[node name="CratesStacked" parent="Room/Store" unique_id=721015306 instance=ExtResource("crates_stacked")]
+transform = Transform3D(0.5168309, 0, 0.18811116, 0, 0.55, 0, -0.18811116, 0, 0.5168309, 8.1, 0, -2.5)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/CratesStacked" unique_id=69391375]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/CratesStacked/Collision" unique_id=1542017854]
+transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 0.13976, 1.36364, 0.147612)
+shape = SubResource("CratesStackedShape")
+
+[node name="BarrelStack" parent="Room/Store" unique_id=1754340033 instance=ExtResource("barrel_small_stack")]
+transform = Transform3D(1.8834989e-07, 0, -0.6, 0, 0.6, 0, 0.6, 0, 1.8834989e-07, 8.2, 0, -3.8)
+
+[node name="Collision" type="StaticBody3D" parent="Room/Store/BarrelStack" unique_id=1481286094]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/Store/BarrelStack/Collision" unique_id=1255924328]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.25, 1.25, 0)
+shape = SubResource("BarrelStackShape")
+
+[node name="ShopLamp" parent="Room/Store" unique_id=2084185622 instance=ExtResource("ceiling_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0, -4)
+
+[node name="ShelfL_box_small" parent="Room/Store" unique_id=2117617474 instance=ExtResource("box_small")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 1.8, 1.2, -6.45)
+
+[node name="ShelfL_bottle_A_brown" parent="Room/Store" unique_id=1014659288 instance=ExtResource("bottle_A_brown")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.5, 1.2, -6.45)
+
+[node name="ShelfL_bottle_B_green" parent="Room/Store" unique_id=865880698 instance=ExtResource("bottle_B_green")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.85, 1.2, -6.45)
+
+[node name="ShelfL_candle_triple" parent="Room/Store" unique_id=1935845513 instance=ExtResource("candle_triple")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 1.8, 2.7, -6.45)
+
+[node name="ShelfL_plate_stack" parent="Room/Store" unique_id=113056783 instance=ExtResource("plate_stack")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.35, 2.7, -6.45)
+
+[node name="ShelfL_bottle_C_brown" parent="Room/Store" unique_id=2107279276 instance=ExtResource("bottle_C_brown")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2.9, 2.7, -6.45)
+
+[node name="ShelfR_coin_stack_small" parent="Room/Store" unique_id=1977521834 instance=ExtResource("coin_stack_small")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 7.1, 1.2, -6.45)
+
+[node name="ShelfR_keyring" parent="Room/Store" unique_id=1895469555 instance=ExtResource("keyring")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 7.7, 1.2, -6.45)
+
+[node name="ShelfR_bottle_A_labeled_green" parent="Room/Store" unique_id=46206488 instance=ExtResource("bottle_A_labeled_green")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 8.3, 1.2, -6.45)
+
+[node name="ShelfR_candle" parent="Room/Store" unique_id=960404156 instance=ExtResource("candle")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.1, 2.7, -6.45)
+
+[node name="ShelfR_box_small_decorated" parent="Room/Store" unique_id=422172611 instance=ExtResource("box_small_decorated")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.7, 2.7, -6.45)
+
+[node name="ShelfR_bottle_B_brown" parent="Room/Store" unique_id=1283319168 instance=ExtResource("bottle_B_brown")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 8.3, 2.7, -6.45)
+
+[node name="GameplayDoor" type="Node3D" parent="Room" unique_id=201901009]
+
+[node name="DoorRunner" parent="Room/GameplayDoor" unique_id=959855702 instance=ExtResource("rug_rectangle_A")]
+transform = Transform3D(-0.499995, 0, -0.00216297, 0, 1, 0, 0.00216297, 0, -0.499995, -1, 0, -5.83856)
+
+[node name="DoorPlantLeft" parent="Room/GameplayDoor" instance=ExtResource("zzplant_plant_large_potted")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -2.5, 0, -6.3)
+
+[node name="Collision" type="StaticBody3D" parent="Room/GameplayDoor/DoorPlantLeft"]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/GameplayDoor/DoorPlantLeft/Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("DoorPlantShape")
+
+[node name="DoorPlantRight" parent="Room/GameplayDoor" instance=ExtResource("zzplant_plant_large_potted")]
+transform = Transform3D(-0.6, 0, 0, 0, 0.6, 0, 0, 0, -0.6, 0.5, 0, -6.3)
+
+[node name="Collision" type="StaticBody3D" parent="Room/GameplayDoor/DoorPlantRight"]
+
+[node name="Shape" type="CollisionShape3D" parent="Room/GameplayDoor/DoorPlantRight/Collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("DoorPlantShape")
+
+[node name="Entrance" type="Node3D" parent="Room" unique_id=1646484666]
+
+[node name="EntranceRug" parent="Room/Entrance" unique_id=268780277 instance=ExtResource("rug_rectangle_A")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 2, 0, 2.2)
+
+[node name="EntrancePlantLeft" parent="Room/Entrance" unique_id=2000732025 instance=ExtResource("zzplant_plant_small_potted")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 2.4)
+
+[node name="EntrancePlantRight" parent="Room/Entrance" unique_id=2042579846 instance=ExtResource("sansevieria_plant_small_potted")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 0, 2.4)
+
+[node name="CenterLamp" parent="Room" unique_id=1175025819 instance=ExtResource("ceiling_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Surroundings" type="Node3D" parent="." unique_id=1512913328]
+script = ExtResource("silhouette_applier")
+
+[node name="Silhouette000" parent="Surroundings" unique_id=605512728 instance=ExtResource("Tree_2_A_Color1")]
+transform = Transform3D(2.0464048, 0, -1.4691817, 0, 2.51918, 0, 1.4691817, 0, 2.0464048, -13.923168, 0, -6.516243)
+
+[node name="Silhouette001" parent="Surroundings" unique_id=1279664690 instance=ExtResource("Tree_2_A_Color1")]
+transform = Transform3D(0.9630467, 0, 2.1178377, 0, 2.32652, 0, -2.1178377, 0, 0.9630467, -3.2178838, 0, -13.301495)
+
+[node name="Silhouette002" parent="Surroundings" unique_id=1131463363 instance=ExtResource("Tree_2_C_Color1")]
+transform = Transform3D(1.7445673, 0, 1.7822237, 0, 2.49396, 0, -1.7822237, 0, 1.7445673, 16.229183, 0, -9.593576)
+
+[node name="Silhouette003" parent="Surroundings" unique_id=1602658231 instance=ExtResource("Tree_2_A_Color1")]
+transform = Transform3D(2.5371125, 0, -0.64926136, 0, 2.61887, 0, 0.64926136, 0, 2.5371125, -9.407526, 0, 17.698013)
+
+[node name="Silhouette005" parent="Surroundings" unique_id=1043504130 instance=ExtResource("Tree_2_A_Color1")]
+transform = Transform3D(2.563806, 0, -0.97718847, 0, 2.74372, 0, 0.97718847, 0, 2.563806, 7.1223392, 0, -13.084309)
+
+[node name="Silhouette007" parent="Surroundings" unique_id=928371750 instance=ExtResource("Tree_1_A_Color1")]
+transform = Transform3D(-1.3328904, 0, 2.280357, 0, 2.64133, 0, -2.280357, 0, -1.3328904, -12.511538, 0, -17.392769)
+
+[node name="Silhouette008" parent="Surroundings" unique_id=928140519 instance=ExtResource("Tree_2_C_Color1")]
+transform = Transform3D(-1.8841863, 0, -2.016571, 0, 2.75984, 0, 2.016571, 0, -1.8841863, -21.058126, 0, 1.7276659)
+
+[node name="Silhouette009" parent="Surroundings" unique_id=480108357 instance=ExtResource("Tree_4_A_Color1")]
+transform = Transform3D(2.2031374, 0, -0.19657797, 0, 2.2118902, 0, 0.19657797, 0, 2.2031374, 14.448988, 0, 1.9149117)
+
+[node name="Silhouette010" parent="Surroundings" unique_id=123770604 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9834548, 0, -0.5459892, 0, 1.12485, 0, 0.5459892, 0, -0.9834548, 7.77798, 0, 6.137038)
+
+[node name="Silhouette011" parent="Surroundings" unique_id=830411389 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.14277594, 0, 0.9523086, 0, 0.962952, 0, -0.9523086, 0, -0.14277594, -12.7, 0, 1.03)
+
+[node name="Silhouette012" parent="Surroundings" unique_id=1313112547 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.46659207, 0, -1.1434238, 0, 1.23496, 0, 1.1434238, 0, -0.46659207, 11.38, 0, -2.01)
+
+[node name="Silhouette013" parent="Surroundings" unique_id=188533776 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.5351949, 0, 0.92037416, 0, 1.06467, 0, -0.92037416, 0, 0.5351949, 10.80606, 0, 7.5043783)
+
+[node name="Silhouette014" parent="Surroundings" unique_id=1843554372 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8282733, 0, 0.4474952, 0, 0.941429, 0, -0.4474952, 0, 0.8282733, 8.75, 0, 9.62)
+
+[node name="Silhouette015" parent="Surroundings" unique_id=2130802750 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.8986629, 0, -0.31215292, 0, 0.951333, 0, 0.31215292, 0, -0.8986629, -3.5756798, 0, 9.6)
+
+[node name="Silhouette016" parent="Surroundings" unique_id=617657208 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.76858276, 0, -0.46402976, 0, 0.897799, 0, 0.46402976, 0, -0.76858276, 9.55, 0, -5.04)
+
+[node name="Silhouette017" parent="Surroundings" unique_id=1727564287 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.68662095, 0, -0.5549922, 0, 0.882873, 0, 0.5549922, 0, 0.68662095, 8.494998, 0, 6.356735)
+
+[node name="Silhouette018" parent="Surroundings" unique_id=1994405615 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8742694, 0, 0.19921842, 0, 0.89668, 0, -0.19921842, 0, 0.8742694, -10.12, 0, 10.3)
+
+[node name="Silhouette019" parent="Surroundings" unique_id=1453827653 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.93143505, 0, -0.28906903, 0, 0.97526, 0, 0.28906903, 0, 0.93143505, -6.82, 0, 8.87)
+
+[node name="Silhouette020" parent="Surroundings" unique_id=2066330805 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.2196018, 0, -0.39570528, 0, 1.28219, 0, 0.39570528, 0, -1.2196018, 9.25, 0, 8.06)
+
+[node name="Silhouette021" parent="Surroundings" unique_id=685234411 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5338632, 0, -1.1624177, 0, 1.27915, 0, 1.1624177, 0, 0.5338632, -4.557191, 0, 9.92)
+
+[node name="Silhouette022" parent="Surroundings" unique_id=1747374289 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.2528476, 0, -0.2553752, 0, 1.27861, 0, 0.2553752, 0, 1.2528476, -9.31, 0, 2.11)
+
+[node name="Silhouette023" parent="Surroundings" unique_id=873844488 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8334234, 0, -0.48250893, 0, 0.963021, 0, 0.48250893, 0, 0.8334234, 10.23, 0, -10.98)
+
+[node name="Silhouette024" parent="Surroundings" unique_id=415757444 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.15048565, 0, 1.0046318, 0, 1.01584, 0, -1.0046318, 0, 0.15048565, 9.79, 0, 1.41)
+
+[node name="Silhouette025" parent="Surroundings" unique_id=864521402 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.6077963, 0, -0.7839263, 0, 0.991946, 0, 0.7839263, 0, 0.6077963, -5.42, 0, 10.39)
+
+[node name="Silhouette026" parent="Surroundings" unique_id=1193766018 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.23711073, 0, 1.0186478, 0, 1.04588, 0, -1.0186478, 0, -0.23711073, -6.47, 0, -10.57)
+
+[node name="Silhouette027" parent="Surroundings" unique_id=1737440636 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.89379394, 0, 0.22934683, 0, 0.92275, 0, -0.22934683, 0, 0.89379394, -0.6, 0, -8.32)
+
+[node name="Silhouette028" parent="Surroundings" unique_id=1308296517 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.15877531, 0, 1.0543925, 0, 1.06628, 0, -1.0543925, 0, -0.15877531, -9.45, 0, -2.37)
+
+[node name="Silhouette029" parent="Surroundings" unique_id=1591229728 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.5814991, 0, -0.86833704, 0, 1.04506, 0, 0.86833704, 0, 0.5814991, 11.32, 0, 6.2)
+
+[node name="Silhouette030" parent="Surroundings" unique_id=1772661324 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.5676845, 0, 0.5750976, 0, 0.808086, 0, -0.5750976, 0, 0.5676845, -5.0871906, 0, 10.83)
+
+[node name="Silhouette032" parent="Surroundings" unique_id=1847673178 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.89147824, 0, 0.7151351, 0, 1.14287, 0, -0.7151351, 0, 0.89147824, -12.05, 0, -5.45)
+
+[node name="Silhouette034" parent="Surroundings" unique_id=1048858934 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.219504, 0, 0.27191043, 0, 1.24945, 0, -0.27191043, 0, -1.219504, -0.63, 0, 4.01)
+
+[node name="Silhouette035" parent="Surroundings" unique_id=784216091 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.1073987, 0, 0.19363278, 0, 1.1242, 0, -0.19363278, 0, -1.1073987, -12.92, 0, 6.14)
+
+[node name="Silhouette036" parent="Surroundings" unique_id=1489511430 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.2500708, 0, -0.3038132, 0, 1.28646, 0, 0.3038132, 0, -1.2500708, -4.92, 0, -7.36)
+
+[node name="Silhouette037" parent="Surroundings" unique_id=509003100 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.31373492, 0, -1.168412, 0, 1.2098, 0, 1.168412, 0, 0.31373492, -11.74, 0, 5.12)
+
+[node name="Silhouette038" parent="Surroundings" unique_id=1964418088 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.2892694, 0, -0.013492044, 0, 1.28934, 0, 0.013492044, 0, 1.2892694, 4.25, 0, -10.44)
+
+[node name="Silhouette039" parent="Surroundings" unique_id=1432798840 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.5541737, 0, -0.72131324, 0, 0.909616, 0, 0.72131324, 0, -0.5541737, 5.23, 0, -9.92)
+
+[node name="Silhouette040" parent="Surroundings" unique_id=313311704 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.35579956, 0, -1.2472744, 0, 1.29703, 0, 1.2472744, 0, -0.35579956, 11.76, 0, 4.67)
+
+[node name="Silhouette041" parent="Surroundings" unique_id=1692657399 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.031764302, 0, -1.1296636, 0, 1.13011, 0, 1.1296636, 0, -0.031764302, -11.25, 0, -6.31)
+
+[node name="Silhouette042" parent="Surroundings" unique_id=517500700 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.67574644, 0, 0.43745402, 0, 0.804984, 0, -0.43745402, 0, 0.67574644, -9.92, 0, -2.23)
+
+[node name="Silhouette043" parent="Surroundings" unique_id=880408206 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.5939401, 0, -0.6432975, 0, 0.875555, 0, 0.6432975, 0, -0.5939401, 10.78, 0, -7.96)
+
+[node name="Silhouette044" parent="Surroundings" unique_id=1875034262 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.8829467, 0, -0.29719767, 0, 0.931623, 0, 0.29719767, 0, -0.8829467, -4.6506343, 0, 9.03)
+
+[node name="Silhouette045" parent="Surroundings" unique_id=464839343 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.1791892, 0, 0.35597876, 0, 1.23175, 0, -0.35597876, 0, -1.1791892, 0.44, 0, -8.06)
+
+[node name="Silhouette046" parent="Surroundings" unique_id=708321747 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.96961635, 0, 0.5754328, 0, 1.12751, 0, -0.5754328, 0, 0.96961635, -2.89, 0, -8.11)
+
+[node name="Silhouette047" parent="Surroundings" unique_id=941468246 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0085984, 0, 0.30335248, 0, 1.05323, 0, -0.30335248, 0, -1.0085984, 4.37, 0, -8.99)
+
+[node name="Silhouette048" parent="Surroundings" unique_id=1571591872 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.8017104, 0, 0.71021724, 0, 1.07105, 0, -0.71021724, 0, -0.8017104, 12.05, 0, -8.63)
+
+[node name="Silhouette049" parent="Surroundings" unique_id=285425223 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.19194333, 0, 1.1242931, 0, 1.14056, 0, -1.1242931, 0, 0.19194333, 9.05, 0, 9.78)
+
+[node name="Silhouette050" parent="Surroundings" unique_id=974295636 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.77284884, 0, 0.9314133, 0, 1.2103, 0, -0.9314133, 0, 0.77284884, -9.98, 0, 10.4)
+
+[node name="Silhouette051" parent="Surroundings" unique_id=1336257437 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.37741858, 0, -1.0586767, 0, 1.12394, 0, 1.0586767, 0, 0.37741858, -2.97, 0, -8)
+
+[node name="Silhouette052" parent="Surroundings" unique_id=1925966523 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9822071, 0, -0.48699576, 0, 1.09631, 0, 0.48699576, 0, -0.9822071, -1.73, 0, 7.73)
+
+[node name="Silhouette053" parent="Surroundings" unique_id=1486280550 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.89603776, 0, 0.056209143, 0, 0.897799, 0, -0.056209143, 0, -0.89603776, -10.48, 0, -10.27)
+
+[node name="Silhouette054" parent="Surroundings" unique_id=2099884765 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.7862211, 0, 0.14902505, 0, 0.80022, 0, -0.14902505, 0, -0.7862211, 11.37, 0, 3.55)
+
+[node name="Silhouette055" parent="Surroundings" unique_id=533280176 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9342033, 0, 0.22802287, 0, 0.961629, 0, -0.22802287, 0, -0.9342033, 10.13, 0, 2.63)
+
+[node name="Silhouette056" parent="Surroundings" unique_id=2089403715 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.022384938, 0, 0.875771, 0, 0.876057, 0, -0.875771, 0, -0.022384938, -11.15, 0, 8.12)
+
+[node name="Silhouette057" parent="Surroundings" unique_id=1780253577 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.1114327, 0, 0.23492706, 0, 1.13599, 0, -0.23492706, 0, 1.1114327, -5.79, 0, -7.45)
+
+[node name="Silhouette058" parent="Surroundings" unique_id=2017049454 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8931856, 0, 0.3464749, 0, 0.958032, 0, -0.3464749, 0, 0.8931856, 10.31, 0, -3.43)
+
+[node name="Silhouette059" parent="Surroundings" unique_id=658651066 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.42057323, 0, -0.74894947, 0, 0.858957, 0, 0.74894947, 0, -0.42057323, -12.43, 0, -0.95)
+
+[node name="Silhouette060" parent="Surroundings" unique_id=1113744891 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0321734, 0, -0.5236343, 0, 1.1574, 0, 0.5236343, 0, -1.0321734, 5.96, 0, -7.41)
+
+[node name="Silhouette061" parent="Surroundings" unique_id=2088701914 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.57501644, 0, 0.6822352, 0, 0.892238, 0, -0.6822352, 0, -0.57501644, 10.7, 0, 4.55)
+
+[node name="Silhouette062" parent="Surroundings" unique_id=948507387 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.052413248, 0, 0.8801177, 0, 0.881677, 0, -0.8801177, 0, 0.052413248, -9.964344, 0, 9.133508)
+
+[node name="Silhouette063" parent="Surroundings" unique_id=828677334 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.1509448, 0, 1.1533747, 0, 1.16321, 0, -1.1533747, 0, -0.1509448, 6.63798, 0, 5.7770376)
+
+[node name="Silhouette064" parent="Surroundings" unique_id=936675261 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.2650147, 0, -1.2417859, 0, 1.26975, 0, 1.2417859, 0, -0.2650147, -12.13, 0, 7.38)
+
+[node name="Silhouette065" parent="Surroundings" unique_id=514096564 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.1219723, 0, 0.018202936, 0, 1.12212, 0, -0.018202936, 0, -1.1219723, -10.61, 0, -0.63)
+
+[node name="Silhouette066" parent="Surroundings" unique_id=1675887849 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.6495988, 0, -0.79020745, 0, 1.02294, 0, 0.79020745, 0, -0.6495988, 7.32, 0, -9.95)
+
+[node name="Silhouette067" parent="Surroundings" unique_id=1056086274 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.88838565, 0, -0.048214085, 0, 0.889693, 0, 0.048214085, 0, -0.88838565, 9.75, 0, 9.9)
+
+[node name="Silhouette068" parent="Surroundings" unique_id=54814357 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.83974904, 0, -0.0784989, 0, 0.84341, 0, 0.0784989, 0, 0.83974904, -10.81, 0, -4.09)
+
+[node name="Silhouette069" parent="Surroundings" unique_id=850974502 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0374359, 0, 0.40164188, 0, 1.11247, 0, -0.40164188, 0, -1.0374359, -8.79, 0, -9.34)
+
+[node name="Silhouette070" parent="Surroundings" unique_id=1488393706 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.88857394, 0, -0.7210124, 0, 1.1443, 0, 0.7210124, 0, 0.88857394, -9.55, 0, -10.73)
+
+[node name="Silhouette071" parent="Surroundings" unique_id=851860179 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8145808, 0, 0.5001246, 0, 0.955859, 0, -0.5001246, 0, 0.8145808, 12.99, 0, 1.2)
+
+[node name="Silhouette072" parent="Surroundings" unique_id=820402385 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.843329, 0, -0.1983198, 0, 0.866334, 0, 0.1983198, 0, -0.843329, 7.08, 0, 3.926786)
+
+[node name="Silhouette073" parent="Surroundings" unique_id=834219624 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9369188, 0, 0.043238297, 0, 0.937916, 0, -0.043238297, 0, -0.9369188, 7.77, 0, 10.29)
+
+[node name="Silhouette074" parent="Surroundings" unique_id=347878097 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.10194072, 0, -0.829699, 0, 0.835938, 0, 0.829699, 0, 0.10194072, 7.7, 0, 8.42)
+
+[node name="Silhouette075" parent="Surroundings" unique_id=113163528 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0163959, 0, 0.3863823, 0, 1.08736, 0, -0.3863823, 0, -1.0163959, -13, 0, -4.71)
+
+[node name="Silhouette076" parent="Surroundings" unique_id=1628784238 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.3515045, 0, -1.1096684, 0, 1.16401, 0, 1.1096684, 0, -0.3515045, 8.24, 0, 3.42)
+
+[node name="Silhouette077" parent="Surroundings" unique_id=669236305 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.61984116, 0, 0.72417474, 0, 0.953222, 0, -0.72417474, 0, 0.61984116, -3.06, 0, -8.13)
+
+[node name="Silhouette078" parent="Surroundings" unique_id=1036559382 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.77290666, 0, 0.2545223, 0, 0.813736, 0, -0.2545223, 0, 0.77290666, -12.12, 0, 0.93)
+
+[node name="Silhouette079" parent="Surroundings" unique_id=2119881531 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9718082, 0, -0.8247543, 0, 1.27461, 0, 0.8247543, 0, -0.9718082, -9.62, 0, -3.14)
+
+[node name="Silhouette080" parent="Surroundings" unique_id=59047165 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9610199, 0, 0.6557338, 0, 1.16342, 0, -0.6557338, 0, 0.9610199, -12.68, 0, 1.86)
+
+[node name="Silhouette081" parent="Surroundings" unique_id=1513873163 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.91128457, 0, 0.3227237, 0, 0.966742, 0, -0.3227237, 0, -0.91128457, 11.4, 0, 6.49)
+
+[node name="Silhouette082" parent="Surroundings" unique_id=1658972472 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.0469903, 0, -0.20200771, 0, 1.0663, 0, 0.20200771, 0, 1.0469903, -8.54, 0, -9.93)
+
+[node name="Silhouette083" parent="Surroundings" unique_id=1523329930 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.30114403, 0, 1.1023566, 0, 1.14275, 0, -1.1023566, 0, 0.30114403, 2.5, 0, -8.72)
+
+[node name="Silhouette084" parent="Surroundings" unique_id=479003400 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.76681924, 0, -0.7040378, 0, 1.041, 0, 0.7040378, 0, 0.76681924, -11.674344, 0, 7.273508)
+
+[node name="Silhouette085" parent="Surroundings" unique_id=1504106709 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9007632, 0, 0.64705795, 0, 1.10908, 0, -0.64705795, 0, -0.9007632, 10.224195, 0, 2.287386)
+
+[node name="Silhouette086" parent="Surroundings" unique_id=767769985 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.022638053, 0, -0.9982393, 0, 0.998496, 0, 0.9982393, 0, 0.022638053, -0.26, 0, -10.17)
+
+[node name="Silhouette087" parent="Surroundings" unique_id=1599514325 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.020362, 0, 0.19367394, 0, 1.03858, 0, -0.19367394, 0, -1.020362, -5.68, 0, 9.26)
+
+[node name="Silhouette088" parent="Surroundings" unique_id=2034038747 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9862358, 0, 0.062559776, 0, 0.988218, 0, -0.062559776, 0, 0.9862358, 0.88, 0, -9)
+
+[node name="Silhouette089" parent="Surroundings" unique_id=1337521841 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.0567707, 0, -0.007874549, 0, 1.0568, 0, 0.007874549, 0, -1.0567707, -4.75, 0, -10.4)
+
+[node name="Silhouette091" parent="Surroundings" unique_id=2114897572 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.321715, 0, -1.0187701, 0, 1.06836, 0, 1.0187701, 0, 0.321715, 11.02, 0, 4.24)
+
+[node name="Silhouette092" parent="Surroundings" unique_id=1384969120 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9112382, 0, -0.7604639, 0, 1.18687, 0, 0.7604639, 0, -0.9112382, -5.61, 0, -9.29)
+
+[node name="Silhouette093" parent="Surroundings" unique_id=108242565 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8605806, 0, -0.41032296, 0, 0.953396, 0, 0.41032296, 0, 0.8605806, 9.44, 0, 9.7)
+
+[node name="Silhouette094" parent="Surroundings" unique_id=239582846 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.476544, 0, -1.1540614, 0, 1.24858, 0, 1.1540614, 0, -0.476544, -11.13, 0, 5.57)
+
+[node name="Silhouette095" parent="Surroundings" unique_id=274833851 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.87253803, 0, 0.5687557, 0, 1.04154, 0, -0.5687557, 0, 0.87253803, 8.79, 0, 5.25)
+
+[node name="Silhouette096" parent="Surroundings" unique_id=1904874178 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.9965326, 0, 0.018536646, 0, 0.996705, 0, -0.018536646, 0, 0.9965326, -9.85, 0, -3.48)
+
+[node name="Silhouette097" parent="Surroundings" unique_id=1571153038 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.7697151, 0, 0.62789106, 0, 0.993332, 0, -0.62789106, 0, 0.7697151, 6.794998, 0, 4.4467354)
+
+[node name="Silhouette098" parent="Surroundings" unique_id=718688342 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.3501142, 0, -1.14643, 0, 1.1987, 0, 1.14643, 0, 0.3501142, 10.06, 0, -6.32)
+
+[node name="Silhouette099" parent="Surroundings" unique_id=499818472 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.115448065, 0, -1.1104146, 0, 1.1164, 0, 1.1104146, 0, 0.115448065, -10.97, 0, 9.91)
+
+[node name="Silhouette100" parent="Surroundings" unique_id=1122188091 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.8996356, 0, 0.45559484, 0, 1.00842, 0, -0.45559484, 0, -0.8996356, -7.16, 0, -9.62)
+
+[node name="Silhouette101" parent="Surroundings" unique_id=2107925132 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8704604, 0, 0.5105509, 0, 1.00914, 0, -0.5105509, 0, 0.8704604, -4.137191, 0, 8.9)
+
+[node name="Silhouette102" parent="Surroundings" unique_id=1839117522 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.6094956, 0, 0.5414146, 0, 0.815239, 0, -0.5414146, 0, 0.6094956, 10.12, 0, -3.72)
+
+[node name="Silhouette103" parent="Surroundings" unique_id=1870528892 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.82752514, 0, 0.97147363, 0, 1.27615, 0, -0.97147363, 0, 0.82752514, 4.95, 0, 5.04)
+
+[node name="Silhouette104" parent="Surroundings" unique_id=995866748 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.7498118, 0, -0.9689292, 0, 1.22517, 0, 0.9689292, 0, -0.7498118, 0.5, 0, -9.4)
+
+[node name="Silhouette105" parent="Surroundings" unique_id=1628021397 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.2198994, 0, 0.012160361, 0, 1.21996, 0, -0.012160361, 0, 1.2198994, 11.09, 0, -5.96)
+
+[node name="Silhouette106" parent="Surroundings" unique_id=1572605265 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.6544091, 0, -0.58231103, 0, 0.875978, 0, 0.58231103, 0, -0.6544091, 4.48, 0, -8.54)
+
+[node name="Silhouette107" parent="Surroundings" unique_id=993751378 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.40006047, 0, -1.1400222, 0, 1.20818, 0, 1.1400222, 0, 0.40006047, -10.27, 0, 5.68)
+
+[node name="Silhouette108" parent="Surroundings" unique_id=1344005375 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.38572505, 0, -0.90379894, 0, 0.982668, 0, 0.90379894, 0, 0.38572505, 5.54, 0, 6.2267857)
+
+[node name="Silhouette109" parent="Surroundings" unique_id=573037090 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.86111724, 0, -0.3320714, 0, 0.922927, 0, 0.3320714, 0, 0.86111724, -8.51, 0, 8.6)
+
+[node name="Silhouette110" parent="Surroundings" unique_id=306687870 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8661876, 0, 0.017874585, 0, 0.866372, 0, -0.017874585, 0, 0.8661876, -0.88, 0, -10.88)
+
+[node name="Silhouette111" parent="Surroundings" unique_id=624483939 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.85097206, 0, 0.11286461, 0, 0.858424, 0, -0.11286461, 0, -0.85097206, 11.38, 0, 4.67)
+
+[node name="Silhouette112" parent="Surroundings" unique_id=29107794 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.7834431, 0, -0.97770137, 0, 1.25287, 0, 0.97770137, 0, -0.7834431, 10.88, 0, -2.59)
+
+[node name="Silhouette113" parent="Surroundings" unique_id=653125102 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.49250647, 0, 0.810008, 0, 0.947985, 0, -0.810008, 0, -0.49250647, 6.92, 0, -9.05)
+
+[node name="Silhouette114" parent="Surroundings" unique_id=1597666972 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.17514053, 0, -0.9189898, 0, 0.93553, 0, 0.9189898, 0, -0.17514053, -11.69, 0, -1.74)
+
+[node name="Silhouette115" parent="Surroundings" unique_id=1879992482 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.43319693, 0, 0.9192624, 0, 1.01622, 0, -0.9192624, 0, 0.43319693, -9.21, 0, 10.28)
+
+[node name="Silhouette116" parent="Surroundings" unique_id=593938906 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.5216893, 0, 0.6658859, 0, 0.84591, 0, -0.6658859, 0, -0.5216893, 8.94, 0, 7.82)
+
+[node name="Silhouette117" parent="Surroundings" unique_id=219304292 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9753159, 0, 0.10090696, 0, 0.980522, 0, -0.10090696, 0, 0.9753159, 8.08, 0, -10.89)
+
+[node name="Silhouette118" parent="Surroundings" unique_id=1234753276 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.8002349, 0, -0.09705471, 0, 0.806099, 0, 0.09705471, 0, -0.8002349, -11.62, 0, -6.19)
+
+[node name="Silhouette119" parent="Surroundings" unique_id=1095721221 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.99602133, 0, 0.34448186, 0, 1.05391, 0, -0.34448186, 0, 0.99602133, 11.86, 0, 2.16)
+
+[node name="Silhouette120" parent="Surroundings" unique_id=2006590073 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.7999512, 0, 0.42915654, 0, 0.907798, 0, -0.42915654, 0, -0.7999512, 10.46, 0, 3.19)
+
+[node name="Silhouette121" parent="Surroundings" unique_id=1243721095 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9088696, 0, 0.86931884, 0, 1.25768, 0, -0.86931884, 0, -0.9088696, 7.95798, 0, 6.060252)
+
+[node name="Silhouette122" parent="Surroundings" unique_id=426967197 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.16873774, 0, -0.85766786, 0, 0.874109, 0, 0.85766786, 0, 0.16873774, 10.664194, 0, 0.4473858)
+
+[node name="Silhouette123" parent="Surroundings" unique_id=1925667282 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.79985195, 0, 0.43050516, 0, 0.908349, 0, -0.43050516, 0, -0.79985195, -2.02, 0, 10.39)
+
+[node name="Silhouette124" parent="Surroundings" unique_id=10303167 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.32119724, 0, -0.774495, 0, 0.838457, 0, 0.774495, 0, -0.32119724, -9.79, 0, -7.28)
+
+[node name="Silhouette125" parent="Surroundings" unique_id=1420546421 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8922152, 0, 0.10407764, 0, 0.898265, 0, -0.10407764, 0, 0.8922152, -12.07, 0, -1.99)
+
+[node name="Silhouette126" parent="Surroundings" unique_id=450945764 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.073246345, 0, 0.8650726, 0, 0.868168, 0, -0.8650726, 0, 0.073246345, 8.54, 0, 10.14)
+
+[node name="Silhouette127" parent="Surroundings" unique_id=456775788 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.30837268, 0, -0.7459627, 0, 0.807189, 0, 0.7459627, 0, 0.30837268, 9.34606, 0, 7.0943785)
+
+[node name="Silhouette128" parent="Surroundings" unique_id=1121558350 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.21332338, 0, 0.94324946, 0, 0.967071, 0, -0.94324946, 0, 0.21332338, -10.77, 0, -8.11)
+
+[node name="Silhouette129" parent="Surroundings" unique_id=592578881 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.7411202, 0, 0.5811778, 0, 0.941821, 0, -0.5811778, 0, 0.7411202, -5.36, 0, 8.72)
+
+[node name="Silhouette130" parent="Surroundings" unique_id=848675247 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.07318895, 0, 1.2808406, 0, 1.28293, 0, -1.2808406, 0, 0.07318895, 10.57, 0, 1.05)
+
+[node name="Silhouette132" parent="Surroundings" unique_id=471392500 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0090847, 0, -0.026400883, 0, 1.00943, 0, 0.026400883, 0, -1.0090847, -11.55, 0, -10.67)
+
+[node name="Silhouette134" parent="Surroundings" unique_id=1657600250 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.002071, 0, 0.39979455, 0, 1.07888, 0, -0.39979455, 0, -1.002071, 5, 0, 5.3467855)
+
+[node name="Silhouette135" parent="Surroundings" unique_id=1827221627 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.17404352, 0, 1.0703015, 0, 1.08436, 0, -1.0703015, 0, -0.17404352, -10.33, 0, -8.28)
+
+[node name="Silhouette136" parent="Surroundings" unique_id=1399662380 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.84621954, 0, -0.07144309, 0, 0.84923, 0, 0.07144309, 0, -0.84621954, -11.56, 0, -6.33)
+
+[node name="Silhouette137" parent="Surroundings" unique_id=575410065 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.0455298, 0, 0.28397992, 0, 1.08341, 0, -0.28397992, 0, 1.0455298, -11.36, 0, -10.92)
+
+[node name="Silhouette138" parent="Surroundings" unique_id=2011404653 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.53299695, 0, 0.8308147, 0, 0.987086, 0, -0.8308147, 0, -0.53299695, 6.29, 0, -8.43)
+
+[node name="Silhouette139" parent="Surroundings" unique_id=2114584381 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.85492975, 0, -0.8627421, 0, 1.21459, 0, 0.8627421, 0, -0.85492975, -9.26, 0, -8.26)
+
+[node name="Silhouette140" parent="Surroundings" unique_id=2059227104 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0049978, 0, -0.43960992, 0, 1.09694, 0, 0.43960992, 0, -1.0049978, 9.79, 0, -1.35)
+
+[node name="Silhouette141" parent="Surroundings" unique_id=1775551406 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.7752312, 0, 0.21623671, 0, 0.804824, 0, -0.21623671, 0, 0.7752312, 10.44, 0, -3.19)
+
+[node name="Silhouette142" parent="Surroundings" unique_id=723447323 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.15496512, 0, -0.8446288, 0, 0.858727, 0, 0.8446288, 0, -0.15496512, 9.65, 0, -10.13)
+
+[node name="Silhouette143" parent="Surroundings" unique_id=532966 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.22168663, 0, -1.1313754, 0, 1.15289, 0, 1.1313754, 0, -0.22168663, -7.24, 0, 9.88)
+
+[node name="Silhouette144" parent="Surroundings" unique_id=850258230 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9406552, 0, -0.14602499, 0, 0.951922, 0, 0.14602499, 0, -0.9406552, 2.38, 0, -10.06)
+
+[node name="Silhouette146" parent="Surroundings" unique_id=1767005250 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5782404, 0, 0.85571724, 0, 1.03277, 0, -0.85571724, 0, 0.5782404, -12.96, 0, 5.68)
+
+[node name="Silhouette147" parent="Surroundings" unique_id=2078181649 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8744471, 0, -0.033927266, 0, 0.875105, 0, 0.033927266, 0, 0.8744471, 11.62, 0, -6.48)
+
+[node name="Silhouette148" parent="Surroundings" unique_id=555816420 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0811311, 0, 0.37279555, 0, 1.1436, 0, -0.37279555, 0, -1.0811311, -7.89, 0, 9.13)
+
+[node name="Silhouette149" parent="Surroundings" unique_id=2030049008 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9378315, 0, -0.39321572, 0, 1.01693, 0, 0.39321572, 0, -0.9378315, -2.977191, 0, 9.07)
+
+[node name="Silhouette150" parent="Surroundings" unique_id=178110803 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.5637532, 0, -0.91842896, 0, 1.07765, 0, 0.91842896, 0, -0.5637532, -4.8171906, 0, 9.92)
+
+[node name="Silhouette151" parent="Surroundings" unique_id=427006196 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.2166377, 0, -0.12468321, 0, 1.22301, 0, 0.12468321, 0, -1.2166377, -10.2, 0, -5.3)
+
+[node name="Silhouette152" parent="Surroundings" unique_id=92403982 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9508595, 0, 0.8540676, 0, 1.27811, 0, -0.8540676, 0, 0.9508595, -0.35, 0, 4.6)
+
+[node name="Silhouette153" parent="Surroundings" unique_id=1006977379 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8122985, 0, -0.14375639, 0, 0.824921, 0, 0.14375639, 0, 0.8122985, -10.32, 0, 2.9)
+
+[node name="Silhouette154" parent="Surroundings" unique_id=298709238 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.6866691, 0, -0.7342025, 0, 1.00527, 0, 0.7342025, 0, 0.6866691, -10.51, 0, -9.58)
+
+[node name="Silhouette155" parent="Surroundings" unique_id=308109766 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.67936075, 0, 0.45865092, 0, 0.81969, 0, -0.45865092, 0, 0.67936075, -11.37, 0, -4.37)
+
+[node name="Silhouette156" parent="Surroundings" unique_id=1518106766 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.73653793, 0, 0.42844784, 0, 0.852089, 0, -0.42844784, 0, -0.73653793, 8.32798, 0, 6.167038)
+
+[node name="Silhouette157" parent="Surroundings" unique_id=1896227917 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.46886274, 0, -1.0234871, 0, 1.12577, 0, 1.0234871, 0, -0.46886274, -7.12, 0, -10.41)
+
+[node name="Silhouette158" parent="Surroundings" unique_id=787893541 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8893601, 0, 0.78212756, 0, 1.18435, 0, -0.78212756, 0, 0.8893601, -11.03, 0, -2.63)
+
+[node name="Silhouette159" parent="Surroundings" unique_id=905791178 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.14151828, 0, 1.0088626, 0, 1.01874, 0, -1.0088626, 0, -0.14151828, 0.97, 0, -9.16)
+
+[node name="Silhouette160" parent="Surroundings" unique_id=128770546 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.6042038, 0, -0.5537546, 0, 0.819577, 0, 0.5537546, 0, 0.6042038, -3.5671906, 0, 10.4)
+
+[node name="Silhouette161" parent="Surroundings" unique_id=1091806836 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.5765692, 0, 1.1196342, 0, 1.25937, 0, -1.1196342, 0, -0.5765692, 12.52, 0, -8.06)
+
+[node name="Silhouette162" parent="Surroundings" unique_id=1590418352 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.90102607, 0, -0.3110494, 0, 0.953205, 0, 0.3110494, 0, -0.90102607, -9.37, 0, -9.82)
+
+[node name="Silhouette163" parent="Surroundings" unique_id=1001725570 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.84669596, 0, 0.58360016, 0, 1.02834, 0, -0.58360016, 0, -0.84669596, -6.35, 0, -7.35)
+
+[node name="Silhouette164" parent="Surroundings" unique_id=1312825477 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9785335, 0, -0.3169046, 0, 1.02857, 0, 0.3169046, 0, 0.9785335, 5.46, 0, -8.84)
+
+[node name="Silhouette166" parent="Surroundings" unique_id=1907570710 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.35930046, 0, -1.0543184, 0, 1.11386, 0, 1.0543184, 0, -0.35930046, -10.26, 0, 1.77)
+
+[node name="Silhouette167" parent="Surroundings" unique_id=766599027 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.1167339, 0, 0.07935607, 0, 1.11955, 0, -0.07935607, 0, -1.1167339, -7.63, 0, -10.48)
+
+[node name="Silhouette168" parent="Surroundings" unique_id=1394782252 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.0305942, 0, 0.39217433, 0, 1.10269, 0, -0.39217433, 0, 1.0305942, 9.72, 0, 9.23)
+
+[node name="Silhouette169" parent="Surroundings" unique_id=1628316512 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.7508714, 0, -0.27754122, 0, 0.800523, 0, 0.27754122, 0, 0.7508714, -7.94, 0, 9.93)
+
+[node name="Silhouette170" parent="Surroundings" unique_id=850829348 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.52885514, 0, -0.86094165, 0, 1.0104, 0, 0.86094165, 0, 0.52885514, -4.88, 0, 7.77)
+
+[node name="Silhouette171" parent="Surroundings" unique_id=1297887866 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.0922983, 0, -0.27334118, 0, 1.12598, 0, 0.27334118, 0, -1.0922983, 7.7, 0, -7.5)
+
+[node name="Silhouette172" parent="Surroundings" unique_id=1236234972 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.4218753, 0, 0.77739894, 0, 0.884493, 0, -0.77739894, 0, 0.4218753, -11.654344, 0, 8.643508)
+
+[node name="Silhouette174" parent="Surroundings" unique_id=1978617815 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.045137864, 0, -1.0897657, 0, 1.0907, 0, 1.0897657, 0, -0.045137864, -5.88, 0, -10.78)
+
+[node name="Silhouette175" parent="Surroundings" unique_id=115156299 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.0651726, 0, 0.017727174, 0, 1.06532, 0, -0.017727174, 0, 1.0651726, 4.84, 0, -9.65)
+
+[node name="Silhouette176" parent="Surroundings" unique_id=1524987132 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.0286055, 0, -0.1416285, 0, 1.03831, 0, 0.1416285, 0, -1.0286055, -8.52, 0, 8.56)
+
+[node name="Silhouette177" parent="Surroundings" unique_id=1968672311 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9178868, 0, -0.79973173, 0, 1.21741, 0, 0.79973173, 0, -0.9178868, -12.36, 0, 6.5)
+
+[node name="Silhouette178" parent="Surroundings" unique_id=544940231 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.60605556, 0, -0.53760594, 0, 0.810138, 0, 0.53760594, 0, 0.60605556, 5.62, 0, 4.6167855)
+
+[node name="Silhouette179" parent="Surroundings" unique_id=937799546 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.34814614, 0, 1.0941678, 0, 1.14822, 0, -1.0941678, 0, 0.34814614, 12.73, 0, -6.57)
+
+[node name="Silhouette180" parent="Surroundings" unique_id=1754809526 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9099011, 0, 0.018834002, 0, 0.910096, 0, -0.018834002, 0, 0.9099011, -3.997191, 0, 8.53)
+
+[node name="Silhouette181" parent="Surroundings" unique_id=1800233126 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.23543997, 0, 1.120134, 0, 1.14461, 0, -1.120134, 0, 0.23543997, -8.68, 0, 9.97)
+
+[node name="Silhouette182" parent="Surroundings" unique_id=1730926536 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.31983122, 0, 1.0131254, 0, 1.06241, 0, -1.0131254, 0, 0.31983122, -2.37, 0, -10.42)
+
+[node name="Silhouette183" parent="Surroundings" unique_id=630872433 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.81265706, 0, -0.85745186, 0, 1.18137, 0, 0.85745186, 0, 0.81265706, 4.88, 0, 4.3467855)
+
+[node name="Silhouette184" parent="Surroundings" unique_id=1505069501 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.9793272, 0, -0.71401244, 0, 1.21198, 0, 0.71401244, 0, 0.9793272, 10.85, 0, 6.45)
+
+[node name="Silhouette187" parent="Surroundings" unique_id=229059363 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.8416395, 0, -0.8661585, 0, 1.20772, 0, 0.8661585, 0, -0.8416395, -10.54, 0, 2.32)
+
+[node name="Silhouette188" parent="Surroundings" unique_id=884382566 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.1252378, 0, 0.23962721, 0, 1.15047, 0, -0.23962721, 0, -1.1252378, 7.49798, 0, 5.9470377)
+
+[node name="Silhouette189" parent="Surroundings" unique_id=1742249615 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.702952, 0, 0.7717284, 0, 1.04389, 0, -0.7717284, 0, -0.702952, 8.55, 0, 8.76)
+
+[node name="Silhouette190" parent="Surroundings" unique_id=1173704509 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.1669084, 0, 0.16481382, 0, 1.17849, 0, -0.16481382, 0, -1.1669084, 12.69, 0, 4.9)
+
+[node name="Silhouette191" parent="Surroundings" unique_id=1380163824 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.79261035, 0, 0.3944631, 0, 0.885343, 0, -0.3944631, 0, -0.79261035, 10.89, 0, 2.38)
+
+[node name="Silhouette192" parent="Surroundings" unique_id=1121309632 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.4622704, 0, -0.78362226, 0, 0.909812, 0, 0.78362226, 0, -0.4622704, 8.23, 0, -9.44)
+
+[node name="Silhouette193" parent="Surroundings" unique_id=220736903 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.4312432, 0, 0.9062795, 0, 1.00365, 0, -0.9062795, 0, -0.4312432, 2.45, 0, -8.93)
+
+[node name="Silhouette194" parent="Surroundings" unique_id=605295725 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.20436907, 0, -1.095846, 0, 1.11474, 0, 1.095846, 0, 0.20436907, 9.27, 0, 6.13)
+
+[node name="Silhouette195" parent="Surroundings" unique_id=841739967 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.81755495, 0, -0.06761277, 0, 0.820346, 0, 0.06761277, 0, -0.81755495, 11.1, 0, 8.59)
+
+[node name="Silhouette196" parent="Surroundings" unique_id=1974622598 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.6075113, 0, -1.0815592, 0, 1.2405, 0, 1.0815592, 0, 0.6075113, -1.31, 0, -9.44)
+
+[node name="Silhouette197" parent="Surroundings" unique_id=256436397 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.77918345, 0, 0.5363046, 0, 0.945912, 0, -0.5363046, 0, 0.77918345, 2.34, 0, -9.4)
+
+[node name="Silhouette198" parent="Surroundings" unique_id=303253639 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8908888, 0, -0.938705, 0, 1.29416, 0, 0.938705, 0, 0.8908888, -4.01, 0, 9.79)
+
+[node name="Silhouette199" parent="Surroundings" unique_id=1189204100 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5505702, 0, -0.646475, 0, 0.849151, 0, 0.646475, 0, 0.5505702, -3.74, 0, -8.71)
+
+[node name="Silhouette200" parent="Surroundings" unique_id=238146699 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8432312, 0, -0.70240986, 0, 1.09746, 0, 0.70240986, 0, 0.8432312, -1.23, 0, 8.18)
+
+[node name="Silhouette201" parent="Surroundings" unique_id=348148866 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.107371, 0, -0.51885843, 0, 1.2229, 0, 0.51885843, 0, -1.107371, 10.13, 0, 0.57)
+
+[node name="Silhouette202" parent="Surroundings" unique_id=1915961777 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.934179, 0, 0.22707906, 0, 0.961382, 0, -0.22707906, 0, 0.934179, -1.92, 0, -8.1)
+
+[node name="Silhouette203" parent="Surroundings" unique_id=1876361884 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.10310875, 0, -1.0177503, 0, 1.02296, 0, 1.0177503, 0, -0.10310875, 11.43, 0, -8.62)
+
+[node name="Silhouette204" parent="Surroundings" unique_id=993591845 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.7269541, 0, 0.40826073, 0, 0.83375, 0, -0.40826073, 0, 0.7269541, -11.92, 0, -8.61)
+
+[node name="Silhouette205" parent="Surroundings" unique_id=1517352364 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.32288715, 0, -0.8916191, 0, 0.948283, 0, 0.8916191, 0, -0.32288715, 4.07, 0, -10.25)
+
+[node name="Silhouette206" parent="Surroundings" unique_id=693981790 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.89311296, 0, -0.8323751, 0, 1.22086, 0, 0.8323751, 0, -0.89311296, -4.157191, 0, 10.93)
+
+[node name="Silhouette207" parent="Surroundings" unique_id=1278337714 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.20739666, 0, -0.9631689, 0, 0.985245, 0, 0.9631689, 0, 0.20739666, 3.25, 0, -8.55)
+
+[node name="Silhouette208" parent="Surroundings" unique_id=1688530130 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9507445, 0, 0.3131228, 0, 1.00098, 0, -0.3131228, 0, -0.9507445, 9.93606, 0, 7.1443787)
+
+[node name="Silhouette209" parent="Surroundings" unique_id=619688957 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.41047418, 0, 0.8884091, 0, 0.978652, 0, -0.8884091, 0, 0.41047418, -6.12, 0, -7.82)
+
+[node name="Silhouette210" parent="Surroundings" unique_id=599327971 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.35946843, 0, 0.9947739, 0, 1.05773, 0, -0.9947739, 0, 0.35946843, -9.32, 0, -7.41)
+
+[node name="Silhouette211" parent="Surroundings" unique_id=830458015 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.38211593, 0, -0.83441305, 0, 0.917746, 0, 0.83441305, 0, 0.38211593, -9.89, 0, -7.45)
+
+[node name="Silhouette212" parent="Surroundings" unique_id=866694906 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.6603027, 0, -1.1632487, 0, 1.33759, 0, 1.1632487, 0, -0.6603027, -9.84, 0, -8.09)
+
+[node name="Silhouette213" parent="Surroundings" unique_id=1641557396 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.49267283, 0, 0.81181294, 0, 0.949614, 0, -0.81181294, 0, -0.49267283, -8.93, 0, -7.32)
+
+[node name="Silhouette214" parent="Surroundings" unique_id=760220670 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9227098, 0, 0.0027687366, 0, 0.922714, 0, -0.0027687366, 0, -0.9227098, -10.53, 0, -5.8)
+
+[node name="Silhouette215" parent="Surroundings" unique_id=2015449137 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.359126, 0, -0.06374381, 0, 1.36062, 0, 0.06374381, 0, 1.359126, -9.61, 0, -6.01)
+
+[node name="Silhouette216" parent="Surroundings" unique_id=681872165 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.104622, 0, 0.22855978, 0, 1.12802, 0, -0.22855978, 0, 1.104622, -9.87, 0, -6.54)
+
+[node name="Silhouette217" parent="Surroundings" unique_id=1760826819 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.8964919, 0, -1.0086619, 0, 1.34948, 0, 1.0086619, 0, -0.8964919, -8.43, 0, -7.5)
+
+[node name="Silhouette218" parent="Surroundings" unique_id=1143479911 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.040595878, 0, 1.2906817, 0, 1.29132, 0, -1.2906817, 0, -0.040595878, -9.12, 0, -9.42)
+
+[node name="Silhouette219" parent="Surroundings" unique_id=1810536154 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.2605941, 0, 0.24172047, 0, 1.28356, 0, -0.24172047, 0, -1.2605941, -9.65, 0, -8.71)
+
+[node name="Silhouette220" parent="Surroundings" unique_id=608990534 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9782242, 0, -0.48456055, 0, 1.09166, 0, 0.48456055, 0, -0.9782242, -9.37, 0, -7.11)
+
+[node name="Silhouette221" parent="Surroundings" unique_id=1619939407 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.54209346, 0, 0.7206538, 0, 0.90178, 0, -0.7206538, 0, 0.54209346, -9.44, 0, -7.19)
+
+[node name="Silhouette222" parent="Surroundings" unique_id=1278062042 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.0449091, 0, -0.2887433, 0, 1.08407, 0, 0.2887433, 0, 1.0449091, -9.51, 0, -9.48)
+
+[node name="Silhouette223" parent="Surroundings" unique_id=1137309768 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.5242657, 0, 1.0751818, 0, 1.19619, 0, -1.0751818, 0, -0.5242657, -11.34, 0, -7.24)
+
+[node name="Silhouette224" parent="Surroundings" unique_id=1107417221 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.33499706, 0, -1.2845672, 0, 1.32753, 0, 1.2845672, 0, 0.33499706, -10.17, 0, -6.79)
+
+[node name="Silhouette225" parent="Surroundings" unique_id=2114955390 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.3789631, 0, 1.1342996, 0, 1.19593, 0, -1.1342996, 0, 0.3789631, -9.56, 0, -6.84)
+
+[node name="Silhouette226" parent="Surroundings" unique_id=1657229583 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.28126046, 0, 0.9744303, 0, 1.01421, 0, -0.9744303, 0, 0.28126046, -8.16, 0, -8.19)
+
+[node name="Silhouette227" parent="Surroundings" unique_id=220140055 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.85047686, 0, 1.0105453, 0, 1.3208, 0, -1.0105453, 0, 0.85047686, -10.17, 0, -8.7)
+
+[node name="Silhouette228" parent="Surroundings" unique_id=798017436 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.93797725, 0, 0.37706497, 0, 1.01093, 0, -0.37706497, 0, -0.93797725, -9.36, 0, -8.03)
+
+[node name="Silhouette229" parent="Surroundings" unique_id=579921940 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.37352434, 0, -1.1350285, 0, 1.19491, 0, 1.1350285, 0, 0.37352434, -9.69, 0, -6.61)
+
+[node name="Silhouette230" parent="Surroundings" unique_id=1881871335 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.1136538, 0, -0.40147397, 0, 1.18381, 0, 0.40147397, 0, 1.1136538, -10.38, 0, -8.75)
+
+[node name="Silhouette231" parent="Surroundings" unique_id=1921601245 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.93020976, 0, -0.72582835, 0, 1.17988, 0, 0.72582835, 0, -0.93020976, -9.29, 0, -7.41)
+
+[node name="Silhouette232" parent="Surroundings" unique_id=268367141 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.78836334, 0, -1.0575705, 0, 1.31908, 0, 1.0575705, 0, 0.78836334, -9.95, 0, -8.21)
+
+[node name="Silhouette233" parent="Surroundings" unique_id=582177749 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0435079, 0, -0.41518345, 0, 1.12307, 0, 0.41518345, 0, -1.0435079, -10.21, 0, -8.03)
+
+[node name="Silhouette234" parent="Surroundings" unique_id=1233341773 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.5724943, 0, 1.2299938, 0, 1.3567, 0, -1.2299938, 0, 0.5724943, -9.25, 0, -6.98)
+
+[node name="Silhouette235" parent="Surroundings" unique_id=1078547083 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.48190832, 0, -0.9200182, 0, 1.03859, 0, 0.9200182, 0, 0.48190832, -10.08, 0, -7.6)
+
+[node name="Silhouette236" parent="Surroundings" unique_id=976704185 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.8825962, 0, -0.88160676, 0, 1.24748, 0, 0.88160676, 0, -0.8825962, -9.61, 0, -5.8)
+
+[node name="Silhouette237" parent="Surroundings" unique_id=1914364005 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.94275457, 0, 0.89955825, 0, 1.30307, 0, -0.89955825, 0, -0.94275457, -8.62, 0, -7.3)
+
+[node name="Silhouette238" parent="Surroundings" unique_id=631927993 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.6747725, 0, 0.9220349, 0, 1.14257, 0, -0.9220349, 0, 0.6747725, -9.28, 0, -7.71)
+
+[node name="Silhouette239" parent="Surroundings" unique_id=1379410522 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.2674662, 0, 0.5184191, 0, 1.36939, 0, -0.5184191, 0, 1.2674662, -10.27, 0, -8.92)
+
+[node name="Silhouette240" parent="Surroundings" unique_id=554258460 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.13590787, 0, -0.9913473, 0, 1.00062, 0, 0.9913473, 0, 0.13590787, -8.25, 0, -7.48)
+
+[node name="Silhouette241" parent="Surroundings" unique_id=1929784103 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.8065707, 0, -0.72407377, 0, 1.0839, 0, 0.72407377, 0, -0.8065707, -9.47, 0, -6.04)
+
+[node name="Silhouette242" parent="Surroundings" unique_id=1845315911 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.316573, 0, -1.2132794, 0, 1.2539, 0, 1.2132794, 0, -0.316573, -10.65, 0, -8.49)
+
+[node name="Silhouette243" parent="Surroundings" unique_id=212834627 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.0338529, 0, -0.12622574, 0, 1.04153, 0, 0.12622574, 0, 1.0338529, -9.62, 0, -8.16)
+
+[node name="Silhouette244" parent="Surroundings" unique_id=1048971643 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.2570198, 0, 0.25503138, 0, 1.28263, 0, -0.25503138, 0, -1.2570198, -10.54, 0, -6.74)
+
+[node name="Silhouette245" parent="Surroundings" unique_id=1395707733 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.6240694, 0, 1.2484947, 0, 1.39578, 0, -1.2484947, 0, -0.6240694, -8.24, 0, -7.86)
+
+[node name="Silhouette246" parent="Surroundings" unique_id=975698734 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.90662515, 0, 0.31981307, 0, 0.961379, 0, -0.31981307, 0, -0.90662515, 8.92, 0, -9.48)
+
+[node name="Silhouette247" parent="Surroundings" unique_id=1869464760 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.8554431, 0, -0.75847435, 0, 1.14327, 0, 0.75847435, 0, -0.8554431, 11.07, 0, -7.28)
+
+[node name="Silhouette248" parent="Surroundings" unique_id=1865310858 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.2075272, 0, 0.51867723, 0, 1.31421, 0, -0.51867723, 0, 1.2075272, 8.73, 0, -9.43)
+
+[node name="Silhouette249" parent="Surroundings" unique_id=720035818 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.1903787, 0, 0.508043, 0, 1.29426, 0, -0.508043, 0, -1.1903787, 11.11, 0, -8)
+
+[node name="Silhouette250" parent="Surroundings" unique_id=2130311852 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.2355163, 0, -0.23194768, 0, 1.2571, 0, 0.23194768, 0, 1.2355163, 10.79, 0, -7.49)
+
+[node name="Silhouette251" parent="Surroundings" unique_id=1222781673 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.89444274, 0, -0.23401101, 0, 0.924548, 0, 0.23401101, 0, 0.89444274, 8.06, 0, -7.35)
+
+[node name="Silhouette252" parent="Surroundings" unique_id=966446870 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.31233612, 0, 0.99060696, 0, 1.03868, 0, -0.99060696, 0, -0.31233612, 10.06, 0, -7.22)
+
+[node name="Silhouette253" parent="Surroundings" unique_id=1475502098 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9420939, 0, -0.71745485, 0, 1.18418, 0, 0.71745485, 0, 0.9420939, 9.71, 0, -8.15)
+
+[node name="Silhouette254" parent="Surroundings" unique_id=2018532273 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.92828506, 0, 0.39310598, 0, 1.00809, 0, -0.39310598, 0, -0.92828506, 8.4, 0, -7.25)
+
+[node name="Silhouette255" parent="Surroundings" unique_id=264725540 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.8353398, 0, 1.0870907, 0, 1.37097, 0, -1.0870907, 0, -0.8353398, 9.47, 0, -6.48)
+
+[node name="Silhouette256" parent="Surroundings" unique_id=638359310 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.0064296, 0, -0.20199433, 0, 1.0265, 0, 0.20199433, 0, -1.0064296, 9.4, 0, -6.47)
+
+[node name="Silhouette257" parent="Surroundings" unique_id=693196580 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.29715702, 0, 0.9029144, 0, 0.950556, 0, -0.9029144, 0, -0.29715702, 9.23, 0, -7.58)
+
+[node name="Silhouette258" parent="Surroundings" unique_id=38511369 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9989624, 0, -0.35035744, 0, 1.05862, 0, 0.35035744, 0, 0.9989624, 10.68, 0, -5.74)
+
+[node name="Silhouette259" parent="Surroundings" unique_id=1702301427 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8215873, 0, 0.71860176, 0, 1.09151, 0, -0.71860176, 0, 0.8215873, 11.36, 0, -6.85)
+
+[node name="Silhouette260" parent="Surroundings" unique_id=216547074 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.4748863, 0, -1.176395, 0, 1.26863, 0, 1.176395, 0, 0.4748863, 10.11, 0, -8.61)
+
+[node name="Silhouette261" parent="Surroundings" unique_id=1334191037 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.18244964, 0, -0.9520138, 0, 0.969339, 0, 0.9520138, 0, -0.18244964, 10.36, 0, -7.36)
+
+[node name="Silhouette262" parent="Surroundings" unique_id=935518959 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.9585611, 0, 0.4009027, 0, 1.03902, 0, -0.4009027, 0, -0.9585611, 8.65, 0, -8.18)
+
+[node name="Silhouette263" parent="Surroundings" unique_id=287833461 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.99891156, 0, -0.34009558, 0, 1.05522, 0, 0.34009558, 0, 0.99891156, 9.47, 0, -7.42)
+
+[node name="Silhouette264" parent="Surroundings" unique_id=1120537565 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9041887, 0, 0.47669017, 0, 1.02215, 0, -0.47669017, 0, -0.9041887, 8.45, 0, -7.25)
+
+[node name="Silhouette265" parent="Surroundings" unique_id=933271918 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.5385293, 0, -1.0294718, 0, 1.16182, 0, 1.0294718, 0, -0.5385293, 10.04, 0, -6.91)
+
+[node name="Silhouette266" parent="Surroundings" unique_id=1860896343 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.24441743, 0, -0.97063947, 0, 1.00094, 0, 0.97063947, 0, -0.24441743, 8.75, 0, -8.63)
+
+[node name="Silhouette267" parent="Surroundings" unique_id=1298357989 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.41287223, 0, -0.80545676, 0, 0.90511, 0, 0.80545676, 0, -0.41287223, 10.95, 0, -7.16)
+
+[node name="Silhouette268" parent="Surroundings" unique_id=883729723 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.10473671, 0, 1.0212029, 0, 1.02656, 0, -1.0212029, 0, -0.10473671, 9.89, 0, -5.5)
+
+[node name="Silhouette269" parent="Surroundings" unique_id=599705569 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.2702128, 0, 0.5736953, 0, 1.39376, 0, -0.5736953, 0, -1.2702128, 7.79, 0, -8.82)
+
+[node name="Silhouette270" parent="Surroundings" unique_id=1740363351 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.1707181, 0, 0.3843004, 0, 1.23218, 0, -0.3843004, 0, 1.1707181, 8.79, 0, -8.54)
+
+[node name="Silhouette271" parent="Surroundings" unique_id=1621441509 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.19453458, 0, -1.2277234, 0, 1.24304, 0, 1.2277234, 0, 0.19453458, 8.79, 0, -7.81)
+
+[node name="Silhouette272" parent="Surroundings" unique_id=1795812565 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.77783996, 0, -0.8962132, 0, 1.18669, 0, 0.8962132, 0, 0.77783996, 11.43, 0, -8.13)
+
+[node name="Silhouette273" parent="Surroundings" unique_id=1013708590 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8609477, 0, -0.7493141, 0, 1.14136, 0, 0.7493141, 0, 0.8609477, 8.82, 0, -7.19)
+
+[node name="Silhouette274" parent="Surroundings" unique_id=1023542057 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.17305903, 0, 0.9205379, 0, 0.936664, 0, -0.9205379, 0, -0.17305903, 10.49, 0, -9.19)
+
+[node name="Silhouette275" parent="Surroundings" unique_id=16051978 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.87925893, 0, 0.918721, 0, 1.27167, 0, -0.918721, 0, -0.87925893, 8.25, 0, -9.11)
+
+[node name="Silhouette276" parent="Surroundings" unique_id=386106804 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5719869, 0, -0.95183855, 0, 1.11048, 0, 0.95183855, 0, 0.5719869, -10.27, 0, 8.2)
+
+[node name="Silhouette277" parent="Surroundings" unique_id=505100322 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.0291624, 0, 0.29616857, 0, 1.07093, 0, -0.29616857, 0, 1.0291624, -9.28, 0, 8.05)
+
+[node name="Silhouette278" parent="Surroundings" unique_id=2011173661 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.93363726, 0, 0.809766, 0, 1.23588, 0, -0.809766, 0, 0.93363726, -10.66, 0, 8.02)
+
+[node name="Silhouette279" parent="Surroundings" unique_id=1649375680 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.9310025, 0, 0.21871392, 0, 0.956348, 0, -0.21871392, 0, 0.9310025, -8.3, 0, 7.39)
+
+[node name="Silhouette280" parent="Surroundings" unique_id=1771735533 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.4921259, 0, 1.2242388, 0, 1.31945, 0, -1.2242388, 0, -0.4921259, -10.09, 0, 8.36)
+
+[node name="Silhouette281" parent="Surroundings" unique_id=1376141987 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.60261095, 0, 1.1279137, 0, 1.2788, 0, -1.1279137, 0, -0.60261095, -9.77, 0, 8.1)
+
+[node name="Silhouette282" parent="Surroundings" unique_id=915493259 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5652092, 0, 0.75701785, 0, 0.944742, 0, -0.75701785, 0, 0.5652092, -8.25, 0, 8.1)
+
+[node name="Silhouette283" parent="Surroundings" unique_id=615950698 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.0738354, 0, -0.37256607, 0, 1.13663, 0, 0.37256607, 0, 1.0738354, -10.21, 0, 8.91)
+
+[node name="Silhouette284" parent="Surroundings" unique_id=122002071 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.30707696, 0, -1.2579213, 0, 1.29486, 0, 1.2579213, 0, -0.30707696, -11.13, 0, 8.1)
+
+[node name="Silhouette285" parent="Surroundings" unique_id=1363550472 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.306864, 0, -1.1153775, 0, 1.15682, 0, 1.1153775, 0, -0.306864, -8.99, 0, 8.52)
+
+[node name="Silhouette286" parent="Surroundings" unique_id=498859213 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8743572, 0, -0.99395454, 0, 1.3238, 0, 0.99395454, 0, 0.8743572, -10.93, 0, 6.63)
+
+[node name="Silhouette287" parent="Surroundings" unique_id=1908111373 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.2399654, 0, 1.2272396, 0, 1.25048, 0, -1.2272396, 0, 0.2399654, -11.36, 0, 6.63)
+
+[node name="Silhouette288" parent="Surroundings" unique_id=1397817526 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.7999525, 0, -0.6703779, 0, 1.04371, 0, 0.6703779, 0, 0.7999525, -8.73, 0, 7.35)
+
+[node name="Silhouette289" parent="Surroundings" unique_id=1211053470 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.1964446, 0, 0.121520326, 0, 1.2026, 0, -0.121520326, 0, -1.1964446, -10.73, 0, 6.3)
+
+[node name="Silhouette290" parent="Surroundings" unique_id=1062407297 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.10140891, 0, 1.0562431, 0, 1.0611, 0, -1.0562431, 0, -0.10140891, -8.25, 0, 7.37)
+
+[node name="Silhouette291" parent="Surroundings" unique_id=1270458191 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.0506977, 0, -0.4309175, 0, 1.13563, 0, 0.4309175, 0, -1.0506977, -10.45, 0, 9.3)
+
+[node name="Silhouette292" parent="Surroundings" unique_id=67800483 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.1241777, 0, 0.65042585, 0, 1.29878, 0, -0.65042585, 0, 1.1241777, -9.88, 0, 6.69)
+
+[node name="Silhouette293" parent="Surroundings" unique_id=1201133435 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.3219663, 0, -0.10957855, 0, 1.3265, 0, 0.10957855, 0, 1.3219663, -8.47, 0, 8.11)
+
+[node name="Silhouette294" parent="Surroundings" unique_id=2002805190 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.52224666, 0, 1.0812415, 0, 1.20076, 0, -1.0812415, 0, -0.52224666, -10.6, 0, 7.43)
+
+[node name="Silhouette295" parent="Surroundings" unique_id=685436758 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.060202, 0, -0.54975325, 0, 1.19426, 0, 0.54975325, 0, -1.060202, -9.87, 0, 6.69)
+
+[node name="Silhouette296" parent="Surroundings" unique_id=1453431282 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.7416055, 0, 0.777915, 0, 1.07477, 0, -0.777915, 0, 0.7416055, -9, 0, 7.75)
+
+[node name="Silhouette297" parent="Surroundings" unique_id=554821747 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.99184954, 0, 0.5285695, 0, 1.1239, 0, -0.5285695, 0, 0.99184954, -9.3, 0, 6.27)
+
+[node name="Silhouette298" parent="Surroundings" unique_id=540603146 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.29962185, 0, -1.157004, 0, 1.19517, 0, 1.157004, 0, 0.29962185, -7.8, 0, 8.22)
+
+[node name="Silhouette299" parent="Surroundings" unique_id=1191138832 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9304405, 0, -0.74338317, 0, 1.19094, 0, 0.74338317, 0, 0.9304405, -11.25, 0, 6.25)
+
+[node name="Silhouette300" parent="Surroundings" unique_id=164296626 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9686222, 0, -0.30401057, 0, 1.01521, 0, 0.30401057, 0, -0.9686222, -10.75, 0, 7.37)
+
+[node name="Silhouette301" parent="Surroundings" unique_id=1275947352 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5837295, 0, 0.6968219, 0, 0.909011, 0, -0.6968219, 0, 0.5837295, -11.01, 0, 6.11)
+
+[node name="Silhouette302" parent="Surroundings" unique_id=1826334983 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.1049519, 0, -0.07896593, 0, 1.10777, 0, 0.07896593, 0, 1.1049519, -9.26, 0, 7.55)
+
+[node name="Silhouette303" parent="Surroundings" unique_id=1347353735 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.4637196, 0, -1.0470043, 0, 1.1451, 0, 1.0470043, 0, 0.4637196, -10.48, 0, 6.72)
+
+[node name="Silhouette304" parent="Surroundings" unique_id=163861761 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.16667351, 0, -0.9454794, 0, 0.960058, 0, 0.9454794, 0, -0.16667351, -9.89, 0, 8.34)
+
+[node name="Silhouette305" parent="Surroundings" unique_id=1691833576 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.645432, 0, 1.2057258, 0, 1.36761, 0, -1.2057258, 0, -0.645432, -9.46, 0, 7.26)
+
+[node name="Silhouette306" parent="Surroundings" unique_id=868641167 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.822529, 0, 0.68370116, 0, 1.06958, 0, -0.68370116, 0, -0.822529, -10.23, 0, 6.01)
+
+[node name="Silhouette307" parent="Surroundings" unique_id=125562759 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.2303848, 0, -0.11799715, 0, 1.23603, 0, 0.11799715, 0, -1.2303848, -8.21, 0, 8.59)
+
+[node name="Silhouette308" parent="Surroundings" unique_id=1912530901 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.5748638, 0, -0.95950043, 0, 1.11853, 0, 0.95950043, 0, 0.5748638, -7.58, 0, 8.3)
+
+[node name="Silhouette309" parent="Surroundings" unique_id=1350341887 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.49617776, 0, 1.2999129, 0, 1.39139, 0, -1.2999129, 0, 0.49617776, 8.27, 0, 4.44)
+
+[node name="Silhouette310" parent="Surroundings" unique_id=410794620 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.12638481, 0, -1.0251085, 0, 1.03287, 0, 1.0251085, 0, -0.12638481, 11.07, 0, 2.27)
+
+[node name="Silhouette311" parent="Surroundings" unique_id=1513733175 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.57695794, 0, 1.2064594, 0, 1.33732, 0, -1.2064594, 0, -0.57695794, 10.66, 0, 2.54)
+
+[node name="Silhouette312" parent="Surroundings" unique_id=1848684730 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.6842164, 0, -0.730951, 0, 1.00122, 0, 0.730951, 0, -0.6842164, 10.48, 0, 4.5)
+
+[node name="Silhouette313" parent="Surroundings" unique_id=2021529732 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.2919015, 0, 0.034795012, 0, 1.29237, 0, -0.034795012, 0, -1.2919015, 9.42, 0, 3.41)
+
+[node name="Silhouette314" parent="Surroundings" unique_id=1200533402 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.50592786, 0, 1.129684, 0, 1.2378, 0, -1.129684, 0, -0.50592786, 8.14, 0, 3.45)
+
+[node name="Silhouette315" parent="Surroundings" unique_id=219992262 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.52268225, 0, -1.0600094, 0, 1.18187, 0, 1.0600094, 0, 0.52268225, 9.76, 0, 1.95)
+
+[node name="Silhouette316" parent="Surroundings" unique_id=1384667395 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.09786202, 0, 1.1644651, 0, 1.16857, 0, -1.1644651, 0, 0.09786202, 9.8, 0, 3.67)
+
+[node name="Silhouette317" parent="Surroundings" unique_id=1156630121 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.82142, 0, 0.71360403, 0, 1.0881, 0, -0.71360403, 0, 0.82142, 9.24, 0, 3.44)
+
+[node name="Silhouette318" parent="Surroundings" unique_id=762764484 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.19002156, 0, 1.0426966, 0, 1.05987, 0, -1.0426966, 0, 0.19002156, 9.56, 0, 1.68)
+
+[node name="Silhouette319" parent="Surroundings" unique_id=407132157 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.35754848, 0, 0.95310104, 0, 1.01796, 0, -0.95310104, 0, 0.35754848, 10.85, 0, 3.11)
+
+[node name="Silhouette320" parent="Surroundings" unique_id=784527641 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9585573, 0, 0.82528126, 0, 1.26488, 0, -0.82528126, 0, -0.9585573, 11.24, 0, 2.58)
+
+[node name="Silhouette321" parent="Surroundings" unique_id=235744543 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.355209, 0, 0.16935648, 0, 1.36575, 0, -0.16935648, 0, -1.355209, 7.74, 0, 3.67)
+
+[node name="Silhouette322" parent="Surroundings" unique_id=1050073741 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.7600189, 0, 1.1362363, 0, 1.36699, 0, -1.1362363, 0, 0.7600189, 9.54, 0, 3.41)
+
+[node name="Silhouette323" parent="Surroundings" unique_id=309980178 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.8410958, 0, 0.66373307, 0, 1.07144, 0, -0.66373307, 0, 0.8410958, 7.91, 0, 4.73)
+
+[node name="Silhouette324" parent="Surroundings" unique_id=196272547 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.1849004, 0, -0.31184715, 0, 1.22525, 0, 0.31184715, 0, -1.1849004, 8.52, 0, 5.39)
+
+[node name="Silhouette325" parent="Surroundings" unique_id=33153644 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.52141213, 0, 0.8822499, 0, 1.02481, 0, -0.8822499, 0, -0.52141213, 9.54, 0, 1.65)
+
+[node name="Silhouette326" parent="Surroundings" unique_id=1941358329 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.43228298, 0, -1.3293186, 0, 1.39784, 0, 1.3293186, 0, 0.43228298, 10.25, 0, 4.85)
+
+[node name="Silhouette327" parent="Surroundings" unique_id=1263630024 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.6775965, 0, 0.6813824, 0, 0.960947, 0, -0.6813824, 0, 0.6775965, 11.43, 0, 3.05)
+
+[node name="Silhouette328" parent="Surroundings" unique_id=1078368523 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.2504987, 0, -0.4471502, 0, 1.32804, 0, 0.4471502, 0, 1.2504987, 9.32, 0, 2.32)
+
+[node name="Silhouette329" parent="Surroundings" unique_id=1090603318 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.13096677, 0, 1.2834051, 0, 1.29007, 0, -1.2834051, 0, 0.13096677, 10.11, 0, 3.07)
+
+[node name="Silhouette330" parent="Surroundings" unique_id=325691981 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.36563817, 0, 1.1639825, 0, 1.22006, 0, -1.1639825, 0, 0.36563817, 9.68, 0, 3.95)
+
+[node name="Silhouette331" parent="Surroundings" unique_id=823682162 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.9419785, 0, -0.53874743, 0, 1.08516, 0, 0.53874743, 0, -0.9419785, 10.39, 0, 3.69)
+
+[node name="Silhouette332" parent="Surroundings" unique_id=573242798 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.48328102, 0, -1.1466459, 0, 1.24433, 0, 1.1466459, 0, -0.48328102, 10.69, 0, 3.44)
+
+[node name="Silhouette333" parent="Surroundings" unique_id=1728951575 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.1339052, 0, -1.0859655, 0, 1.09419, 0, 1.0859655, 0, 0.1339052, 9.72, 0, 2.16)
+
+[node name="Silhouette334" parent="Surroundings" unique_id=106937851 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.30393326, 0, 1.2768759, 0, 1.31255, 0, -1.2768759, 0, 0.30393326, 10.94, 0, 4.24)
+
+[node name="Silhouette335" parent="Surroundings" unique_id=2112124716 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.87888986, 0, 1.0289724, 0, 1.35323, 0, -1.0289724, 0, -0.87888986, 8.64, 0, 3.78)
+
+[node name="Silhouette336" parent="Surroundings" unique_id=747550213 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.97393066, 0, -0.21805714, 0, 0.998043, 0, 0.21805714, 0, 0.97393066, 8.41, 0, 3.88)
+
+[node name="Silhouette337" parent="Surroundings" unique_id=2025308509 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.4969984, 0, 0.86383104, 0, 0.9966, 0, -0.86383104, 0, 0.4969984, 9.53, 0, 2.56)
+
+[node name="Silhouette338" parent="Surroundings" unique_id=1850989740 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.15321167, 0, -1.2536424, 0, 1.26297, 0, 1.2536424, 0, -0.15321167, 10.21, 0, 1.99)
+
+[node name="Silhouette339" parent="Surroundings" unique_id=835484781 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.0393413, 0, -0.07834491, 0, 1.04229, 0, 0.07834491, 0, 1.0393413, 9.27, 0, 4.6)
+
+[node name="Silhouette340" parent="Surroundings" unique_id=467003049 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.9508475, 0, -0.16154651, 0, 0.964473, 0, 0.16154651, 0, 0.9508475, 8.63, 0, 3.69)
+
+[node name="Silhouette341" parent="Surroundings" unique_id=1527796438 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.5381019, 0, 0.8817329, 0, 1.03296, 0, -0.8817329, 0, 0.5381019, 8.09, 0, 4.83)
+
+[node name="Silhouette342" parent="Surroundings" unique_id=1270574865 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.21206181, 0, 1.1852182, 0, 1.20404, 0, -1.1852182, 0, -0.21206181, 8.25, 0, 4.95)
+
+[node name="Silhouette343" parent="Surroundings" unique_id=1338370858 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.51009184, 0, -1.122979, 0, 1.2334, 0, 1.122979, 0, 0.51009184, 8.64, 0, 4.54)
+
+[node name="Silhouette344" parent="Surroundings" unique_id=695149931 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.1700008, 0, 0.020477748, 0, 1.17018, 0, -0.020477748, 0, -1.1700008, -0.31, 0, 6.77)
+
+[node name="Silhouette345" parent="Surroundings" unique_id=1104793186 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.58167344, 0, 1.0732257, 0, 1.22072, 0, -1.0732257, 0, -0.58167344, -0.6, 0, 8.58)
+
+[node name="Silhouette346" parent="Surroundings" unique_id=792297905 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.0317602, 0, 0.1892881, 0, 1.04898, 0, -0.1892881, 0, -1.0317602, -0.89, 0, 8.99)
+
+[node name="Silhouette347" parent="Surroundings" unique_id=1246279437 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.7963415, 0, 1.082075, 0, 1.34352, 0, -1.082075, 0, 0.7963415, -2.32, 0, 8.28)
+
+[node name="Silhouette348" parent="Surroundings" unique_id=869319214 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.82767045, 0, -0.54512537, 0, 0.99106, 0, 0.54512537, 0, 0.82767045, -0.37, 0, 6.83)
+
+[node name="Silhouette349" parent="Surroundings" unique_id=691975600 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-1.1916724, 0, 0.7163495, 0, 1.39041, 0, -0.7163495, 0, -1.1916724, -2.42, 0, 8.16)
+
+[node name="Silhouette350" parent="Surroundings" unique_id=2052458270 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.2499555, 0, 0.86527133, 0, 0.900651, 0, -0.86527133, 0, -0.2499555, -5.0271907, 0, 9.05)
+
+[node name="Silhouette352" parent="Surroundings" unique_id=1478119339 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.7175527, 0, 1.0268155, 0, 1.25269, 0, -1.0268155, 0, 0.7175527, 7.075141, 0, 4.9260015)
+
+[node name="Silhouette353" parent="Surroundings" unique_id=1183314764 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.129125, 0, 0.4760853, 0, 1.22539, 0, -0.4760853, 0, 1.129125, -4.0271907, 0, 8.55)
+
+[node name="Silhouette354" parent="Surroundings" unique_id=973198651 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.40673795, 0, -0.90945816, 0, 0.996268, 0, 0.90945816, 0, -0.40673795, -0.65, 0, 5.7)
+
+[node name="Silhouette355" parent="Surroundings" unique_id=846733974 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.20750003, 0, 1.2446014, 0, 1.26178, 0, -1.2446014, 0, -0.20750003, -1.79, 0, 8.4)
+
+[node name="Silhouette356" parent="Surroundings" unique_id=118374029 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.38845605, 0, -0.869901, 0, 0.952694, 0, 0.869901, 0, -0.38845605, -3.336282, 0, 8.12)
+
+[node name="Silhouette357" parent="Surroundings" unique_id=149632086 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.86111647, 0, -1.0604063, 0, 1.36601, 0, 1.0604063, 0, 0.86111647, -2.16, 0, 7.96)
+
+[node name="Silhouette358" parent="Surroundings" unique_id=1938393116 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(1.102791, 0, -0.26626483, 0, 1.13448, 0, 0.26626483, 0, 1.102791, -0.43, 0, 6.62)
+
+[node name="Silhouette359" parent="Surroundings" unique_id=1360227549 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8218729, 0, -0.68887246, 0, 1.07239, 0, 0.68887246, 0, 0.8218729, -0.83, 0, 6.89)
+
+[node name="Silhouette360" parent="Surroundings" unique_id=1910659784 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.8730035, 0, 0.51230294, 0, 1.01222, 0, -0.51230294, 0, 0.8730035, -0.68, 0, 7.27)
+
+[node name="Silhouette361" parent="Surroundings" unique_id=1659633743 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.0096192, 0, 0.81648105, 0, 1.29845, 0, -0.81648105, 0, -1.0096192, -0.42, 0, 6.19)
+
+[node name="Silhouette362" parent="Surroundings" unique_id=1399423211 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.4134654, 0, 1.29529, 0, 1.35968, 0, -1.29529, 0, 0.4134654, -5.1071906, 0, 9.12)
+
+[node name="Silhouette363" parent="Surroundings" unique_id=242880871 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-1.1085231, 0, 0.50912696, 0, 1.21985, 0, -0.50912696, 0, -1.1085231, -1.35, 0, 7.33)
+
+[node name="Silhouette364" parent="Surroundings" unique_id=1217939839 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(-0.44929305, 0, -1.3079956, 0, 1.38301, 0, 1.3079956, 0, -0.44929305, -0.7, 0, 6.93)
+
+[node name="Silhouette365" parent="Surroundings" unique_id=1500575331 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.9443176, 0, 0.31403452, 0, 0.995165, 0, -0.31403452, 0, 0.9443176, -1.16, 0, 9.08)
+
+[node name="Silhouette366" parent="Surroundings" unique_id=2099302059 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(1.3351339, 0, 0.10555583, 0, 1.3393, 0, -0.10555583, 0, 1.3351339, -4.787191, 0, 8.64)
+
+[node name="Silhouette367" parent="Surroundings" unique_id=1242120046 instance=ExtResource("grass_tuft_B")]
+transform = Transform3D(0.06859151, 0, 1.1059651, 0, 1.10809, 0, -1.1059651, 0, 0.06859151, -1.21, 0, 7.91)
+
+[node name="Silhouette370" parent="Surroundings" unique_id=692642731 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(-0.19230588, 0, 1.2199663, 0, 1.23503, 0, -1.2199663, 0, -0.19230588, -2.49, 0, 8.11)
+
+[node name="Silhouette371" parent="Surroundings" unique_id=928502205 instance=ExtResource("grass_tuft_A")]
+transform = Transform3D(0.0207253, 0, -1.2511183, 0, 1.25129, 0, 1.2511183, 0, 0.0207253, -0.17, 0, 6.52)
+
+[node name="SilhouetteMailbox" parent="Surroundings" unique_id=489690439 instance=ExtResource("mailbox")]
+transform = Transform3D(0.8823832, 0, 0.4705315, 0, 1, 0, -0.4705315, 0, 0.8823832, 0.01031059, 0, 6.4741516)
+
+[node name="SilhouettePackage" parent="Surroundings" unique_id=507408357 instance=ExtResource("package")]
+transform = Transform3D(0.9061703, 0.0012667523, 0.4219638, -0.0010960775, 0.9999989, -0.00064579485, -0.42196432, 0.00012276619, 0.90617096, 0.59632224, 0, 7.4727125)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=333767093]
+environment = SubResource("Env")
+
+[node name="Lights" type="Node3D" parent="." unique_id=2139204197]
+
+[node name="RoomLight" type="OmniLight3D" parent="Lights" unique_id=1962871080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.8, -2)
+light_color = Color(1, 0.86, 0.68, 1)
+light_energy = 0.7
+omni_range = 16.0
+
+[node name="Entrance" type="Marker3D" parent="." unique_id=1898988982 groups=["spawn_point"]]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 1, 0, 3.2584137e-07, 0, -1, 2, 0, 4.3)
+
+[node name="DoorPrompt" parent="." unique_id=1956009579 instance=ExtResource("interaction_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.2, 4.8)
+action_radius = 0.9
+
+[node name="DoorExit" type="Node" parent="." unique_id=27086890]
 script = ExtResource("scene_exit")
 prompt_path = NodePath("../DoorPrompt")
 target_scene = "res://scenes/calm_place/outside/outside.tscn"
 spawn_id = &"HouseDoor"
 
-[node name="Player" parent="." instance=ExtResource("player")]
+[node name="ShopPrompt" parent="." unique_id=1009594306 instance=ExtResource("interaction_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 1.9, -2.7)
+action_radius = 1.2
 
-[node name="CameraRig" type="Node3D" parent="."]
+[node name="CookPrompt" parent="." unique_id=327162049 instance=ExtResource("interaction_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.25, 1.8, -5.3)
+action_radius = 1.2
+
+[node name="GameplayDoorPrompt" parent="." unique_id=1632486778 instance=ExtResource("interaction_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.6, -6)
+action_radius = 1
+
+[node name="GameplayDoorExit" type="Node" parent="." unique_id=1158256239]
+script = ExtResource("scene_exit")
+prompt_path = NodePath("../GameplayDoorPrompt")
+
+[node name="Shots" type="Node3D" parent="." unique_id=1444370365]
+
+[node name="CounterShot" type="Marker3D" parent="Shots" unique_id=50231145]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 5.2, 1.5, -1.9)
+
+[node name="StoveShot" type="Marker3D" parent="Shots" unique_id=1384756719]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, -6.25, 1.35, -4.6)
+
+[node name="CounterView" type="Node" parent="." unique_id=789742020]
+script = ExtResource("focus_view")
+prompt_path = NodePath("../ShopPrompt")
+shot_path = NodePath("../Shots/CounterShot")
+shot_size = 2.6
+
+[node name="StoveView" type="Node" parent="." unique_id=2085360556]
+script = ExtResource("focus_view")
+prompt_path = NodePath("../CookPrompt")
+shot_path = NodePath("../Shots/StoveShot")
+shot_size = 2.1
+
+[node name="Player" parent="." unique_id=1443999053 instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4.3)
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1394886784]
 script = ExtResource("camera_script")
 target_path = NodePath("../Player")
+camera_distance = 30.0
+pitch_degrees = 35.0
+yaw_degrees = 20.0
+size_near_player = 7.0
 
-[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=253507413]
 projection = 1
 current = true
-size = 6.0
+size = 7.0
+
+[node name="TiltShift" parent="." unique_id=830145869 instance=ExtResource("tilt_shift")]

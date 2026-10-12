@@ -10,6 +10,7 @@ extends Node3D
 @export var pivot_height: float = 0.5        ## altura (no jogador) que fica no centro da tela
 @export var camera_distance: float = 20.0    ## recuo do Camera3D ao longo do eixo de visão (só evita cortar objetos)
 @export_range(10.0, 90.0) var pitch_degrees: float = 55.0  ## inclinação pra baixo (90 = totalmente de cima)
+@export_range(-180.0, 180.0) var yaw_degrees: float = 0.0  ## giro fixo da cena (45 = diagonal, visual isométrico). O movimento do jogador acompanha.
 
 @export_group("Zoom perto da casa")
 @export var focus_path: NodePath
@@ -33,7 +34,7 @@ func _ready() -> void:
 	if camera != null:
 		# inclinação definida aqui (não pela rotação do Camera3D no editor),
 		# pra não correr o risco de ficar olhando pro céu
-		camera.rotation = Vector3(deg_to_rad(-pitch_degrees), 0.0, 0.0)
+		camera.rotation = Vector3(deg_to_rad(-pitch_degrees), deg_to_rad(yaw_degrees), 0.0)
 		camera.position = camera.transform.basis.z * camera_distance
 		camera.size = size_near_player
 	if target != null:

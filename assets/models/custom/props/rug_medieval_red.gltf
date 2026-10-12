@@ -1,0 +1,134 @@
+{
+ "asset": {
+  "version": "2.0",
+  "generator": "projeto-noite tools/gen_models.py"
+ },
+ "scene": 0,
+ "scenes": [
+  {
+   "name": "Scene",
+   "nodes": [
+    0
+   ]
+  }
+ ],
+ "nodes": [
+  {
+   "name": "rug_medieval_red",
+   "mesh": 0
+  }
+ ],
+ "meshes": [
+  {
+   "name": "rug_medieval_red",
+   "primitives": [
+    {
+     "attributes": {
+      "POSITION": 0,
+      "NORMAL": 1,
+      "TEXCOORD_0": 2
+     },
+     "indices": 3,
+     "material": 0
+    }
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "name": "atlas",
+   "pbrMetallicRoughness": {
+    "baseColorTexture": {
+     "index": 0
+    },
+    "metallicFactor": 0,
+    "roughnessFactor": 0.5
+   }
+  }
+ ],
+ "textures": [
+  {
+   "sampler": 0,
+   "source": 0
+  }
+ ],
+ "samplers": [
+  {
+   "magFilter": 9729,
+   "minFilter": 9987
+  }
+ ],
+ "images": [
+  {
+   "uri": "../../dungeon/dungeon_texture.png"
+  }
+ ],
+ "buffers": [
+  {
+   "uri": "rug_medieval_red.bin",
+   "byteLength": 437760
+  }
+ ],
+ "bufferViews": [
+  {
+   "buffer": 0,
+   "byteOffset": 0,
+   "byteLength": 105840,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 105840,
+   "byteLength": 105840,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 211680,
+   "byteLength": 70560,
+   "target": 34962
+  },
+  {
+   "buffer": 0,
+   "byteOffset": 282240,
+   "byteLength": 155520,
+   "target": 34963
+  }
+ ],
+ "accessors": [
+  {
+   "bufferView": 0,
+   "componentType": 5126,
+   "count": 8820,
+   "type": "VEC3",
+   "min": [
+    -2.66,
+    0.0,
+    -1.5
+   ],
+   "max": [
+    2.66,
+    0.08399999999999999,
+    1.5
+   ]
+  },
+  {
+   "bufferView": 1,
+   "componentType": 5126,
+   "count": 8820,
+   "type": "VEC3"
+  },
+  {
+   "bufferView": 2,
+   "componentType": 5126,
+   "count": 8820,
+   "type": "VEC2"
+  },
+  {
+   "bufferView": 3,
+   "componentType": 5125,
+   "count": 38880,
+   "type": "SCALAR"
+  }
+ ]
+}

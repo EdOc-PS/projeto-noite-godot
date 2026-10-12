@@ -1,6 +1,7 @@
 shader_type canvas_item;
-// Efeito tilt-shift (miniatura/diorama): desfoca o topo e o rodapé da tela,
-// mantendo uma faixa horizontal nítida no meio.
+// Efeito tilt-shift (miniatura/diorama): desfoca as bordas da tela mantendo
+// uma área nítida no meio. Com `ellipse_x` > 0 a área nítida é uma elipse
+// (borda "convexa": cantos e laterais também desfocam); 0 = faixa horizontal.
 // Desfoque suave tipo "vidro fosco": lê mipmaps da tela (já pré-desfocados
 // pela GPU) e mistura 16 amostras num disco em espiral, em vez de poucas
 // amostras espaçadas (que dão aspecto pixelado/duplicado).
@@ -11,12 +12,16 @@ uniform float focus_center : hint_range(0.0, 1.0) = 0.55; // altura (0=topo, 1=r
 uniform float focus_width : hint_range(0.0, 1.0) = 0.22;  // meia-largura da faixa totalmente nítida
 uniform float falloff : hint_range(0.0, 1.0) = 0.25;      // distância extra até o desfoque máximo
 uniform float blur_amount : hint_range(0.0, 12.0) = 5.0;  // força do desfoque nas bordas
+uniform float ellipse_x : hint_range(0.0, 1.0) = 0.5;     // quanto as laterais contam (0 = faixa, maior = elipse mais estreita)
 
 const int SAMPLES = 16;
 const float GOLDEN_ANGLE = 2.39996;
 
 void fragment() {
-	float dist = abs(SCREEN_UV.y - focus_center);
+	// distância até o centro da área nítida, numa elipse (largura = altura / ellipse_x)
+	float aspect = SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;  // largura/altura da tela
+	vec2 d = vec2((SCREEN_UV.x - 0.5) * ellipse_x / aspect * 1.6, SCREEN_UV.y - focus_center);
+	float dist = length(d);
 	float blur_factor = smoothstep(focus_width, focus_width + falloff, dist);
 
 	// nível de mipmap cresce com o desfoque (0 = imagem nítida)

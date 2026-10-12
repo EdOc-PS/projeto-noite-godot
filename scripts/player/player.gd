@@ -13,6 +13,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var move_dir := Vector3(input_dir.x, 0.0, input_dir.y)
+	# relativo à câmera: com a câmera girada, "cima" continua sendo cima na tela
+	var cam := get_viewport().get_camera_3d()
+	if cam != null:
+		move_dir = move_dir.rotated(Vector3.UP, cam.global_rotation.y)
 
 	if move_dir.length_squared() > 0.0:
 		move_dir = move_dir.normalized()

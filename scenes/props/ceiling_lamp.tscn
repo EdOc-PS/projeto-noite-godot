@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://shaders/light_shaft.gdshader" id="light_shaft"]
+
+[sub_resource type="StandardMaterial3D" id="Cord"]
+albedo_color = Color(0.2, 0.17, 0.16, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Shade"]
+albedo_color = Color(0.82, 0.59, 0.41, 1)
+roughness = 0.5
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="Bulb"]
+albedo_color = Color(1, 0.9, 0.7, 1)
+emission_enabled = true
+emission = Color(1, 0.85, 0.6, 1)
+emission_energy_multiplier = 6.0
+
+[sub_resource type="CylinderMesh" id="CordMesh"]
+material = SubResource("Cord")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="CylinderMesh" id="ShadeMesh"]
+material = SubResource("Shade")
+top_radius = 0.12
+bottom_radius = 0.42
+height = 0.36
+radial_segments = 20
+rings = 2
+cap_bottom = false
+
+[sub_resource type="SphereMesh" id="BulbMesh"]
+material = SubResource("Bulb")
+radius = 0.11
+height = 0.22
+radial_segments = 12
+rings = 6
+
+[sub_resource type="ShaderMaterial" id="ShaftMat"]
+render_priority = 1
+shader = ExtResource("light_shaft")
+
+[sub_resource type="CylinderMesh" id="ShaftMesh"]
+material = SubResource("ShaftMat")
+top_radius = 0.4
+bottom_radius = 1.5
+height = 3.3
+radial_segments = 24
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[node name="CeilingLamp" type="Node3D"]
+
+[node name="Cord" type="MeshInstance3D" parent="."]
+position = Vector3(0, 4.3, 0)
+cast_shadow = 0
+mesh = SubResource("CordMesh")
+
+[node name="Shade" type="MeshInstance3D" parent="."]
+position = Vector3(0, 3.62, 0)
+mesh = SubResource("ShadeMesh")
+
+[node name="Bulb" type="MeshInstance3D" parent="."]
+position = Vector3(0, 3.5, 0)
+cast_shadow = 0
+mesh = SubResource("BulbMesh")
+
+[node name="Light" type="SpotLight3D" parent="."]
+position = Vector3(0, 3.5, 0)
+rotation = Vector3(-1.570796, 0, 0)
+light_color = Color(1, 0.84, 0.62, 1)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 6.0
+spot_angle = 38.0
+
+[node name="Shaft" type="MeshInstance3D" parent="." groups=["light_shaft"]]
+position = Vector3(0, 1.8, 0)
+cast_shadow = 0
+mesh = SubResource("ShaftMesh")

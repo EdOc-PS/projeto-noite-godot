@@ -7,6 +7,7 @@ Objetivo: definir como a câmera se comporta no jogo inteiro: padrão no gamepla
 ## Princípios
 
 - **Fixa no gameplay**: o jogador nunca gira a câmera. "Cima" no controle é sempre "cima" na tela.
+- **Diagonal (isométrica) por padrão**: câmera girada ~45° e inclinada ~45°, vendo o cenário pela quina, como nas referências (Tiny Treats, Death's Door na vila). O movimento do jogador é relativo à câmera (`player.gd` gira o input pelo giro da câmera).
 - **Ortogonal**: visual de maquete/diorama (combina com o tilt-shift).
 - **Jogador centralizado** no gameplay; a câmera segue com suavidade (sem tremer em movimentos bruscos).
 - **Cada lugar escolhe o melhor enquadramento**: lugar aberto → mais de cima; lugar fechado → mais baixo, mostrando paredes e fachadas.
@@ -20,9 +21,9 @@ Medidos em prints do Death's Door: sala dos corvos ~45° (de frente), vila/loja 
 | Lugar | Inclinação | Giro | Zoom | Por quê |
 |---|---|---|---|---|
 | **Padrão** | 60° | 0° | normal | Meio-termo entre isométrica e top-down |
-| **Área aberta** (Calm Place, praças) | **70°** ✅ no Calm Place | 0° | um pouco aberto | O chão é o destaque: flores, sombra das nuvens, caminhos |
+| **Área aberta** (Calm Place, praças) | **45°** ✅ no Calm Place | **-17°** ✅ (porta da casa, levemente pela direita) | um pouco aberto | O chão é o destaque: flores, sombra das nuvens, caminhos |
 | **Fachadas e entradas** (porta da casa, lojas) | 50–55° | 0° | um pouco fechado | Mostra a frente do prédio e a porta |
-| **Interiores e salas** | ~50° | 0° | fechado | Ar de palco, como a sala dos corvos |
+| **Interiores e salas** | **35°** | **20°** (frente-direita) | próximo (`size` 7), segue o jogador | Diorama do cômodo; paredes do lado da câmera cortadas |
 | **Combate (dungeon)** | 65° | 0° | travado na sala | Ler ataques e inimigos no chão |
 | **Cena / conversa** | livre | livre | close | Ver abaixo |
 
@@ -33,7 +34,7 @@ Evitar: top-down puro (90°: casa vira telhado, personagem vira cabeça) e giro 
 `scripts/camera/isometric_camera.gd` no `CameraRig`:
 
 - Segue o jogador (`follow_speed`), centralizado na altura `pivot_height`.
-- `pitch_degrees`: inclinação (70° no Calm Place).
+- `pitch_degrees`: inclinação · `yaw_degrees`: giro fixo da cena (Calm Place: 45° / -17°, porta da casa vista um pouco pela direita).
 - Zoom ortogonal abre perto de um foco (`focus_path`, hoje a casa): `size_near_player` 6 → `size_near_focus` 10.
 
 ## 2. Zonas de câmera — a fazer
@@ -71,8 +72,24 @@ No Death's Door, quando um NPC fala ou algo importante acontece, a câmera **sai
 ## Etapas
 
 1. ✅ Câmera de gameplay com inclinação e zoom de foco.
-2. ✅ Calm Place a 70°.
+2. ✅ Calm Place diagonal: 45° de inclinação, -17° de giro (frente da casa, um pouco pela direita) (70° de cima foi testado e descartado: "de cima demais").
 3. `CameraZone` + transição suave; trocar o zoom da casa por zonas.
 4. Limites do mapa (`BOUNDED`).
 5. `CameraDirector` + `CameraShot` (planos de cena), testado com um NPC de exemplo.
 6. Integrar com o sistema de diálogo e emotes.
+
+## Interior da casa (`calm_place/inside_house`) — ✅
+
+- **Planta em L** (safe house, 18 × 10 m + extensão de 8 × 4 m): **esquerda** cozinha em L e jantar (na extensão da frente); **fundo** a porta pro outro mundo, à esquerda do centro (provisória, vai virar algo mais especial); **direita** a **ferraria medieval** (mesmo piso de madeira e mesmas paredes da casa toda; o clima de dungeon vem dos móveis do KayKit Dungeon: mesa de venda/upgrade sobre um tapete vermelho medieval `rug_medieval_red`, bigorna, amolador, armas encostadas na parede, prateleiras `shelves`, estandarte, tochas acesas, baú de ouro encostado na parede do fundo, barris e caixotes) e a sala com lareira. Cozinha com bancadas `countertop_straight_B` e armários altos `wall_cabinet_straight` na parede. Recorte vazio na frente-direita; a entrada é um **mini corredor** (x 1–3, z 3–5) saindo da parede da frente, com o spawn `Entrance` dentro dele. Quinas fechadas com pilares na cor do topo da parede.
+- **Organização dos nós**: `Room/` agrupado por área — `Structure` (piso, paredes, pilares, corredor), `Kitchen`, `Dining`, `Living` (inclui a lareira), `Store` (ferraria/loja: mesa, armas centralizadas na parede do fundo sob o estandarte, tochas dos dois lados, prateleiras `ForgeShelvesLeft/Right` com objetos), `GameplayDoor`, `Entrance`. Luz pertence ao objeto que a emite (`TorchLeft/TorchLight`, `LampStanding/LampLight`, luminárias de teto na área delas); em `Lights/` só a luz geral (`RoomLight`). **Colisão também pertence ao asset**: cada móvel tem um filho `Collision` (`StaticBody3D`) com `Shape`; armas agrupadas em `Store/WeaponRack`. Piso e paredes ficam em `Structure/Collision`.
+- **Câmera**: `pitch_degrees` 35°, `yaw_degrees` 20° (frente-direita), `size` **7** (mais perto do personagem), **segue o jogador**.
+- **Paredes do lado da câmera cortadas** (cutaway, escala 0,3 na altura): direita e frentes. Fundo e esquerda inteiras.
+- Fora do cômodo: fundo escuro + natureza em silhueta (padrão de todo interior, ver POS-PROCESSAMENTO.md).
+
+## Visão de interação frontal (padrão do jogo) — ✅
+
+Ao **segurar `interact`** em pontos de "uso" (balcão de loja, fogão, e no futuro bancadas, baús, mapas…), a câmera **sai de cima do jogador e vai suave pra uma visão de frente do objeto**, com zoom. O personagem some e para de andar. Sai com `interact` de novo, `ui_cancel` ou mexendo o analógico; a câmera volta suave pro jogador.
+
+- Script: `scripts/world/focus_view.gd` (node com `prompt_path`, `shot_path`, `shot_size`, `blend_time`; sinais `opened`/`closed` pra abrir a UI da loja/cozinha).
+- **Sempre a mesma câmera ortogonal** se movendo, girando e mudando o zoom. Testado trocar pra uma câmera em perspectiva (primeira pessoa de verdade) e descartado: piscava e distorcia na troca.
+- Enquadramento: um `Marker3D` (em `Shots/`) recuado no eixo do olhar, virado pro objeto. Visão **de frente, na altura dos olhos** (quase 90° com o objeto, só -10° de inclinação), como uma pessoa olhando pro móvel: balcão `CounterShot` (`size` 3,2), fogão `StoveShot` (`size` 2,6). O marcador fica entre o jogador e o objeto, na frente das luminárias de teto (com câmera ortogonal, o que fica atrás dela não aparece).

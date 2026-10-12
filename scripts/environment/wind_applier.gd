@@ -21,7 +21,7 @@ const WIND_SHADER := preload("res://shaders/wind_sway.gdshader")
 @export var grass_push: float = 0.08  ## quanto abre quando o player passa
 
 @export_group("Flores (bioluminescentes)")
-@export var flower_glow: float = 0.7         ## brilho das pétalas (0 = sem brilho)
+@export var flower_glow: float = 0.0         ## brilho das pétalas (0 = sem brilho)
 @export_range(0.0, 1.0) var flower_glow_chance: float = 0.5  ## fração das flores que brilham
 @export var flower_pulse_speed: float = 0.8  ## velocidade do pulso
 

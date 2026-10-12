@@ -47,9 +47,10 @@ Regra: se a troca leve começar a ficar com tela preta perceptível (cena grande
 | De | Prompt | Para | Chega em |
 |---|---|---|---|
 | `calm_place/outside` | porta da casa (`house/DoorPrompt`) | `calm_place/inside_house` | `Entrance` |
-| `calm_place/inside_house` | botão flutuante (`DoorPrompt`) | `calm_place/outside` | `house/HouseDoor` (na frente da porta, de costas pra ela) |
+| `calm_place/inside_house` | entrada do salão (`DoorPrompt`) | `calm_place/outside` | `house/HouseDoor` (na frente da porta, de costas pra ela) |
+| `calm_place/inside_house` | porta do fundo, à esquerda do centro (`GameplayDoorPrompt`) | — (gameplay, a definir: preencher `target_scene` do `GameplayDoorExit`) | — |
 
-`inside_house` por enquanto é só fundo preto com o jogador iluminado, chão invisível e o botão de saída.
+`inside_house`: casa-loja de quem ajuda o personagem (um cômodo, ver [plans/05-camera.md](plans/05-camera.md) pro enquadramento).
 
 ## Pendências
 

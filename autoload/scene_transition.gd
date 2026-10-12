@@ -6,8 +6,8 @@ extends CanvasLayer
 
 signal finished  ## íris terminou de abrir
 
-@export var close_time: float = 0.7
-@export var open_time: float = 0.8
+@export var close_time: float = 0.5
+@export var open_time: float = 0.55
 @export var hold_black: float = 0.15   ## pausa na tela preta entre fechar e abrir
 @export var focus_radius: float = 40.0 ## raio (px) em que a íris "segura" em volta do jogador antes do último fechamento
 

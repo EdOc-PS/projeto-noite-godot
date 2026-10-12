@@ -62,7 +62,7 @@ Fora de escopo: dungeons, cidade (dia), sistemas de gameplay.
   - `forest_fill` (sem colisão, fora do alcance do player): árvores, arbustos, pedras e grama `forest_nature` até as bordas do mapa; árvores maiores (Tree_1_C, 2_D, 2_E, 3_C, 4_C) só longe da área jogável.
   - Itens soltos reorganizados nos grupos certos (pedras → `rocks`, arbustos → `bush`, grama → `grass_flowers`, árvores Tree_2 → `tree_simple_large`, Tree_4 → `tree_especie_large`); itens dentro da área jogável sem colisão receberam colisão (formas `Col_<asset>`).
 - **Bordas invisíveis**: `MapBounds` (4× `StaticBody3D`, `x/z = ±17.5`, altura 4) — o player não sai dos 34×34 do chão.
-- **Câmera** (`scripts/camera/isometric_camera.gd`, configurada em `scenes/calm_place/outside/outside.tscn`): top-down fixa, sem rotação. O rig segue o jogador; o `Camera3D` é recuado ao longo do próprio eixo, então o jogador fica sempre centralizado. Inclinação por `pitch_degrees`: **70°** no Calm Place (quase top-down: área aberta, o chão é o destaque; o padrão do script é 55°). Zoom ortogonal abre de `size 6` → `10` ao se aproximar da casa (`focus_radius = 10`).
+- **Câmera** (`scripts/camera/isometric_camera.gd`, configurada em `scenes/calm_place/outside/outside.tscn`): top-down fixa, sem rotação. O rig segue o jogador; o `Camera3D` é recuado ao longo do próprio eixo, então o jogador fica sempre centralizado. Ângulo: **diagonal isométrica**, `pitch_degrees` 45° + `yaw_degrees` -17° (porta da casa vista um pouco pela direita; ver plano 05). Zoom ortogonal abre de `size 6` → `10` ao se aproximar da casa (`focus_radius = 10`).
 
 ## Avisos
 
@@ -89,10 +89,39 @@ Escolhido no lugar de nuvens 3D projetando sombra: a câmera nunca mostra o céu
 
 Fumaça da chaminé: `house/ChimneySmoke` (`scripts/environment/chimney_smoke.gd`, mesh `custom/smoke/smoke_puff.gltf`).
 
-## Flores bioluminescentes
+## Flores bioluminescentes — desligado
+
+Removido a pedido (`flower_glow` = 0). O código continua no shader/`WindApplier` pra reativar se quiser.
+
 
 No `wind_sway.gdshader` (`bio_glow`, `bio_pulse_speed`): as pétalas emitem luz na própria cor, pulsando devagar e fora de sincronia entre flores. O caule não brilha (máscara: pixels onde o verde domina). O `WindApplier` aplica em metade das `flower_*` (`flower_glow_chance` 0,5; o resto só balança), ajuste por `flower_glow` (0,7) e `flower_pulse_speed`. O glow do `Environment` faz o halo.
 
 ## Poeira dos passos
 
 `Player/FootstepDust` (`scripts/player/footstep_dust.gd`): 5 partículas com o mesh `smoke_puff` (nasce com ~0,3 e encolhe até sumir), lavanda clara semitransparente (alpha 0,4, sem sombreamento), soltas enquanto o personagem anda no chão (`min_speed`). Ficam no mundo (`local_coords = false`) e somem encolhendo em 0,6 s.
+
+## Riscos de vento
+
+`WindStreaks` (`scripts/environment/wind_streaks.gd`): 4 linhas brancas finas e compridas (rastro de 1 s) e semitransparentes passando na direção do vento, com leve ondulação (rastro/trail de partícula com fita em cruz, afinando nas pontas). O emissor acompanha o jogador, então sempre aparecem na área da câmera. Ajuste: `streak_count`, `speed`, `streak_color` (alpha = força), `width`.
+
+Vagalumes soltos (`Fireflies`): 45 → 25. Os do poste continuam iguais.
+
+Poeira dos passos: no fim da vida se deforma e esfarela em manchas (`shaders/dust_dissolve.gdshader`, usa a idade da partícula), estilo Death's Door.
+
+Tilt-shift: a área nítida agora é uma **elipse** (borda convexa: cantos e laterais também desfocam), não uma faixa. Ajuste `ellipse_x` no `TiltShiftMaterial` (0 = faixa antiga; maior = elipse mais estreita).
+
+## Tufos de grama densa
+
+`GrassField` (`scripts/environment/grass_field.gd`): **milhares** de tufos (`assets/models/custom/grass/grass_tuft_A/B.gltf`, gerados por `tools/gen_models.py`) agrupados em **manchas** pelo cenário. As manchas vêm de um ruído (onde passa de `threshold`, mais densa no centro). Desenhados com **MultiMesh** (um desenho por tipo de tufo), por isso a quantidade não pesa como nós separados. Usam o `wind_sway.gdshader`: balançam com o vento e amassam com o jogador. Não nascem na casa (caixa da casa + `house_margin`), no caminho de pedras (`path_clearance`, ligando as pedras próximas) nem em cima de cercas, banco e postes (`clearance`). Faixas **densas nas laterais da casa** (`house_side_width`) e zonas extras (`bonus_zones`).
+
+Ajuste: `spacing` (densidade dentro da mancha), `threshold` (quantidade de manchas), `noise_frequency` (tamanho das manchas), `noise_seed` (outro desenho de manchas).
+
+## Névoa com profundidade
+
+A névoa por distância ficava "achatada" porque a câmera é ortogonal (tudo está quase à mesma distância dela). Agora: névoa **por altura** no `Environment` (`fog_height` 1,2, `fog_height_density` 0,45: mais densa embaixo) e 3 camadas de névoa (`GroundFog`, planos de 44 m com `fog_card.gdshader` a 0,3 / 1,1 / 2,0 m) com manchas que se movem, dando volume. Densidade de distância caiu pra 0,008.
+
+## Nuvens de poeira no chão
+
+`GroundDust` (`scripts/environment/ground_dust.gd`): a cada 3–6 s (`interval`) nasce, a 2,5–7 m do jogador, um bolinho de 9 nuvenzinhas (`smoke_puff`) rente ao chão que cresce, vai com o vento e esfarela (mesmo `dust_dissolve.gdshader` da poeira dos passos). Ajuste: `dust_color` (alpha = força), `puffs`, `cloud_size`, `drift_speed`.
+
+Grama densa (`GrassField`): balança mais rápido (`sway_speed` 2,3) e tem **altura em ondas** (`height_range` 0,6–1,7, `height_frequency`): um ruído largo faz a grama crescer e baixar pelo campo, e dentro de cada mancha ela é mais alta no centro. Faixa densa acompanhando o caminho de pedras (`path_border_width`), sem entrar nele.

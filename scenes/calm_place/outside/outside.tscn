@@ -16,7 +16,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 9)
 script = ExtResource("camera_script")
 target_path = NodePath("../Player")
 focus_path = NodePath("../CalmPlace/house")
-pitch_degrees = 70.0
+pitch_degrees = 45.0
+yaw_degrees = -17.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=301302880]
 transform = Transform3D(1, 0, 0, 0, 0.57357633, 0.819152, 0, -0.819152, 0.57357633, 0, 16, 11.472)

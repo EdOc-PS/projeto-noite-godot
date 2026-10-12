@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://shaders/tilt_shift.gdshader" id="tilt_shift_shader"]
+
+[sub_resource type="ShaderMaterial" id="TiltShiftMaterial"]
+shader = ExtResource("tilt_shift_shader")
+shader_parameter/focus_center = 0.55
+shader_parameter/focus_width = 0.28
+shader_parameter/falloff = 0.2
+shader_parameter/blur_amount = 5.0
+shader_parameter/ellipse_x = 0.5
+
+[node name="TiltShiftLayer" type="CanvasLayer"]
+
+[node name="TiltShiftRect" type="ColorRect" parent="."]
+material = SubResource("TiltShiftMaterial")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2

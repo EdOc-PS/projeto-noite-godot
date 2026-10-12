@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://b3ymdrv6o7tqe"]
 
+[ext_resource type="Script" path="res://scripts/environment/ground_dust.gd" id="ground_dust"]
+[ext_resource type="Script" path="res://scripts/environment/lantern_pulse.gd" id="lantern_pulse"]
 [ext_resource type="PackedScene" uid="uid://cwtat35jyr1d3" path="res://assets/models/calm_place/pretty_park/trashcan.gltf" id="2_k6ypa"]
 [ext_resource type="PackedScene" uid="uid://c4e63f6fqfi32" path="res://assets/models/calm_place/homely_house/mailbox.gltf" id="3_taj60"]
 [ext_resource type="PackedScene" uid="uid://bofh62hw48iwt" path="res://assets/models/calm_place/homely_house/package.gltf" id="4_arsyn"]
@@ -71,6 +73,8 @@
 [ext_resource type="Script" path="res://scripts/environment/chimney_smoke.gd" id="chimney_smoke"]
 [ext_resource type="Script" path="res://scripts/environment/cloud_shadow_decal.gd" id="cloud_shadow_decal"]
 [ext_resource type="Script" path="res://scripts/environment/contact_shadows.gd" id="contact_shadows"]
+[ext_resource type="Script" path="res://scripts/environment/wind_streaks.gd" id="wind_streaks"]
+[ext_resource type="Script" path="res://scripts/environment/grass_field.gd" id="grass_field"]
 [ext_resource type="Texture2D" path="res://assets/textures/effects/cloud_shadows.png" id="cloud_shadows_tex"]
 [ext_resource type="PackedScene" uid="uid://dyklw5ka2w63r" path="res://assets/models/calm_place/house_plants/monstera_leaf_small_A.gltf" id="leaf_monstera_a"]
 [ext_resource type="PackedScene" uid="uid://csveh0h2lky7c" path="res://assets/models/calm_place/house_plants/monstera_leaf_small_B.gltf" id="leaf_monstera_b"]
@@ -193,8 +197,8 @@ size = Vector3(1, 4, 36)
 [sub_resource type="ShaderMaterial" id="TiltShiftMaterial"]
 shader = ExtResource("tilt_shift_shader")
 shader_parameter/focus_center = 0.55
-shader_parameter/focus_width = 0.22
-shader_parameter/falloff = 0.25
+shader_parameter/focus_width = 0.28
+shader_parameter/falloff = 0.2
 shader_parameter/blur_amount = 5.0
 
 [sub_resource type="BoxShape3D" id="BenchShape"]
@@ -370,8 +374,10 @@ glow_intensity = 0.7
 glow_blend_mode = 2
 fog_enabled = true
 fog_light_color = Color(0.10588235, 0.13725491, 0.24705882, 1)
-fog_density = 0.015
+fog_density = 0.008
 fog_sky_affect = 0.0
+fog_height = 1.2
+fog_height_density = 0.45
 fog_depth_curve = 1.5
 adjustment_enabled = true
 adjustment_contrast = 1.12
@@ -400,6 +406,25 @@ shader_parameter/soft_distance = 0.8
 shader_parameter/fog_base = 0.0
 shader_parameter/fog_top = 3.0
 shader_parameter/noise_height_scale = 4.0
+
+[sub_resource type="ShaderMaterial" id="GroundFogMaterial"]
+render_priority = 1
+shader = ExtResource("fog_shader")
+shader_parameter/fog_color = Color(0.24, 0.28, 0.45, 1)
+shader_parameter/noise_tex = SubResource("FogNoiseTex")
+shader_parameter/density = 0.35
+shader_parameter/noise_scale = 0.045
+shader_parameter/scroll = Vector2(0.01, 0.006)
+shader_parameter/edge_softness = 0.15
+shader_parameter/edge_softness_v = 0.15
+shader_parameter/soft_distance = 1.2
+shader_parameter/fog_base = 0.0
+shader_parameter/fog_top = 3.0
+shader_parameter/noise_height_scale = 6.0
+
+[sub_resource type="PlaneMesh" id="GroundFogPlane"]
+material = SubResource("GroundFogMaterial")
+size = Vector2(44, 44)
 
 [sub_resource type="PlaneMesh" id="FogStripNS"]
 material = SubResource("FogCardMaterial")
@@ -466,6 +491,15 @@ size = Vector3(2.1564, 3, 0.6)
 [node name="WindApplier" type="Node" parent="."]
 script = ExtResource("wind_applier")
 
+[node name="GrassField" type="Node3D" parent="."]
+script = ExtResource("grass_field")
+
+[node name="GroundDust" type="GPUParticles3D" parent="."]
+script = ExtResource("ground_dust")
+
+[node name="WindStreaks" type="GPUParticles3D" parent="."]
+script = ExtResource("wind_streaks")
+
 [node name="ContactShadows" type="Node" parent="."]
 script = ExtResource("contact_shadows")
 
@@ -480,7 +514,7 @@ script = ExtResource("cloud_shadow_decal")
 
 [node name="Fireflies" type="GPUParticles3D" parent="." unique_id=1816087198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-amount = 45
+amount = 25
 lifetime = 7.0
 randomness = 0.5
 visibility_aabb = AABB(-16, -2, -16, 32, 5, 32)
@@ -910,9 +944,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9256396, 0, 1.702)
 [node name="flower_B2" parent="grass_flowers" unique_id=502485595 instance=ExtResource("succulent_d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.381, 0, 0.851)
 
-[node name="grass_A4" parent="grass_flowers" unique_id=1351016249 instance=ExtResource("15_35w2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.096, 0, -1.192)
-
 [node name="grass_A5" parent="grass_flowers" unique_id=604636995 instance=ExtResource("15_35w2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.578, 0, 7.446)
 
@@ -921,12 +952,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.015066, 0, 13.57)
 
 [node name="grass_A3" parent="grass_flowers" unique_id=1556604596 instance=ExtResource("15_35w2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.007533, 0, 6.785)
-
-[node name="grass_A2" parent="grass_flowers" unique_id=171184800 instance=ExtResource("15_35w2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5736997, 0, 3.6072288)
-
-[node name="grass_B3" parent="grass_flowers" unique_id=1903121166 instance=ExtResource("16_6kk6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.354839, 0, 0.051659226)
 
 [node name="grass_B2" parent="grass_flowers" unique_id=1898955576 instance=ExtResource("16_6kk6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.996, 0, 2.609)
@@ -1502,9 +1527,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4.9)
 
 [node name="grass_B_rock1" parent="grass_flowers" unique_id=901234573 instance=ExtResource("16_6kk6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 0, 5.5)
-
-[node name="grass_A_rock2" parent="grass_flowers" unique_id=901234574 instance=ExtResource("15_35w2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 2.5)
 
 [node name="ground" type="Node3D" parent="." unique_id=497200450]
 
@@ -2514,6 +2536,7 @@ transform = Transform3D(-0.6998817, 0.021037437, 0.7139486, -0.023325399, 0.9983
 light_color = Color(1, 0.55, 0.1, 1)
 light_energy = 2.5
 omni_range = 6.5
+script = ExtResource("lantern_pulse")
 
 [node name="StreetLantern3" parent="lantern" unique_id=1834746473 instance=ExtResource("street_lantern")]
 transform = Transform3D(-0.12631178, 0, -0.99199057, 0, 1, 0, 0.99199057, 0, -0.12631178, -2.0265083, 0, -4.464828)
@@ -2533,6 +2556,7 @@ transform = Transform3D(-0.6998817, 0.021037437, 0.7139486, -0.023325399, 0.9983
 light_color = Color(1, 0.55, 0.1, 1)
 light_energy = 2.5
 omni_range = 6.5
+script = ExtResource("lantern_pulse")
 
 [node name="StreetLantern" parent="lantern" unique_id=2017108223 instance=ExtResource("street_lantern")]
 transform = Transform3D(0.81162167, 0, -0.5841834, 0, 1, 0, 0.5841834, 0, 0.81162167, 7.38727, 0, 2.6216393)
@@ -2552,6 +2576,7 @@ transform = Transform3D(-0.6998817, 0.021037437, 0.7139486, -0.023325399, 0.9983
 light_color = Color(1, 0.55, 0.1, 1)
 light_energy = 2.5
 omni_range = 6.5
+script = ExtResource("lantern_pulse")
 
 [node name="leaves" type="Node3D" parent="." unique_id=812345650]
 

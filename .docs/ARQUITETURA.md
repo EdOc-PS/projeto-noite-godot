@@ -13,6 +13,7 @@ projeto-noite/
 │   ├── ARQUITETURA.md        # este arquivo
 │   ├── TRANSICOES.md         # regra de transição de cenário (iris wipe)
 │   ├── CARREGAMENTO.md       # boas práticas pra esconder loading
+│   ├── POS-PROCESSAMENTO.md  # padrão de efeitos visuais de toda cena
 │   └── plans/                # planos de implementação por etapa
 ├── project.godot
 ├── scenes/
@@ -23,6 +24,8 @@ projeto-noite/
 │   │   └── inside_house/      # inside_house.tscn (fundo preto + player + botão de volta)
 │   ├── dungeon/              # salas e sistema de dungeon (noite)
 │   ├── player/                # cena do personagem
+│   ├── props/                 # objetos montados no projeto (ex.: fireplace.tscn)
+│   ├── effects/               # efeitos reutilizáveis (ex.: tilt_shift.tscn)
 │   ├── ui/                    # elementos de UI reutilizáveis (ex.: interaction_prompt.tscn)
 ├── scripts/
 │   ├── player/
@@ -33,6 +36,12 @@ projeto-noite/
 ├── assets/
 │   ├── models/                # modelos 3D, um subdiretório por kit/conjunto
 │   │   ├── characters/         # personagens (mannequin/: boneco provisório do KayKit)
+│   │   ├── home/               # casa do personagem: furniture/ (KayKit), kitchen/ (Tiny Treats)
+│   │   ├── shops/              # interiores de lojas: bakery/ (Tiny Treats)
+│   │   ├── cooking/            # comida, panelas, fogões (KayKit Restaurant): mecânica de cozinhar
+│   │   ├── tools/              # ferramentas e ferraria (KayKit RPG Tools): upgrade de armas, aventura
+│   │   ├── dungeon/            # pedra, tochas, estandartes, baús (KayKit Dungeon): mundo da noite e a ferraria da casa
+│   │   ├── weapons/            # armas de fantasia (KayKit Fantasy Weapons)
 │   │   ├── city/               # kit da cidade
 │   │   └── calm_place/         # kits da área tranquila fora da cidade
 │   │       ├── homely_house/
