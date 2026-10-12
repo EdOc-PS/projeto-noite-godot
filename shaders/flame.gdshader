@@ -13,6 +13,9 @@ uniform float speed = 1.6;               // velocidade das línguas subindo
 uniform float distortion = 0.35;         // quanto o ruído entorta a chama
 uniform float flicker = 0.18;            // pisca rápido do brilho
 uniform float time_offset = 0.0;         // dessincroniza chamas vizinhas
+uniform float height_wobble = 0.22;      // quanto a altura sobe e desce
+uniform float width_wobble = 0.12;       // quanto a largura abre e fecha
+uniform float wave = 0.12;               // ondulação lateral (serpenteia subindo)
 uniform float core_band = 0.55;          // a partir daqui é miolo
 uniform float mid_band = 0.25;           // a partir daqui é meio (abaixo: borda)
 
@@ -33,6 +36,12 @@ float fbm(vec2 p) {
 }
 
 void vertex() {
+	// altura e largura oscilam como fogo de verdade (ruído lento, não seno)
+	float tv = TIME * speed + time_offset;
+	float hs = 1.0 + (noise(vec2(tv * 0.9, 1.3)) - 0.5) * 2.0 * height_wobble;
+	float ws = 1.0 + (noise(vec2(tv * 0.7, 7.9)) - 0.5) * 2.0 * width_wobble;
+	VERTEX.y *= hs;
+	VERTEX.x *= ws;
 	// billboard só no Y, mantendo a escala do node
 	vec3 right = normalize(cross(vec3(0.0, 1.0, 0.0), INV_VIEW_MATRIX[2].xyz));
 	vec3 fwd = normalize(cross(right, vec3(0.0, 1.0, 0.0)));
@@ -52,6 +61,7 @@ void fragment() {
 
 	// gota: larga e redonda embaixo, afinando pra cima, entortada pelo ruído
 	float x = (UV.x - 0.5) * 2.0 + (n - 0.5) * distortion * (0.3 + h * 1.6);
+	x += sin(h * 7.0 - t * 3.2) * wave * h;      // serpenteia subindo
 	float width = mix(0.8, 0.05, pow(h, 0.8));
 	float shape = 1.0 - abs(x) / width;
 	shape -= n2 * 0.75 * h;                    // línguas se soltando no topo

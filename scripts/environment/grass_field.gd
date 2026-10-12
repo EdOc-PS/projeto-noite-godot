@@ -23,16 +23,18 @@ const ATLAS := preload("res://assets/models/calm_place/homely_house/tiny_treats_
 @export var scale_range: Vector2 = Vector2(0.55, 0.9)
 ## Altura em ondas: um ruído largo faz a grama crescer e baixar pelo campo, e
 ## dentro da mancha ela é mais alta no centro e baixa na borda.
-@export var height_range: Vector2 = Vector2(0.6, 1.7)  ## multiplicador da altura (baixa, alta)
+@export var height_range: Vector2 = Vector2(0.45, 2.1)  ## multiplicador da altura (baixa, alta)
 @export var height_frequency: float = 0.16             ## menor = ondas de altura mais largas
 @export var root_path: NodePath = NodePath("..")  ## onde procurar objetos pra desviar
 @export var clearance: float = 0.6           ## raio livre em volta de objetos que não são planta
+@export var flower_clearance: float = 0.35    ## raio livre em volta das flores (grama não cobre flor)
 @export var house_path: NodePath = NodePath("../house")
 @export var path_clearance: float = 0.85     ## raio livre em volta do caminho de pedras (ligando as pedras próximas)
 @export var path_border_width: float = 0.8   ## faixa de grama densa acompanhando o caminho, logo depois do raio livre
 @export var path_link_distance: float = 4.2  ## pedras mais próximas que isso formam um trecho contínuo
 ## Manchas extras (x, z, raio no mundo): grama densa garantida, além do ruído.
-@export var bonus_zones: Array[Vector3] = [Vector3(7.2, -9.4, 3.0), Vector3(14.0, -1.5, 2.5), Vector3(7.7, -0.2, 1.2)]
+@export var bonus_zones: Array[Vector3] = [Vector3(7.2, -9.4, 3.0), Vector3(14.0, -1.5, 2.5), Vector3(7.7, -0.2, 1.2),
+		Vector3(-3.2, 0.7, 1.0), Vector3(-1.4, 0.4, 0.8), Vector3(-0.4, 0.9, 0.7)]  # em volta do banco
 ## Faixas densas nas laterais da casa (esquerda e direita), em metros a partir da parede.
 @export var house_side_width: float = 2.6
 @export var house_margin: float = 0.25  ## grama não encosta na parede
@@ -47,6 +49,7 @@ const HOUSE_Z := Vector2(-2.22, 4.32)                 ## fundo e frente da casa 
 
 var _blocked: Array[Vector3] = []
 var _cobbles: Array[Vector3] = []
+var _flowers: Array[Vector3] = []
 var _height_noise := FastNoiseLite.new()
 
 func _ready() -> void:
@@ -187,6 +190,9 @@ func _free(p: Vector3, house: Node3D) -> bool:
 	for o in _blocked:
 		if Vector2(p.x - o.x, p.z - o.z).length() < clearance:
 			return false
+	for o in _flowers:
+		if Vector2(p.x - o.x, p.z - o.z).length() < flower_clearance:
+			return false
 	return true
 
 ## Guarda a posição de tudo que não é planta (caminho, pedras, cercas, banco,
@@ -201,6 +207,8 @@ func _collect_obstacles(node: Node) -> void:
 			var plant := file.begins_with("grass") or file.begins_with("flower") or file.begins_with("tree") \
 					or file.begins_with("bush") or file.begins_with("foliage") or file.contains("_leaf_") \
 					or file.begins_with("floor")
+			if file.begins_with("flower") and child is Node3D:
+				_flowers.append((child as Node3D).global_position)
 			if file.begins_with("cobblestones") and child is Node3D:
 				_cobbles.append((child as Node3D).global_position)  # caminho de pedras: trecho contínuo
 			elif not plant and child is Node3D:

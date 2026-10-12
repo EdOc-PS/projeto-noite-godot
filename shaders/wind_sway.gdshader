@@ -36,9 +36,13 @@ void vertex() {
 	vec3 world_origin = MODEL_MATRIX[3].xyz;
 	float phase = TIME * sway_speed + dot(world_origin.xz, vec2(0.35, 0.21));
 	v_phase = dot(world_origin.xz, vec2(1.7, 2.3));
-	float s = sin(phase) + 0.4 * sin(phase * 2.3 + 1.7);
+	// balanço suave: inclina com o vento e faz um oval (nunca para de vez nas
+	// pontas, sem aquele "acelera e freia"), com uma rajada lenta por cima
+	vec2 wd = normalize(wind_dir);
+	float s = 0.35 + 0.5 * sin(phase) + 0.25 * sin(phase * 0.37 + 1.3);
+	float side = 0.35 * cos(phase);
 	float w = smoothstep(sway_start, sway_start + sway_height, VERTEX.y);
-	VERTEX.xz += normalize(wind_dir) * s * sway_strength * w;
+	VERTEX.xz += (wd * s + vec2(-wd.y, wd.x) * side) * sway_strength * w;
 
 	// toque: calculado pela origem da planta, então ela toda se abre junta
 	vec2 away = world_origin.xz - player_pos.xz;

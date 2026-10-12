@@ -10,8 +10,10 @@ uniform vec2 wind_dir = vec2(1.0, 0.3);
 
 vec3 wind_offset(vec3 vertex, vec3 world_origin, float time) {
 	float phase = time * sway_speed + dot(world_origin.xz, vec2(0.35, 0.21));
-	float s = sin(phase) + 0.4 * sin(phase * 2.3 + 1.7);
+	vec2 wd = normalize(wind_dir);
+	float s = 0.35 + 0.5 * sin(phase) + 0.25 * sin(phase * 0.37 + 1.3);
+	float side = 0.35 * cos(phase);
 	float w = smoothstep(sway_start, sway_start + sway_height, vertex.y);
-	vec2 d = normalize(wind_dir) * s * sway_strength * w;
+	vec2 d = (wd * s + vec2(-wd.y, wd.x) * side) * sway_strength * w;
 	return vec3(d.x, 0.0, d.y);
 }

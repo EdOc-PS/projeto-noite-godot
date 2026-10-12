@@ -76,7 +76,7 @@ Ver [CREDITOS.md](../CREDITOS.md).
 
 Como os jogos modernos fazem: a **lua é a luz principal** (forte o bastante pra desenhar sombras), o **ambiente é baixo** e a sombra é suave e azulada, nunca recorte preto. Brilho geral parecido, mas com sombras que se leem.
 
-- Lua (`DirectionalLight3D`): energia 0,4 → **0,8**, `shadow_opacity` 0,9, `shadow_blur` 1,5, `directional_shadow_max_distance` 35 m (o mapa é pequeno: concentrar a resolução da sombra deixa o contorno nítido).
+- Lua (`DirectionalLight3D`): energia 0,4 → **0,8**, `shadow_opacity` 0,9, `shadow_blur` 1,0 (era 1,5; mais definida), `directional_shadow_max_distance` 35 m (o mapa é pequeno: concentrar a resolução da sombra deixa o contorno nítido).
 - Ambiente (`ambient_light_energy`): 0,7 → **0,45**, compensando a lua mais forte.
 - SSAO: raio 1,2 → 2,0, intensidade 2,0, `ssao_light_affect` 0,3 (escurece cantos também sob a luz da lua e dos postes).
 - **Sombra de contato** (`ContactShadows`, `scripts/environment/contact_shadows.gd`): Decal com mancha radial escura embaixo de cada árvore, arbusto, folhagem, pedra e toco, do tamanho da base. O SSAO de tela não pega bem a base de objetos vistos de cima (câmera ortogonal) e sem isso eles parecem flutuar. Ajuste: `color` (alpha = força) e `size_factor`.
@@ -106,7 +106,7 @@ No `wind_sway.gdshader` (`bio_glow`, `bio_pulse_speed`): as pétalas emitem luz 
 
 Vagalumes soltos (`Fireflies`): 45 → 25. Os do poste continuam iguais.
 
-Poeira dos passos: no fim da vida se deforma e esfarela em manchas (`shaders/dust_dissolve.gdshader`, usa a idade da partícula), estilo Death's Door.
+Poeira dos passos: no fim da vida se deforma e esfarela em manchas (`shaders/dust_dissolve.gdshader`, usa a idade da partícula), estilo Death's Door. (Melhorar depois: testado sprite PNG e versão iluminada, descartados por ora.)
 
 Tilt-shift: a área nítida agora é uma **elipse** (borda convexa: cantos e laterais também desfocam), não uma faixa. Ajuste `ellipse_x` no `TiltShiftMaterial` (0 = faixa antiga; maior = elipse mais estreita).
 
@@ -120,8 +120,8 @@ Ajuste: `spacing` (densidade dentro da mancha), `threshold` (quantidade de manch
 
 A névoa por distância ficava "achatada" porque a câmera é ortogonal (tudo está quase à mesma distância dela). Agora: névoa **por altura** no `Environment` (`fog_height` 1,2, `fog_height_density` 0,45: mais densa embaixo) e 3 camadas de névoa (`GroundFog`, planos de 44 m com `fog_card.gdshader` a 0,3 / 1,1 / 2,0 m) com manchas que se movem, dando volume. Densidade de distância caiu pra 0,008.
 
-## Nuvens de poeira no chão
+## Vento suave
 
-`GroundDust` (`scripts/environment/ground_dust.gd`): a cada 3–6 s (`interval`) nasce, a 2,5–7 m do jogador, um bolinho de 9 nuvenzinhas (`smoke_puff`) rente ao chão que cresce, vai com o vento e esfarela (mesmo `dust_dissolve.gdshader` da poeira dos passos). Ajuste: `dust_color` (alpha = força), `puffs`, `cloud_size`, `drift_speed`.
+Vento (`wind_sway.gdshader` e `includes/wind.gdshaderinc`): a planta inclina com o vento e faz um oval suave (sem "acelerar e frear" nas pontas), com uma rajada lenta por cima.
 
 Grama densa (`GrassField`): balança mais rápido (`sway_speed` 2,3) e tem **altura em ondas** (`height_range` 0,6–1,7, `height_frequency`): um ruído largo faz a grama crescer e baixar pelo campo, e dentro de cada mancha ela é mais alta no centro. Faixa densa acompanhando o caminho de pedras (`path_border_width`), sem entrar nele.
