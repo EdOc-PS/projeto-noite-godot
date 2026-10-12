@@ -84,7 +84,7 @@ No Death's Door, quando um NPC fala ou algo importante acontece, a câmera **sai
 - **Organização dos nós**: `Room/` agrupado por área — `Structure` (piso, paredes, pilares, corredor), `Kitchen`, `Dining`, `Living` (inclui a lareira), `Store` (ferraria/loja: mesa, armas centralizadas na parede do fundo sob o estandarte, tochas dos dois lados, prateleiras `ForgeShelvesLeft/Right` com objetos), `GameplayDoor`, `Entrance`. Luz pertence ao objeto que a emite (`TorchLeft/TorchLight`, `LampStanding/LampLight`, luminárias de teto na área delas); em `Lights/` só a luz geral (`RoomLight`). **Colisão também pertence ao asset**: cada móvel tem um filho `Collision` (`StaticBody3D`) com `Shape`; armas agrupadas em `Store/WeaponRack`. Piso e paredes ficam em `Structure/Collision`.
 - **Câmera**: `pitch_degrees` 35°, `yaw_degrees` 20° (frente-direita), `size` **7** (mais perto do personagem), **segue o jogador**.
 - **Paredes do lado da câmera cortadas** (cutaway, escala 0,3 na altura): direita e frentes. Fundo e esquerda inteiras.
-- Fora do cômodo: fundo escuro + natureza em silhueta (padrão de todo interior, ver POS-PROCESSAMENTO.md).
+- Fora do cômodo: fundo escuro + natureza em silhueta (padrão de todo interior, ver 10-pos-processamento.md).
 
 ## Visão de interação frontal (padrão do jogo) — ✅
 

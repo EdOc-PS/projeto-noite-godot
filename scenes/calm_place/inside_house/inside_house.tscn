@@ -93,6 +93,8 @@
 [ext_resource type="PackedScene" uid="uid://bcy08eyf5ksuf" path="res://assets/models/shops/bakery/wall_panelled_bakery_window_small.gltf" id="wall_panelled_bakery_window_small"]
 [ext_resource type="PackedScene" uid="uid://cr03pbfet4eto" path="res://assets/models/home/kitchen/wall_shelf_kitchen_hooks_decorated.gltf" id="wall_shelf_kitchen_hooks_decorated"]
 [ext_resource type="PackedScene" uid="uid://bwdlw0506h2au" path="res://assets/models/calm_place/house_plants/zzplant_plant_small_potted.gltf" id="zzplant_plant_small_potted"]
+[ext_resource type="Script" path="res://scripts/environment/plastic_applier.gd" id="plastic_applier"]
+[ext_resource type="Script" path="res://scripts/environment/soft_shadows.gd" id="soft_shadows"]
 
 [sub_resource type="StandardMaterial3D" id="PostMat"]
 albedo_color = Color(0.975, 0.94, 0.918, 1)
@@ -201,6 +203,11 @@ ambient_light_color = Color(0.55, 0.47, 0.42, 1)
 ambient_light_energy = 0.35
 tonemap_mode = 4
 ssao_enabled = true
+ssr_enabled = true
+ssr_max_steps = 64
+ssr_fade_in = 0.15
+ssr_fade_out = 2.0
+ssr_depth_tolerance = 0.2
 ssao_intensity = 1.5
 glow_enabled = true
 glow_intensity = 0.6
@@ -213,6 +220,18 @@ adjustment_saturation = 1.3
 size = Vector3(1.4, 2, 1.4)
 
 [node name="InsideHouse" type="Node3D" unique_id=1904728130]
+
+[node name="PlasticApplier" type="Node" parent="."]
+script = ExtResource("plastic_applier")
+
+[node name="SoftShadows" type="Node" parent="."]
+script = ExtResource("soft_shadows")
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+size = Vector3(26, 9, 22)
+box_projection = true
+interior = true
 
 [node name="Room" type="Node3D" parent="." unique_id=1542319205]
 
@@ -2104,9 +2123,14 @@ action_radius = 1.2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.6, -6)
 action_radius = 1
 
+[node name="GameplayDoorArrival" type="Marker3D" parent="." groups=["spawn_point"]]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 1, 0, 3.2584137e-07, 0, -1, -1, 0, -5.2)
+
 [node name="GameplayDoorExit" type="Node" parent="." unique_id=1158256239]
 script = ExtResource("scene_exit")
 prompt_path = NodePath("../GameplayDoorPrompt")
+target_scene = "res://scenes/city/city.tscn"
+spawn_id = &"Arrival"
 
 [node name="Shots" type="Node3D" parent="." unique_id=1444370365]
 

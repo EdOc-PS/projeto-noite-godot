@@ -13,11 +13,12 @@ projeto-noite/
 │   ├── ARQUITETURA.md        # este arquivo
 │   ├── TRANSICOES.md         # regra de transição de cenário (iris wipe)
 │   ├── CARREGAMENTO.md       # boas práticas pra esconder loading
-│   ├── POS-PROCESSAMENTO.md  # padrão de efeitos visuais de toda cena
-│   └── plans/                # planos de implementação por etapa
+│   └── plans/                # documentos numerados: NN-nome-minusculo.md
+│       ├── 10-pos-processamento.md  # padrão de efeitos visuais de toda cena
+│       └── 11-estilo-visual.md      # estilo "brinquedo de vinil" (Link's Awakening): as 4 técnicas
 ├── project.godot
 ├── scenes/
-│   ├── city/                 # cena fixa da cidade (dia)
+│   ├── city/                 # city.tscn: ruas da cidade (gerada por tools/gen_city.py; base pra clima)
 │   ├── calm_place/           # área tranquila, um cenário por subpasta
 │   │   ├── outside/           # outside.tscn (cenário jogável: ambiente + player + câmera)
 │   │   │                      #   + outside_environment.tscn (só o ambiente)

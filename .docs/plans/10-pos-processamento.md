@@ -1,6 +1,8 @@
 # Pós-processamento e efeitos de ambiente
 
-Referência: [PROJETO-NOITE.md](PROJETO-NOITE.md) · Câmera: [plans/05-camera.md](plans/05-camera.md) · Ambiente noturno: [plans/02-ambiente-calm-place.md](plans/02-ambiente-calm-place.md)
+Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Câmera: [plans/05-camera.md](05-camera.md) · Ambiente noturno: [plans/02-ambiente-calm-place.md](02-ambiente-calm-place.md)
+
+Estilo geral (Link's Awakening, material plástico, LUT): [11-estilo-visual.md](11-estilo-visual.md)
 
 **Regra: toda cena jogável usa este pacote de efeitos.** É o que dá a cara de "maquete de vinil" do jogo. Cena nova sem eles fica visivelmente diferente das outras.
 
@@ -10,10 +12,16 @@ Referência: [PROJETO-NOITE.md](PROJETO-NOITE.md) · Câmera: [plans/05-camera.m
 |---|---|---|---|
 | **Tonemap AgX** | `Environment.tonemap_mode = 4` | — | Cores ricas sem estourar o branco |
 | **Glow** | `glow_enabled`, `glow_blend_mode = 2` (soft light) | intensidade 0,6–0,7 | Brilho de lâmpadas, fogo, emissões |
-| **SSAO** | `ssao_enabled` | raio 1–2, intensidade 1,5–2 | Cantos e encontros escurecem (profundidade) |
+| **SSAO** (obrigatório) | `ssao_enabled` | raio 2, power 1,3, `ssao_light_affect` 0,3 | Cantos e encontros escurecem (profundidade) |
+| **SSR** (obrigatório) | `ssr_enabled`, 64 passos, fade 0,15/2,0, tolerância 0,2 | — | Reflexos no plástico (ver 11-estilo-visual.md) |
+| **Anti-aliasing** (obrigatório) | `project.godot` → `msaa_3d = 2` (MSAA 4x) + `screen_space_aa = 1` (FXAA) | global, vale pra toda cena | Bordas lisas, sem serrilhado: o "plástico" do toy precisa de contorno limpo |
 | **Saturação e contraste** | `adjustment_enabled` | contraste **1,12**, saturação **1,3** | Cores vivas de brinquedo |
 | **Tilt-shift (desfoque nas bordas)** | instância de **`scenes/effects/tilt_shift.tscn`** | foco 0,55, faixa 0,28, `ellipse_x` 0,5, blur 5 | Visual de miniatura: centro nítido, bordas desfocadas em elipse |
-| **Sombras da luz principal** | `DirectionalLight3D` / luzes | `shadow_blur` 1,5–2 | Contorno definido, mas macio |
+| **Sombras da luz principal** | `DirectionalLight3D` / luzes | `shadow_blur` 1,0 (lua do outside) | Contorno definido, mas macio |
+
+**SSAO e anti-aliasing são padrão do projeto:** nenhuma cena fica sem. O anti-aliasing é global (configuração do projeto), então não se desliga por cena; o SSAO é por `Environment` e tem que estar ligado em todo `WorldEnvironment`.
+
+**Nodes obrigatórios na raiz de toda cena:** `PlasticApplier` (material vinil + rim), `SoftShadows` (sombras macias), `ReflectionProbe` (cobrindo a área jogável). Ver [11-estilo-visual.md](11-estilo-visual.md).
 
 Pra adicionar numa cena: copiar os valores do `Environment` acima e instanciar `scenes/effects/tilt_shift.tscn` na raiz.
 
