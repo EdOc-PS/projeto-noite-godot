@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/interaction_prompt.gd" id="1_script"]
-[ext_resource type="Shader" path="res://shaders/ui_icon_glow.gdshader" id="2_shader"]
+[ext_resource type="Shader" path="res://shaders/ui/ui_icon_glow.gdshader" id="2_shader"]
 [ext_resource type="Texture2D" path="res://assets/ui/input_prompts/generic/generic_button_square.png" id="3_kb_generic"]
 [ext_resource type="Texture2D" path="res://assets/ui/input_prompts/keyboard/keyboard_e_outline.png" id="4_kb_outline"]
 [ext_resource type="Texture2D" path="res://assets/ui/input_prompts/keyboard/keyboard_e.png" id="5_kb_filled"]

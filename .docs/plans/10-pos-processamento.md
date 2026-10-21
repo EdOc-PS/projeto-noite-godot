@@ -1,52 +1,52 @@
 # Pós-processamento e efeitos de ambiente
 
+> **Vale:** silhueta e tilt-shift. A pincelada será definida em [11-estilo-visual.md](11-estilo-visual.md).
+
 Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Câmera: [plans/05-camera.md](05-camera.md) · Ambiente noturno: [plans/02-ambiente-calm-place.md](02-ambiente-calm-place.md)
 
-Estilo geral (Link's Awakening, material plástico, LUT): [11-estilo-visual.md](11-estilo-visual.md)
+Estilo geral (Breath of the Wild): [11-estilo-visual.md](11-estilo-visual.md)
 
-**Regra: toda cena jogável usa este pacote de efeitos.** É o que dá a cara de "maquete de vinil" do jogo. Cena nova sem eles fica visivelmente diferente das outras.
+**Regra: toda cena jogável usa este pacote.** Valores de referência: o campo (`tools/gen_field.py`). Já aplicado em campo, outside, inside_house e área de teste; só a cidade ainda usa o pacote do vinil. Cenas sem ciclo (outside, inside_house) usam o `BotwPost` com `fixed_phase` 1 (noite).
 
-## Checklist de toda cena
+## Checklist de toda cena (estilo BotW)
 
 | Efeito | Onde | Valor padrão | Pra quê |
 |---|---|---|---|
-| **Tonemap AgX** | `Environment.tonemap_mode = 4` | — | Cores ricas sem estourar o branco |
-| **Glow** | `glow_enabled`, `glow_blend_mode = 2` (soft light) | intensidade 0,6–0,7 | Brilho de lâmpadas, fogo, emissões |
-| **SSAO** (obrigatório) | `ssao_enabled` | raio 2, power 1,3, `ssao_light_affect` 0,3 | Cantos e encontros escurecem (profundidade) |
-| **SSR** (obrigatório) | `ssr_enabled`, 64 passos, fade 0,15/2,0, tolerância 0,2 | — | Reflexos no plástico (ver 11-estilo-visual.md) |
-| **Anti-aliasing** (obrigatório) | `project.godot` → `msaa_3d = 2` (MSAA 4x) + `screen_space_aa = 1` (FXAA) | global, vale pra toda cena | Bordas lisas, sem serrilhado: o "plástico" do toy precisa de contorno limpo |
-| **Saturação e contraste** | `adjustment_enabled` | contraste **1,12**, saturação **1,3** | Cores vivas de brinquedo |
-| **Tilt-shift (desfoque nas bordas)** | instância de **`scenes/effects/tilt_shift.tscn`** | foco 0,55, faixa 0,28, `ellipse_x` 0,5, blur 5 | Visual de miniatura: centro nítido, bordas desfocadas em elipse |
-| **Sombras da luz principal** | `DirectionalLight3D` / luzes | `shadow_blur` 1,0 (lua do outside) | Contorno definido, mas macio |
+| **Tonemap AgX** | `Environment.tonemap_mode = 4` | exposição 1,0 | Cores ricas sem estourar |
+| **Luz ambiente do céu** | `ambient_light_source = 3` | energia ~1,1 de dia | Sombra clara e azulada |
+| **Glow** | `glow_enabled`, blend soft light | bloom **0**, intensidade 0,15 de dia | Só emissões; o BotW é vivo, não brilhoso |
+| **SSAO** (obrigatório) | `ssao_enabled` | intensidade 0,8, `ssao_light_affect` 0,15 | Profundidade sem escurecer |
+| **Névoa** | `fog_enabled`, modo **distância** (+ volumétrica e bolsões à noite) | clara de dia, `fog_aerial_perspective` 0,7, `fog_sun_scatter` 0,4; valores por hora em [06-clima.md](06-clima.md) "Névoa" | Ar "lavado", esconde a borda do mapa; nunca chapada |
+| **Anti-aliasing** (obrigatório) | `project.godot` (MSAA 4x + FXAA) | global | Bordas lisas |
+| **Cor por hora** | `WeatherCycle.palette = BOTW` (`KEYS_BOTW`) | saturação 1,4–1,5, contraste 0,92 | Vivo e lavado |
+| **Filtro de tela** | `ColorRect` com `shaders/post_process/botw_post.gdshader` + `scripts/visuals/botw_post.gd` (CanvasLayer 1) | pintura leve 0,3, nitidez 0,25, cor por hora | Cara de guache |
+| **Desfoque das bordas** | tilt-shift (CanvasLayer 2) | blur **3,5** (mais fraco que o do vinil) | Foco no centro |
+| **Personagens toon** | node com `scripts/visuals/botw_character.gd` | Ultimate Toon | Só personagens são cel shading |
 
-**SSAO e anti-aliasing são padrão do projeto:** nenhuma cena fica sem. O anti-aliasing é global (configuração do projeto), então não se desliga por cena; o SSAO é por `Environment` e tem que estar ligado em todo `WorldEnvironment`.
-
-**Nodes obrigatórios na raiz de toda cena:** `PlasticApplier` (material vinil + rim), `SoftShadows` (sombras macias), `ReflectionProbe` (cobrindo a área jogável). Ver [11-estilo-visual.md](11-estilo-visual.md).
-
-Pra adicionar numa cena: copiar os valores do `Environment` acima e instanciar `scenes/effects/tilt_shift.tscn` na raiz.
+**Proibido:** vinheta, bloom forte, DOF de distância (a câmera de cima borra tudo), filtro de tela em quad 3D (deixa partícula transparente preta), `PlasticApplier`/`ToonApplier` em cena nova.
 
 ## Por tipo de cena
 
-| | Externa (noite) — `calm_place/outside` | Interna — `calm_place/inside_house` |
+| | Externa (noite) — `home/outside` | Interna — `home/inside_house` |
 |---|---|---|
 | Fundo | Céu (panorama noturno) | Cor quase preta azulada (o vazio em volta do cômodo) |
 | Luz ambiente | Do céu, 0,45 | Cor quente, 0,35 |
 | Luz principal | Lua (direcional azul-lavanda, 0,8, `shadow_opacity` 0,9) | Spots do teto (quentes, de cima pra baixo) + lareira |
 | Névoa | Sim (azul-marinho nas bordas do mapa) | Não |
 | Névoa em camadas | `fog_height` 1,2 / `fog_height_density` 0,45 (névoa que se acumula embaixo) + 3 camadas `GroundFog` (planos com `fog_card.gdshader` a 0,3 / 1,1 / 2,0 m) | — |
-| Extras | Vento, sombra das nuvens (Decal), sombra de contato, riscos de vento, vagalumes | **Luminárias de teto** com feixe de luz (`scenes/props/ceiling_lamp.tscn`), fogo da lareira, **natureza em silhueta** no vazio em volta |
+| Extras | Vento, sombra das nuvens (Decal), sombra de contato, riscos de vento, vagalumes | **Luminárias de teto** com feixe de luz (`scenes/props/ceiling_lamp.tscn`: spot **largo e suave**, ângulo 75°, alcance 9 m, borda esfumada `spot_angle_attenuation` 0,5, `spot_attenuation` 0,6, energia 2,6: ilumina a casa toda sem marcar um círculo no chão), fogo da lareira, **natureza em silhueta** no vazio em volta |
 
 ## Peças reutilizáveis
 
 | Peça | Arquivo | Uso |
 |---|---|---|
-| Tilt-shift | `scenes/effects/tilt_shift.tscn` + `shaders/tilt_shift.gdshader` | Toda cena (o outside ainda tem uma cópia própria igual; trocar pela instância quando mexer nele) |
+| Tilt-shift | `scenes/vfx/tilt_shift.tscn` + `shaders/post_process/tilt_shift.gdshader` | Toda cena (o outside ainda tem uma cópia própria igual; trocar pela instância quando mexer nele) |
 | Luminária de teto | `scenes/props/ceiling_lamp.tscn` (fio + cúpula + lâmpada + spot + feixe `light_shaft.gdshader` saindo de dentro da cúpula) | Interiores: a luz "sai" da luminária, sem o topo do cone aparecendo |
-| Sombra de contato | `scripts/environment/contact_shadows.gd` | Externas com árvores/arbustos/pedras |
-| Natureza em silhueta (**padrão de todo interior**) | node com `scripts/environment/silhouette_applier.gd` + `shaders/silhouette*.gdshader` | Vazio em volta de interiores: vegetação preta com contorno cinza, balançando com o vento (o mesmo vento de fora, via `shaders/includes/wind.gdshaderinc`) |
-| Luz tremulando | `scripts/environment/lantern_flicker.gd` | Lareira, tochas, velas |
-| Lanterna viva | `scripts/environment/lantern_pulse.gd` (no `LanternLight`) | Postes do outside: tremula e a cor "respira" até um vermelho-brasa; o vidro (`LanternGlow`) acompanha |
-| Fogo | `scenes/effects/fire.tscn` (`shaders/flame.gdshader` + `scripts/props/fire_embers.gd` + luz opcional) | Chama cartunesca estilo Breath of the Wild: gota com ruído subindo, faixas marcadas (miolo amarelo, meio laranja, borda vermelha), pisca. Tamanho pela escala. Lareira e tochas usam com a luz delas (`lantern_pulse.gd`) piscando junto |
+| Sombra de contato | `scripts/visuals/contact_shadows.gd` | Externas com árvores/arbustos/pedras |
+| Natureza em silhueta (**padrão de todo interior**) | node com `scripts/visuals/silhouette_applier.gd` + `shaders/silhouette*.gdshader` | Vazio em volta de interiores: vegetação preta com contorno cinza, balançando com o vento (o mesmo vento de fora, via `shaders/includes/wind.gdshaderinc`) |
+| Luz tremulando | `scripts/props/lantern_flicker.gd` | Lareira, tochas, velas |
+| Lanterna viva | `scripts/props/lantern_pulse.gd` (no `LanternLight`) | Postes do outside: tremula e a cor "respira" até um vermelho-brasa; o vidro (`LanternGlow`) acompanha |
+| Fogo | `scenes/vfx/fire.tscn` (`shaders/fire/flame.gdshader` + `scripts/props/fire_embers.gd` + luz opcional) | Chama cartunesca estilo Breath of the Wild: gota com ruído subindo, faixas marcadas (miolo amarelo, meio laranja, borda vermelha), pisca. Tamanho pela escala. Lareira e tochas usam com a luz delas (`lantern_pulse.gd`) piscando junto |
 
 ## Regra de interiores
 

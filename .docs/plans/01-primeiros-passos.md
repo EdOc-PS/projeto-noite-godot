@@ -35,13 +35,13 @@ projeto-noite/
 ├── assets/
 │   ├── models/
 │   └── textures/
-└── autoload/
+└── scripts/core/
     └── game_state.gd       # placeholder para persistência dia/noite (futuro)
 ```
 
 ## 2. Cena da cidade (placeholder)
 
-- `scenes/city/city.tscn`: `Node3D` raiz
+- `scenes/levels/city/city.tscn`: `Node3D` raiz
   - Chão: `MeshInstance3D` (PlaneMesh) + `StaticBody3D`/`CollisionShape3D`
   - Alguns blocos (`CSGBox3D` ou `MeshInstance3D` com `BoxMesh`) só para ter obstáculos e testar colisão
   - Sem lightmap ainda — usar `WorldEnvironment` com luz ambiente simples + `DirectionalLight3D` básica
@@ -56,7 +56,7 @@ projeto-noite/
 
 ## 4. Personagem básico
 
-- `scenes/player/player.tscn`: `CharacterBody3D`
+- `scenes/characters/player/player.tscn`: `CharacterBody3D`
   - `CollisionShape3D` (capsule)
   - `MeshInstance3D` placeholder (capsule ou box)
 - `scripts/player/player.gd`:

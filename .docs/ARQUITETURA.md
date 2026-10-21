@@ -11,60 +11,34 @@ projeto-noite/
 ├── .docs/
 │   ├── PROJETO-NOITE.md      # visão geral, direção de arte, sistemas
 │   ├── ARQUITETURA.md        # este arquivo
-│   ├── TRANSICOES.md         # regra de transição de cenário (iris wipe)
-│   ├── CARREGAMENTO.md       # boas práticas pra esconder loading
+│   ├── CREDITOS.md           # créditos e licenças dos assets
 │   └── plans/                # documentos numerados: NN-nome-minusculo.md
-│       ├── 10-pos-processamento.md  # padrão de efeitos visuais de toda cena
-│       └── 11-estilo-visual.md      # estilo "brinquedo de vinil" (Link's Awakening): as 4 técnicas
+│       ├── 01..06, 10, 13, 14-*.md  # planos por etapa/sistema
+│       └── 11-estilo-visual.md      # estilo: cartoon estilizado, pincelado
 ├── project.godot
-├── scenes/
-│   ├── city/                 # city.tscn: ruas da cidade (gerada por tools/gen_city.py; base pra clima)
-│   ├── calm_place/           # área tranquila, um cenário por subpasta
-│   │   ├── outside/           # outside.tscn (cenário jogável: ambiente + player + câmera)
-│   │   │                      #   + outside_environment.tscn (só o ambiente)
-│   │   └── inside_house/      # inside_house.tscn (fundo preto + player + botão de volta)
-│   ├── dungeon/              # salas e sistema de dungeon (noite)
-│   ├── player/                # cena do personagem
-│   ├── props/                 # objetos montados no projeto (ex.: fireplace.tscn)
-│   ├── effects/               # efeitos reutilizáveis (ex.: tilt_shift.tscn)
-│   ├── ui/                    # elementos de UI reutilizáveis (ex.: interaction_prompt.tscn)
-├── scripts/
+├── scenes/                    # cenas, por tipo (áreas jogáveis serão recriadas)
+│   ├── characters/            #   player/ (e NPCs/inimigos no futuro)
+│   ├── vfx/                   #   efeitos reutilizáveis (tilt-shift)
+│   └── ui/                    #   elementos de UI reutilizáveis (interaction_prompt)
+├── scripts/                   # código, por sistema
+│   ├── core/                  #   autoloads: SceneTransition, InputDevice, CursorManager
 │   ├── player/
 │   ├── camera/
-│   ├── dungeon/
-│   ├── world/                 # lógica de mundo (ex.: scene_exit.gd, saída de cenário)
+│   ├── world/                 #   saída de cenário, foco de câmera, interação
+│   ├── weather/               #   CLIMA (a refazer): weather_cycle, wind, rain, puddles, sun_rays...
+│   ├── visuals/               #   estilo aplicado na cena: silhouette, soft_shadows, color_grade...
+│   ├── vegetation/            #   wind_applier (vento nas plantas)
 │   └── ui/
-├── assets/
-│   ├── models/                # modelos 3D, um subdiretório por kit/conjunto
-│   │   ├── characters/         # personagens (mannequin/: boneco provisório do KayKit)
-│   │   ├── home/               # casa do personagem: furniture/ (KayKit), kitchen/ (Tiny Treats)
-│   │   ├── shops/              # interiores de lojas: bakery/ (Tiny Treats)
-│   │   ├── cooking/            # comida, panelas, fogões (KayKit Restaurant): mecânica de cozinhar
-│   │   ├── tools/              # ferramentas e ferraria (KayKit RPG Tools): upgrade de armas, aventura
-│   │   ├── dungeon/            # pedra, tochas, estandartes, baús (KayKit Dungeon): mundo da noite e a ferraria da casa
-│   │   ├── weapons/            # armas de fantasia (KayKit Fantasy Weapons)
-│   │   ├── city/               # kit da cidade
-│   │   └── calm_place/         # kits da área tranquila fora da cidade
-│   │       ├── homely_house/
-│   │       ├── pleasant_picnic/
-│   │       ├── pretty_park/
-│   │       ├── fun_playground/
-│   │       ├── forest_nature/
-│   │       └── house_plants/
-│   ├── animations/            # animações separadas do modelo, por esqueleto (ex.: rig_medium/ do KayKit)
-│   ├── skyboxes/              # panoramas equiretangulares (2:1) pra PanoramaSkyMaterial
-│   │   ├── basic/              # dia, manhã, noite, alien, espaço
-│   │   └── space/              # nebulosa, galáxia, faixa, escuro, dia
-│   └── ui/
-│       ├── input_prompts/     # ícones de botão: generic/, keyboard/, xbox/
-│       ├── cursors/           # cursores (Basic Default)
-│       └── emotes/            # balões de emote (Vector Style 1)
-├── shaders/                   # .gdshader (vento, névoa, rim light, tilt-shift)
-└── autoload/
-    ├── scene_transition.gd    # SceneTransition: troca de cenário com iris wipe (ver TRANSICOES.md)
-    ├── input_device.gd        # InputDevice: teclado ou controle em uso (troca ícones da UI)
-    └── game_state.gd          # (futuro) singleton de persistência de estado (dia/noite)
+├── assets/                    # arquivos de terceiros, por tipo e depois por categoria
+│   └── ui/                    #   input_prompts/, cursors/, emotes/  (models/ etc. voltam com os assets do Kenney)
+├── shaders/                   # .gdshader, uma pasta por tipo:
+│   ├── silhouette/            #   silhueta atrás de paredes
+│   ├── post_process/          #   efeitos de tela (tilt_shift)
+│   └── ui/                    #   interface (ui_icon_glow)
+└── (fora do projeto) ../../Jogo - 3D/projeto-noite_sources/   # pacotes originais dos assets
 ```
+
+Pastas que ainda não existem (`assets/models/`, `shaders/weather/`, `shaders/nature/`, `tools/`...) são criadas de novo quando houver conteúdo, seguindo as convenções abaixo.
 
 ## Convenção de assets (`assets/`)
 
@@ -74,7 +48,7 @@ Kits de modelos chegam com múltiplos formatos de exportação (fbx, fbx para Un
 
 ### Pacotes originais ficam fora do projeto
 
-O pacote completo baixado (licença, FBX/OBJ, previews, links, ícones não usados) fica em **`E:\Estudos\Desenvolvimento de Games\Jogo - 3D\projeto-noite_sources\`**, espelhando a estrutura de `assets/` (ex.: `projeto-noite_sources/models/calm_place/forest_nature/`). Lá tem um `LEIA-ME.md` com a mesma regra.
+O pacote completo baixado (licença, FBX/OBJ, previews, links, ícones não usados) fica em **`E:\Estudos\Desenvolvimento de Games\Jogo - 3D\projeto-noite_sources\`**, espelhando a estrutura de `assets/` (ex.: `projeto-noite_sources/models/...`; os pacotes antigos ainda estão na estrutura de antes, `calm_place/...`). Lá tem um `LEIA-ME.md` com a mesma regra.
 
 Dentro do projeto só entra o que o Godot usa:
 
@@ -92,20 +66,26 @@ assets/<tipo>/<categoria>/<nome_do_kit>/
 ### Nomes de pasta
 
 - `<tipo>`: `models/`, `skyboxes/`, `ui/` (novos tipos, ex.: `audio/`, `fonts/`, seguem o padrão).
-- `<categoria>` agrupa por contexto de uso no jogo (ex.: `city`, `calm_place`), não pelo nome comercial do kit. Categoria com um kit só → arquivos direto nela; com vários → uma subpasta por kit.
+- `<categoria>` agrupa por contexto de uso no jogo (ex.: `nature`, `home`, `park`, `city`), não pelo nome comercial do kit. Categoria com um kit só → arquivos direto nela; com vários → uma subpasta por kit.
 - `snake_case`, sem espaços nem caracteres especiais, descrevendo o **conteúdo** (`skyboxes/space`, `ui/cursors`), não o autor/marca — autor e versão ficam no CREDITOS.md.
 
 Ver [PROJETO-NOITE.md](PROJETO-NOITE.md#assets--fonte) para a origem de cada kit.
 
 ## Autoloads (Singletons)
 
-- `InputDevice` (`autoload/input_device.gd`): detecta se o jogador está no teclado/mouse ou no controle (último input) e emite `device_changed`; usado pela UI pra mostrar os ícones certos.
-- `SceneTransition` (`autoload/scene_transition.gd`): única forma de trocar de cenário — `SceneTransition.change_scene(path)`. Faz o iris wipe e abre a íris ao iniciar o jogo. Regras em [TRANSICOES.md](TRANSICOES.md).
-- `GameState` (`autoload/game_state.gd`, ainda não criado): estado do jogador que persiste entre a troca de cena Dia ↔ Noite (vida, itens, progresso). Único autoload previsto no escopo inicial; novos autoloads devem ser justificados aqui quando adicionados.
+- `InputDevice` (`scripts/core/input_device.gd`): detecta se o jogador está no teclado/mouse ou no controle (último input) e emite `device_changed`; usado pela UI pra mostrar os ícones certos.
+- `FpsCounter` (`scripts/ui/fps_counter.gd`): contador de FPS no canto inferior esquerdo, em todas as cenas; F3 mostra/esconde.
+- `SceneTransition` (`scripts/core/scene_transition.gd`): única forma de trocar de cenário — `SceneTransition.change_scene(path)`. Faz o wipe de bolhas e descobre a tela ao iniciar o jogo. Regras em [13-transicoes.md](plans/13-transicoes.md).
+- `GameState` (`scripts/core/game_state.gd`, ainda não criado): estado do jogador que persiste entre a troca de cena Dia ↔ Noite (vida, itens, progresso). Único autoload previsto no escopo inicial; novos autoloads devem ser justificados aqui quando adicionados.
 
 ## Convenções gerais
 
 - Uma cena (`.tscn`) por responsabilidade; scripts (`.gd`) vivem em `scripts/` espelhando a árvore de `scenes/` quando fizer sentido.
 - Nomes de arquivo em `snake_case`, nomes de classes/nodes em `PascalCase`.
-- **Cenários em árvore**: `scenes/<área>/<cenário>/<cenário>.tscn` (ex.: `calm_place/outside/outside.tscn`). Cada cenário jogável é uma cena completa (ambiente + player + câmera) carregável sozinha. Cena inicial atual: `calm_place/outside/outside.tscn`.
+- **Cenários em árvore**: `scenes/levels/<área>/<cenário>/<cenário>.tscn` (ex.: `levels/city/city.tscn`). Cada cenário jogável é uma cena completa (ambiente + player + câmera) carregável sozinha. Hoje não há cenário nem cena inicial (`run/main_scene` removida): serão recriados com os assets novos.
+- **Nós em ordem alfabética.** Os filhos de cada nó ficam em ordem alfabética na árvore da cena . Facilita achar as coisas.
+- **Nós agrupados por tipo.** Objetos repetidos ficam sob um nó pai do tipo: todos os arbustos em `Bushes`, árvores em `Trees`, pedrinhas em `Pebbles`, folhas em `Leaves`, grama no seu `GrassField` etc. (ex.: `Nature/Trees/Tree_0`). Nada de dezenas de objetos soltos na raiz da cena ou misturados no mesmo pai.
+- **Colisão e luz são filhas do objeto.** Todo objeto com colisão ou que emite luz carrega o próprio `StaticBody3D`/`CollisionShape3D` e a própria `OmniLight3D`/`SpotLight3D` como filhos (ex.: `Props/Barrel_0/Collision/Shape`), nunca num `Collision` central solto. Mover/apagar o objeto leva a colisão e a luz junto. **Exceção:** barreiras invisíveis (sem objeto visual), que ficam num node próprio (`InvisibleBarrier`).
+- **Organização por domínio (clima):** tudo que é do sistema de clima fica junto, por tipo de arquivo, na pasta `weather/` de cada um: `scripts/weather/` (lógica), `shaders/weather/` (shaders), e quando existirem `scenes/weather/` (cenas reutilizáveis, ex.: chuva pronta) e `assets/textures/weather/` (texturas de gota, poça, nuvem). Um sistema novo (ex.: combate) segue o mesmo padrão: `scripts/combat/`, `scenes/combat/`... É o padrão de projetos Godot profissionais: primeiro por tipo de recurso (`scenes/`, `scripts/`, `shaders/`, `assets/`), depois por sistema/domínio.
+- **Shader novo vai na pasta do tipo** (ver árvore acima); se não couber em nenhuma, criar uma pasta nova de tipo, nunca solto na raiz de `shaders/`.
 - Nenhuma geração procedural de terreno — dungeons são salas pré-desenhadas montadas em sequência (ver PROJETO-NOITE.md).

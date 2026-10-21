@@ -1,6 +1,6 @@
 # Plano 04 — Interações do cenário
 
-Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Prompt de interação: [03-ui.md](03-ui.md) · Passagens: [TRANSICOES.md](../TRANSICOES.md)
+Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Prompt de interação: [03-ui.md](03-ui.md) · Passagens: [13-transicoes.md](13-transicoes.md)
 
 Catálogo de coisas que o jogador pode fazer no **Calm Place**. A casa-loja (`inside_house`) é a **safe house**: cozinhar (vida), comprar upgrades, melhorar armas e a porta pro mundo da gameplay. Serve de cardápio: escolher, implementar e marcar o status.
 
@@ -55,7 +55,7 @@ Catálogo de coisas que o jogador pode fazer no **Calm Place**. A casa-loja (`in
 | **Cozinhar** (mecânica, estilo Breath of the Wild) | Novo tipo: combinar ingredientes + **visão de interação** (câmera no fogão, ver plano 05) | fogão da casa-loja (`CookPrompt` → `StoveView`) | Misturar itens coletados e cozinhar um prato (cura, bônus pra noite). Mecânica a desenhar. |
 | **Melhorar armas** (ferreiro) | Menu + visão de interação | ferraria medieval da casa (mesa `ForgeTable`, bigorna `Anvil`, amolador `Grindstone`), junto com a compra de upgrades | Upgrade de armas antes de ir pra gameplay. Prompt ainda não colocado. |
 | **Comprar upgrades** | Menu + **visão de interação** (câmera na mesa da ferraria) | ferraria da casa (`ShopPrompt` → `CounterView`) | Loja de quem ajuda o personagem. |
-| **Dormir na cama** | Passagem (pesada) | dentro da casa | Sequência de "cair no sono" → mundo da noite (ver [CARREGAMENTO.md](../CARREGAMENTO.md)). |
+| **Dormir na cama** | Passagem (pesada) | dentro da casa | Sequência de "cair no sono" → mundo da noite (ver [14-carregamento.md](14-carregamento.md)). |
 
 ## O que precisa existir antes
 
