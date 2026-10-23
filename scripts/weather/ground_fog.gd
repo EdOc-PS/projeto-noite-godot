@@ -11,7 +11,7 @@ const SHADER := preload("res://shaders/weather/ground_fog.gdshader")
 @export var area: float = 120.0                    ## lado da caixa (m)
 @export var fog_color: Color = Color(1, 1, 1)      ## branca por enquanto
 @export var fog_density: float = 1.6
-@export var fog_height: float = 0.8                ## m acima do chão (máximo)
+@export var fog_height: float = 0.35               ## m acima do chão (máximo): bem baixa
 @export var wind_speed: float = 0.6                ## m/s
 @export var wind_dir: Vector2 = Vector2(1.0, -0.02)
 

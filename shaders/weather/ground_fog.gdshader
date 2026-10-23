@@ -11,7 +11,7 @@ shader_type fog;
 uniform vec3 fog_color : source_color = vec3(1.0);
 uniform float emission_amount = 0.25;          // brilho próprio (não escurecer o verde)
 uniform float density = 1.6;
-uniform float fog_height = 0.8;                // m acima do chão onde quase acaba
+uniform float fog_height = 0.35;                // m acima do chão onde quase acaba
 uniform float height_falloff = 2.2;            // maior = topo mais definido
 uniform float ground_y = 0.0;
 
