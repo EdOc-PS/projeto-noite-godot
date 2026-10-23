@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/vfx/paint_post.tscn" id="9_paint"]
 [ext_resource type="Script" uid="uid://cwu8o08xhd4eo" path="res://scripts/weather/wind_leaves.gd" id="10_leaves"]
 [ext_resource type="Script" uid="uid://eraj037bwjjr" path="res://scripts/weather/wind_streaks.gd" id="11_streaks"]
-[ext_resource type="Script" path="res://scripts/weather/fog_patches.gd" id="12_haze"]
+[ext_resource type="Script" path="res://scripts/weather/ground_fog.gd" id="12_haze"]
 [ext_resource type="Terrain3DAssets" uid="uid://liqswcgmjtxf" path="res://scenes/levels/field/terrain_assets.tres" id="assets_file"]
 
 [sub_resource type="ProceduralSkyMaterial" id="skymat"]
@@ -172,5 +172,5 @@ speed_range = Vector2(0.8, 1.05)
 trail_length = 1.5
 width_range = Vector2(0.3, 1.3)
 
-[node name="DustFog" type="Node3D" parent="."]
+[node name="GroundFog" type="FogVolume" parent="."]
 script = ExtResource("12_haze")
