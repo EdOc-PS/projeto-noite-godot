@@ -39,6 +39,10 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export_range(0.0, 1.0) var sprig_chance: float = 0.01  ## fração dos pontos de grama que viram raminho
 @export var sprig_min_distance: float = 3.0  ## distância mínima entre raminhos (m)
 @export var sprig_over: Vector2 = Vector2(1.45, 1.65)  ## escala do raminho (×altura da grama no lugar)
+## Grama caída no chão (meshes 2 e 3): poucas, só onde NÃO tem grama.
+@export var litter_mesh_ids: PackedInt32Array = [2, 3]
+@export_range(0.0, 1.0) var litter_chance: float = 0.012  ## fração dos pontos sem grama
+@export var litter_min_distance: float = 1.5
 @export var grass_seed: int = 11
 
 func _ready() -> void:
@@ -99,9 +103,10 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + sprig_mesh_ids:
+	for id in grass_mesh_ids + sprig_mesh_ids + litter_mesh_ids:
 		per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
+	_litter = [] as Array[Vector3]
 	_seed_area(Vector2.ZERO, grass_area, grass_mesh_ids, rng, noise, height_noise, per_mesh, sprigs)
 	for id in per_mesh:
 		if not (per_mesh[id] as Array).is_empty():
@@ -118,7 +123,14 @@ func _seed_area(center: Vector2, size: float, ids: PackedInt32Array, rng: Random
 			var p := Vector3(center.x + x + rng.randf_range(-0.4, 0.4) * grass_spacing, 0.0, center.y + z + rng.randf_range(-0.4, 0.4) * grass_spacing)
 			# densidade cresce do limite pro centro da mancha
 			var density := clampf((noise.get_noise_2d(p.x, p.z) - grass_threshold) / 0.25, 0.0, 1.0)
-			if density > 0.0 and rng.randf() < density:
+			if density <= 0.0:
+				# sem grama: às vezes uma grama caída no chão
+				if not litter_mesh_ids.is_empty() and rng.randf() < litter_chance and _far_from(_litter, p, litter_min_distance):
+					_litter.append(p)
+					var lb := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * rng.randf_range(0.8, 1.3))
+					var lid: int = litter_mesh_ids[rng.randi() % litter_mesh_ids.size()]
+					(per_mesh[lid] as Array[Transform3D]).append(Transform3D(lb, Vector3(p.x, data.get_height(p), p.z)))
+			elif rng.randf() < density:
 				p.y = data.get_height(p)
 				var wave := (height_noise.get_noise_2d(p.x, p.z) + 1.0) * 0.5
 				# densa (meio da mancha) cresce até +grass_dense_growth; a onda só varia
@@ -136,6 +148,8 @@ func _seed_area(center: Vector2, size: float, ids: PackedInt32Array, rng: Random
 				(per_mesh[id] as Array[Transform3D]).append(Transform3D(b, p))
 			z += grass_spacing
 		x += grass_spacing
+
+var _litter: Array[Vector3] = []
 
 func _far_from(points: Array[Vector3], p: Vector3, dist: float) -> bool:
 	for q in points:

@@ -1,6 +1,7 @@
 """Gera a grama (glTF) usada pelo pincel do Terrain3D, um modelo de cada:
 assets/models/grass/grass_tuft.gltf  — tufo de lâminas-cilindro, ponta pontuda de bico arredondado
 assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
+assets/models/grass/grass_litter.gltf — quadrado deitado pra grama caída no chão (sprites 0100/0101)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
 Rodar: python tools/gen_grass_tufts.py
@@ -217,6 +218,24 @@ def write_gltf(path, name, pos, nor, uv, col, edge):
         json.dump(gltf, f)
 
 
+# Grama caída no chão (sprites 0100/0101 do Kenney): um quadrado deitado, rente
+# ao chão; a textura vem do material (assets/materials/grass_litter_*.tres).
+LITTER_SIZE = 0.9  # m
+
+
+def litter():
+    pos, nor, uv, col, edge = [], [], [], [], []
+    h = LITTER_SIZE / 2
+    y = 0.02
+    quad = [(-h, y, -h), (h, y, -h), (h, y, h), (-h, y, h)]
+    quv = [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)]
+    for tri in ((0, 2, 1), (0, 3, 2)):
+        for i in tri:
+            pos.append(quad[i]); nor.append((0.0, 1.0, 0.0)); uv.append(quv[i])
+            col.append((1.0, 1.0, 1.0, 1.0)); edge.append((0.0, 0.0))
+    return pos, nor, uv, col, edge
+
+
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     for name, (seed, blades, radius, height, width) in TUFTS.items():
@@ -227,6 +246,9 @@ def main():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *sprig_3d(seed, height))
         print(os.path.abspath(path))
+    path = os.path.join(OUT_DIR, "grass_litter.gltf")
+    write_gltf(path, "grass_litter", *litter())
+    print(os.path.abspath(path))
 
 
 if __name__ == "__main__":

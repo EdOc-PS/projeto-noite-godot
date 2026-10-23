@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dwr7xp8l0a501" path="res://assets/textures/terrain/grass.png" id="tex_ground"]
 [ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
+[ext_resource type="Texture2D" path="res://assets/textures/terrain/dirt.png" id="tex_dirt"]
+[ext_resource type="PackedScene" path="res://assets/models/grass/grass_litter.gltf" id="litter"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_drops.tres" id="mat_litter_a"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_leaves.tres" id="mat_litter_b"]
 
 [sub_resource type="Terrain3DMeshAsset" id="ma0"]
 name = "Tufo"
@@ -31,6 +35,33 @@ name = "Grama"
 albedo_texture = ExtResource("tex_ground")
 normal_texture = ExtResource("tex_ground_n")
 
+[sub_resource type="Terrain3DMeshAsset" id="ma2"]
+name = "Grama caída (gotas)"
+id = 2
+scene_file = ExtResource("litter")
+material_override = ExtResource("mat_litter_a")
+cast_shadows = 0
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma3"]
+name = "Grama caída (folhas)"
+id = 3
+scene_file = ExtResource("litter")
+material_override = ExtResource("mat_litter_b")
+cast_shadows = 0
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DTextureAsset" id="tex1"]
+name = "Terra"
+id = 1
+albedo_texture = ExtResource("tex_dirt")
+normal_texture = ExtResource("tex_ground_n")
+uv_scale = 0.1
+
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1")])
-texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/vfx/paint_post.tscn" id="9_paint"]
 [ext_resource type="Script" uid="uid://cwu8o08xhd4eo" path="res://scripts/weather/wind_leaves.gd" id="10_leaves"]
 [ext_resource type="Script" uid="uid://eraj037bwjjr" path="res://scripts/weather/wind_streaks.gd" id="11_streaks"]
-[ext_resource type="Script" path="res://scripts/weather/ground_fog.gd" id="12_haze"]
+[ext_resource type="Script" uid="uid://bx3qh3ajlyfyd" path="res://scripts/weather/ground_fog.gd" id="12_haze"]
 [ext_resource type="Terrain3DAssets" uid="uid://liqswcgmjtxf" path="res://scenes/levels/field/terrain_assets.tres" id="assets_file"]
 
 [sub_resource type="ProceduralSkyMaterial" id="skymat"]
@@ -32,16 +32,14 @@ ssao_light_affect = 0.15
 glow_enabled = true
 glow_intensity = 0.4
 glow_bloom = 0.05
-adjustment_enabled = true
-adjustment_saturation = 1.1
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
-volumetric_fog_albedo = Color(1, 1, 1, 1)
 volumetric_fog_length = 26.0
 volumetric_fog_detail_spread = 1.5
 volumetric_fog_ambient_inject = 0.6
 volumetric_fog_sky_affect = 0.0
-
+adjustment_enabled = true
+adjustment_saturation = 1.1
 
 [sub_resource type="Gradient" id="Gradient_17idt"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -67,7 +65,7 @@ seamless = true
 [sub_resource type="Terrain3DMaterial" id="mat"]
 _shader_parameters = {
 &"bias_distance": null,
-&"blend_sharpness": null,
+&"blend_sharpness": 0.25,
 &"depth_blur": null,
 &"enable_macro_variation": false,
 &"enable_projection": null,
@@ -94,8 +92,8 @@ environment = SubResource("env")
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1973918932]
 transform = Transform3D(0.86601907, -0.43302146, 0.25000688, 0, 0.5000028, 0.8660238, -0.500011, -0.74999315, 0.43301192, -11.793602, 10, -7.0998535)
 light_color = Color(1, 0.96, 0.88, 1)
-light_angular_distance = 2.5
 light_volumetric_fog_energy = 1.6
+light_angular_distance = 2.5
 shadow_enabled = true
 shadow_opacity = 0.75
 shadow_blur = 1.5
@@ -141,8 +139,8 @@ leaves_path = NodePath("../WindLeaves")
 
 [node name="WindLeaves" type="Node3D" parent="." unique_id=1307586731]
 script = ExtResource("10_leaves")
-wind_dir = Vector2(1, -0.02)
 leaves_per_texture = 12
+wind_dir = Vector2(1, -0.02)
 
 [node name="WindTrails" type="GPUParticles3D" parent="." unique_id=1254133874]
 script = ExtResource("11_streaks")
@@ -155,7 +153,6 @@ streak_color = Color(0.9, 0.95, 0.86, 1)
 night_color = Color(0.85, 0.9, 1, 0.35)
 width = 0.07
 speed_range = Vector2(0.8, 1.25)
-trail_length = 1.0
 width_range = Vector2(0.3, 1.3)
 
 [node name="WindTrailsLong" type="GPUParticles3D" parent="." unique_id=1639775941]
@@ -172,5 +169,6 @@ speed_range = Vector2(0.8, 1.05)
 trail_length = 1.5
 width_range = Vector2(0.3, 1.3)
 
-[node name="GroundFog" type="FogVolume" parent="."]
+[node name="GroundFog" type="FogVolume" parent="." unique_id=407297276]
+visible = false
 script = ExtResource("12_haze")

@@ -68,3 +68,9 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Espaçamento 0,26 m entre tufos na mancha e limite das manchas em 0,06 (`grass_threshold`): menos tufos e mais chão entre as manchas, por FPS.
 - **Manchas com clareiras**: o ruído decide onde nasce, o resto é chão.
 - Grama **não projeta sombra**.
+
+## Chão: terra e grama caída
+
+- **Terra** (`assets/textures/terrain/dirt.png`, marrom bem claro liso, RGB 214, 182, 138): textura 1 do Terrain3D, pra caminhos. Pintar com a ferramenta **Paint** (textura "Terra").
+- **Degradê automático entre verde e terra**: é a própria mistura do Terrain3D. A borda de cada pincelada vira mistura das duas texturas; `blend_sharpness` 0,25 no material do terreno deixa a passagem bem suave (o padrão era bem mais dura). Não precisa de textura de degradê. Pra borda ainda mais larga: pincel com **Strength** menor nas bordas ou a ferramenta **Spray**.
+- **Grama caída no chão** (sprites 0100/0101 do Kenney → `assets/textures/vegetation/litter_drops.png` / `litter_leaves.png`): quadrado deitado rente ao chão (`assets/models/grass/grass_litter.gltf`, 0,9 m), meshes 2 e 3 do pincel, material com a **cor da base da grama** (`grass_litter_*.tres`). A semeadura põe **poucas** (`litter_chance` 0,012, mínimo 1,5 m entre elas) e **só onde não tem grama**.
