@@ -47,9 +47,9 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## Manchas de TERRA (textura 1) pintadas sozinhas no chão: formas irregulares
 ## (não círculos perfeitos), com degradê largo pra grama na borda. Dentro
 ## delas não nasce grama, raminho nem grama caída.
-@export var dirt_patches: int = 6
-@export var dirt_radius: Vector2 = Vector2(3.5, 7.0)   ## raio de cada mancha (m)
-@export var dirt_edge: float = 3.0                     ## largura do degradê terra → grama (m)
+@export var dirt_patches: int = 4
+@export var dirt_radius: Vector2 = Vector2(1.5, 3.0)   ## raio de cada mancha (m)
+@export var dirt_edge: float = 1.5                     ## largura do degradê terra → grama (m)
 @export var dirt_seed: int = 5
 @export var grass_seed: int = 11
 
