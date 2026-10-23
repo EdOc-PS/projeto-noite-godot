@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" path="res://scenes/vfx/paint_post.tscn" id="9_paint"]
 [ext_resource type="Script" uid="uid://cwu8o08xhd4eo" path="res://scripts/weather/wind_leaves.gd" id="10_leaves"]
 [ext_resource type="Script" uid="uid://eraj037bwjjr" path="res://scripts/weather/wind_streaks.gd" id="11_streaks"]
-[ext_resource type="Script" path="res://scripts/weather/ground_haze.gd" id="12_haze"]
+[ext_resource type="Script" path="res://scripts/weather/fog_patches.gd" id="12_haze"]
 [ext_resource type="Terrain3DAssets" uid="uid://liqswcgmjtxf" path="res://scenes/levels/field/terrain_assets.tres" id="assets_file"]
 
 [sub_resource type="ProceduralSkyMaterial" id="skymat"]
@@ -34,6 +34,14 @@ glow_intensity = 0.4
 glow_bloom = 0.05
 adjustment_enabled = true
 adjustment_saturation = 1.1
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(1, 1, 1, 1)
+volumetric_fog_length = 40.0
+volumetric_fog_detail_spread = 2.0
+volumetric_fog_ambient_inject = 0.6
+volumetric_fog_sky_affect = 0.0
+
 
 [sub_resource type="Gradient" id="Gradient_17idt"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -163,5 +171,5 @@ speed_range = Vector2(0.8, 1.05)
 trail_length = 1.5
 width_range = Vector2(0.3, 1.3)
 
-[node name="GroundHaze" type="GPUParticles3D" parent="."]
+[node name="DustFog" type="Node3D" parent="."]
 script = ExtResource("12_haze")
