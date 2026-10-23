@@ -18,7 +18,7 @@ uniform float ground_y = 0.0;
 uniform sampler3D noise_tex : repeat_enable, filter_linear;
 uniform float noise_scale = 14.0;              // m por repetição da camada grande
 uniform float detail_scale = 4.5;              // m por repetição da camada de detalhe
-uniform vec3 wind = vec3(0.6, 0.0, -0.01);     // m/s (direção do vento)
+uniform vec3 wind = vec3(0.0);                 // m/s (0 = parada)
 uniform float noise_low : hint_range(0.0, 1.0) = 0.22;   // abaixo disso: vazio
 uniform float noise_high : hint_range(0.0, 1.0) = 0.7;   // acima disso: cheio
 uniform float edge_fade = 6.0;                 // m de fade nas bordas da caixa
