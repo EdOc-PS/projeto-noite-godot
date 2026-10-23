@@ -38,7 +38,7 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(1, 1, 1, 1)
 volumetric_fog_length = 40.0
-volumetric_fog_detail_spread = 2.0
+volumetric_fog_detail_spread = 1.5
 volumetric_fog_ambient_inject = 0.6
 volumetric_fog_sky_affect = 0.0
 
@@ -95,6 +95,7 @@ environment = SubResource("env")
 transform = Transform3D(0.86601907, -0.43302146, 0.25000688, 0, 0.5000028, 0.8660238, -0.500011, -0.74999315, 0.43301192, -11.793602, 10, -7.0998535)
 light_color = Color(1, 0.96, 0.88, 1)
 light_angular_distance = 2.5
+light_volumetric_fog_energy = 1.6
 shadow_enabled = true
 shadow_opacity = 0.75
 shadow_blur = 1.5

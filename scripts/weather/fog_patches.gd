@@ -14,10 +14,10 @@ extends Node3D
 @export var size_min: Vector3 = Vector3(5.0, 2.0, 3.5) ## tamanho da mancha (m)
 @export var size_max: Vector3 = Vector3(9.0, 3.5, 6.5)
 @export var color: Color = Color(0.95, 0.85, 0.45)      ## poeira: amarela
-@export var density: float = 1.4                       ## densidade no auge
+@export var density: float = 2.5                       ## densidade no auge
 @export var speed: Vector2 = Vector2(1.5, 2.6)         ## m/s na direção do vento
 @export var life: Vector2 = Vector2(10.0, 16.0)         ## segundos de cada mancha
-@export var noise_scale: float = 0.35                  ## frequência do ruído (maior = mais fofo/picado)
+@export var noise_scale: float = 0.06                  ## frequência do ruído (maior = gomos menores)
 @export var wind_dir: Vector2 = Vector2(1.0, -0.02)
 ## Segue o estado do vento (wind.gd): menos manchas e mais lentas no calmo.
 @export var follow_wind: bool = true
@@ -36,16 +36,27 @@ var _noise_tex: NoiseTexture3D
 
 func _ready() -> void:
 	_rng.randomize()
+	# ruído "couve-flor" (nuvem fofa): Perlin com várias oitavas, poucas bolhas
+	# grandes por volume e muito detalhe na borda
 	var noise := FastNoiseLite.new()
-	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	noise.frequency = noise_scale
-	noise.fractal_octaves = 3
+	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	noise.fractal_octaves = 5
+	noise.fractal_gain = 0.55
 	_noise_tex = NoiseTexture3D.new()
 	_noise_tex.noise = noise
-	_noise_tex.width = 48
-	_noise_tex.height = 24
-	_noise_tex.depth = 48
+	_noise_tex.width = 64
+	_noise_tex.height = 32
+	_noise_tex.depth = 64
 	_noise_tex.seamless = true
+	_noise_tex.normalize = true
+	# contraste: abaixo de ~40% vira vazio, acima de ~70% fica cheio. É o que
+	# dá os "gomos" e buracos da nuvem, em vez de um véu uniforme
+	var ramp := Gradient.new()
+	ramp.offsets = PackedFloat32Array([0.0, 0.4, 0.72, 1.0])
+	ramp.colors = PackedColorArray([Color.BLACK, Color.BLACK, Color.WHITE, Color.WHITE])
+	_noise_tex.color_ramp = ramp
 	for i in count:
 		var p := Patch.new()
 		p.vol = FogVolume.new()
@@ -53,8 +64,8 @@ func _ready() -> void:
 		p.mat = FogMaterial.new()
 		p.mat.albedo = color
 		p.mat.density_texture = _noise_tex
-		p.mat.edge_fade = 0.5  # borda bem esfumada: volume fofo, sem casca
-		p.mat.height_falloff = 0.4  # mais densa embaixo (levantando do chão)
+		p.mat.edge_fade = 0.15  # borda curta: os gomos do ruído é que fazem o contorno fofo
+		p.mat.height_falloff = 0.8  # densa embaixo, topo em gomos (como camada de nuvem)
 		p.vol.material = p.mat
 		add_child(p.vol)
 		_patches.append(p)
