@@ -13,11 +13,11 @@ const SHADER := preload("res://shaders/weather/ground_fog.gdshader")
 @export var area: float = 120.0                    ## lado da caixa (m)
 @export var fog_height: float = 0.6                ## altura da caixa (m): baixa (fina demais faz faixas)
 @export var fog_color: Color = Color(1, 1, 1)      ## branca por enquanto
-@export var fog_density: float = 0.9
+@export var fog_density: float = 2.411             ## valor do vídeo
 @export var move: Vector2 = Vector2.ZERO           ## m/s (0 = parada)
 @export_group("Texturas")
-@export var noise_texture: Texture2D               ## vazio = gera
-@export var detail_texture: Texture2D              ## vazio = gera
+@export var noise_texture: Texture2D = preload("res://assets/textures/effects/fog/fog_noise.png")  ## vazio = gera
+@export var detail_texture: Texture2D = preload("res://assets/textures/effects/fog/fog_noise.png") ## no vídeo: a mesma textura
 @export var color_ramp: Texture2D                  ## cor pela densidade (opcional)
 
 var _player: Node3D

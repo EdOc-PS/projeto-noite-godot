@@ -19,14 +19,14 @@ uniform bool use_color_ramp = false;
 uniform vec3 fog_color : source_color = vec3(1.0);
 uniform float emission_amount = 0.25;      // brilho próprio (não escurecer o verde)
 
-uniform float density = 1.6;               // densidade final
-uniform float noise_scale = 0.06;          // 1/m do ruído principal (menor = manchas maiores)
-uniform float detail_scale = 0.18;         // 1/m do ruído de detalhe
+uniform float density = 2.411;             // densidade final (valor do vídeo)
+uniform float noise_scale = 0.074;         // 1/m do ruído principal (valor do vídeo)
+uniform float detail_scale = 0.074;        // 1/m do ruído de detalhe (no vídeo: o mesmo ruído e a mesma escala)
 uniform float warp = 0.2;                  // quanto o detalhe distorce o principal
-uniform float flatness = 1.0;              // maior = vira ruído mais rápido ao subir
+uniform float flatness = 2.567;            // maior = vira ruído mais rápido ao subir (valor do vídeo)
 uniform vec2 move = vec2(0.0);             // m/s (0 = parada); o detalhe anda na metade
-uniform float noise_low : hint_range(0.0, 1.0) = 0.25;  // contraste: abaixo disso, vazio
-uniform float noise_high : hint_range(0.0, 1.0) = 0.7;  // acima disso, cheio
+uniform float noise_low : hint_range(0.0, 1.0) = 0.0;   // contraste: abaixo disso, vazio (0/1 = como no vídeo, sem contraste extra)
+uniform float noise_high : hint_range(0.0, 1.0) = 1.0;  // acima disso, cheio
 uniform float edge_fade = 6.0;             // m de fade nas laterais da caixa
 
 void fog() {
