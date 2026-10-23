@@ -70,7 +70,7 @@ move_down={
 
 [rendering]
 
-environment/volumetric_fog/volume_size=96
+environment/volumetric_fog/volume_size=160
 environment/volumetric_fog/volume_depth=64
 
 anti_aliasing/quality/msaa_3d=2
