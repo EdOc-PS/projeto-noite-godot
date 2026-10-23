@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+
+[sub_resource type="CapsuleShape3D" id="shape"]
+radius = 0.35
+height = 1.6
+
+[sub_resource type="CapsuleMesh" id="body_mesh"]
+radius = 0.35
+height = 1.6
+
+[sub_resource type="StandardMaterial3D" id="body_mat"]
+albedo_color = Color(0.95, 0.55, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="nose_mesh"]
+size = Vector3(0.18, 0.18, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="nose_mat"]
+albedo_color = Color(0.25, 0.2, 0.35, 1)
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("shape")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("body_mesh")
+surface_material_override/0 = SubResource("body_mat")
+
+[node name="Nose" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0.35)
+mesh = SubResource("nose_mesh")
+surface_material_override/0 = SubResource("nose_mat")

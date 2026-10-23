@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://shaders/post_process/paint_post.gdshader" id="paint_shader"]
+
+[sub_resource type="ShaderMaterial" id="PaintMaterial"]
+shader = ExtResource("paint_shader")
+shader_parameter/paint_amount = 0.35
+shader_parameter/paint_radius = 2
+shader_parameter/sharpen = 0.2
+shader_parameter/saturation = 1.15
+
+[node name="PaintLayer" type="CanvasLayer"]
+layer = 1
+
+[node name="PaintRect" type="ColorRect" parent="."]
+material = SubResource("PaintMaterial")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2

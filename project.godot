@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Projeto Noite"
+run/main_scene="res://scenes/levels/field/field.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -25,6 +26,10 @@ FpsCounter="*res://scripts/ui/fps_counter.gd"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
 
 [filesystem]
 
@@ -65,11 +70,8 @@ move_down={
 
 [rendering]
 
-rendering_device/driver.windows="d3d12"
 anti_aliasing/quality/msaa_3d=2
 anti_aliasing/quality/screen_space_aa=1
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
-lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
 
 [shader_globals]
 
@@ -81,12 +83,10 @@ wind_gust_slow={
 "type": "float",
 "value": 0.0
 }
-
 veg_rim_scale={
 "type": "float",
 "value": 1.0
 }
-
 wind_strength={
 "type": "float",
 "value": 1.0
@@ -95,7 +95,6 @@ wind_gust={
 "type": "float",
 "value": 0.0
 }
-
 veg_backlight={
 "type": "float",
 "value": 0.0

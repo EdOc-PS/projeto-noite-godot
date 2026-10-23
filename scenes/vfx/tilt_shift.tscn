@@ -11,6 +11,10 @@ shader_parameter/blur_amount = 3.5
 shader_parameter/ellipse_x = 0.5
 
 [node name="TiltShiftLayer" type="CanvasLayer"]
+layer = 2
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
 
 [node name="TiltShiftRect" type="ColorRect" parent="."]
 material = SubResource("TiltShiftMaterial")

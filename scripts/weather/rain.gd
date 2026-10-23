@@ -3,7 +3,7 @@ extends GPUParticles3D
 ## inclinadas pelo vento, numa área em volta do jogador (o emissor segue o
 ## jogador, então não precisa cobrir o mapa todo). Configurado todo aqui.
 ## Liga/desliga suave por `set_intensity()` (o WeatherCycle chama).
-## Regras em .docs/plans/06-clima.md.
+## Regras em .docs/plans/05-clima.md.
 
 @export var drop_count: int = 2700                 ## gotas ao mesmo tempo na intensidade 1 (NIMBLUX: 9000 no máximo, ~5000 na chuva média)
 @export var area: Vector2 = Vector2(12.0, 12.0)    ## meia-área em volta do jogador (24 × 24 m, como o NIMBLUX)

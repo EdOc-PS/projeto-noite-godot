@@ -19,9 +19,16 @@ extends Node3D
 @export var size_near_focus: float = 10.0
 @export var zoom_speed: float = 3.0
 
+@export_group("Zoom na roda do mouse")
+@export var wheel_step: float = 1.15         ## quanto cada clique da roda aproxima/afasta
+## Ortogonal: multiplica o size. Perspectiva: multiplica a distância (camera_distance).
+@export var zoom_min: float = 0.5            ## fração mais perto
+@export var zoom_max: float = 2.5            ## fração mais longe
+
 var target: Node3D
 var camera: Camera3D
 var focus: Node3D
+var zoom := 1.0  ## multiplicador da roda do mouse (1 = size_near_player / camera_distance)
 
 func _ready() -> void:
 	if target_path != NodePath():
@@ -46,9 +53,23 @@ func _process(delta: float) -> void:
 	var desired := target.global_position + Vector3.UP * pivot_height
 	global_position = global_position.lerp(desired, follow_speed * delta)
 
-	if camera != null and focus != null:
-		var to_focus := focus.global_position - target.global_position
-		to_focus.y = 0.0
-		var t := 1.0 - clampf(to_focus.length() / focus_radius, 0.0, 1.0)
-		var desired_size := lerpf(size_near_player, size_near_focus, t)
-		camera.size = lerpf(camera.size, desired_size, zoom_speed * delta)
+	if camera != null:
+		var desired_size := size_near_player
+		if focus != null:
+			var to_focus := focus.global_position - target.global_position
+			to_focus.y = 0.0
+			var t := 1.0 - clampf(to_focus.length() / focus_radius, 0.0, 1.0)
+			desired_size = lerpf(size_near_player, size_near_focus, t)
+		if camera.projection == Camera3D.PROJECTION_ORTHOGONAL:
+			camera.size = lerpf(camera.size, desired_size * zoom, zoom_speed * delta)
+		else:
+			var dir := camera.transform.basis.z
+			var dist := lerpf(camera.position.length(), camera_distance * zoom, zoom_speed * delta)
+			camera.position = dir * dist
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom = clampf(zoom / wheel_step, zoom_min, zoom_max)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom = clampf(zoom * wheel_step, zoom_min, zoom_max)

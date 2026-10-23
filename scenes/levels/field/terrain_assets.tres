@@ -1,0 +1,36 @@
+[gd_resource type="Terrain3DAssets" format=3 uid="uid://liqswcgmjtxf"]
+
+[ext_resource type="Material" path="res://assets/materials/grass_sprig.tres" id="mat_sprig"]
+[ext_resource type="Material" uid="uid://bkye1nki5tjc1" path="res://assets/materials/grass_tuft.tres" id="mat_tuft"]
+[ext_resource type="PackedScene" uid="uid://27o0kn2472au" path="res://assets/models/grass/grass_sprig.gltf" id="sprig"]
+[ext_resource type="Texture2D" uid="uid://dwr7xp8l0a501" path="res://assets/textures/terrain/grass.png" id="tex_ground"]
+[ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
+[ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
+
+[sub_resource type="Terrain3DMeshAsset" id="ma0"]
+name = "Tufo"
+scene_file = ExtResource("tuft")
+cast_shadows = 0
+material_override = ExtResource("mat_tuft")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma1"]
+name = "Raminho"
+id = 1
+scene_file = ExtResource("sprig")
+cast_shadows = 0
+material_override = ExtResource("mat_sprig")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DTextureAsset" id="tex0"]
+name = "Grama"
+albedo_texture = ExtResource("tex_ground")
+normal_texture = ExtResource("tex_ground_n")
+
+[resource]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0")])

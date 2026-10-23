@@ -3,7 +3,7 @@ extends GPUParticles3D
 ## cintilando (acendem e apagam rápido, como gota de água pegando o sol).
 ## Ficam na área deste node (a área com grama). Grupo `dew_fx`: o
 ## WeatherCycle controla `amount_ratio` (cheio no começo da manhã e some
-## conforme o sol sobe; nada à tarde/noite/chuva). Regras em .docs/plans/06-clima.md.
+## conforme o sol sobe; nada à tarde/noite/chuva). Regras em .docs/plans/05-clima.md.
 
 @export var sparkle_count: int = 35
 @export var area: Vector3 = Vector3(7.5, 0.18, 11.5)  ## meia-caixa (local)

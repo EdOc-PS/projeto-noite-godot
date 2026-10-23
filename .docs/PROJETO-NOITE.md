@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-Jogo 3D de câmera de cima com estética **cartoon estilizada, pincelada** (visual próprio; inspirado no pincelado de Dishonored e no Breath of the Wild, vivo e claro). Detalhes em [plans/11-estilo-visual.md](plans/11-estilo-visual.md).
+Jogo 3D de câmera de cima com estética **cartoon estilizada, pincelada** (visual próprio; inspirado no pincelado de Dishonored e no Breath of the Wild, vivo e claro). Detalhes em [plans/07-estilo-visual.md](plans/07-estilo-visual.md).
 
 Loop de jogo dividido em duas partes:
 
@@ -16,7 +16,7 @@ Loop de jogo dividido em duas partes:
 
 ## Direção de Arte
 
-- **Estilo**: cartoon estilizado (não realista), pincelado/aquarela, cores vivas e claras ([plans/11-estilo-visual.md](plans/11-estilo-visual.md))
+- **Estilo**: cartoon estilizado (não realista), pincelado/aquarela, cores vivas e claras ([plans/07-estilo-visual.md](plans/07-estilo-visual.md))
 - **Personagens**: proporção Chibi / Super Deformed (a confirmar com o novo personagem)
 - **Câmera**: isométrica, projeção **Orthogonal** (Camera3D), ângulo aproximado de 30–45°
 - **Elementos**: silhueta atrás de paredes, vento, efeito de lente (tilt-shift) em volta da tela, interações/inputs/mouse
@@ -57,7 +57,7 @@ Sistemas de dungeon, progressão e cutscenes vêm em etapas posteriores.
 
 ## Assets — Fonte
 
-Hoje o projeto só tem `assets/ui/` (Kenney, CC0).
+Hoje o projeto tem `assets/ui/` (Kenney, CC0) e a textura de chão `assets/textures/terrain/grass.png`. A natureza recomeça do zero (a anterior está em `projeto-noite_sources/natureza-arquivada/`).
 
 Próximos: assets do **Kenney** para a cidade (a enviar) e uma arte a definir para o mundo de gameplay.
 

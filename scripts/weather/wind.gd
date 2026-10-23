@@ -1,5 +1,5 @@
 extends Node
-## Vento da cena (parte do clima, ver "Vento (sistema)" em .docs/plans/06-clima.md).
+## Vento da cena (parte do clima, ver "Vento (sistema)" em .docs/plans/05-clima.md).
 ##
 ## - Direção FIXA: `wind_dir` (noroeste → sudeste na tela), a mesma dos riscos
 ##   de vento e das folhas.
@@ -15,9 +15,10 @@ extends Node
 enum State { CALM, BREEZE, GALE }
 
 const STATES := {
-	State.CALM:   { "bend": 0.08, "sway": 1.0, "gustiness": 0.1, "streaks": 0.15, "speed": 0.6 },
-	State.BREEZE: { "bend": 0.3,  "sway": 1.0, "gustiness": 0.35, "streaks": 0.6, "speed": 1.0 },
-	State.GALE:   { "bend": 0.75, "sway": 1.5, "gustiness": 0.6, "streaks": 1.0, "speed": 1.8 },
+	# mais suave que no projeto antigo (a ventania parecia forte demais)
+	State.CALM:   { "bend": 0.06, "sway": 0.8, "gustiness": 0.08, "streaks": 0.03, "speed": 0.5 },
+	State.BREEZE: { "bend": 0.22, "sway": 0.9, "gustiness": 0.25, "streaks": 0.14, "speed": 0.75 },
+	State.GALE:   { "bend": 0.45, "sway": 1.15, "gustiness": 0.4, "streaks": 0.45, "speed": 1.15 },
 }
 
 @export var wind_dir: Vector2 = Vector2(1.0, 0.3)            ## direção fixa (mundo)
@@ -26,7 +27,7 @@ const STATES := {
 @export_range(-1.0, 1.0) var fixed_phase: float = -1.0
 @export var leaves_path: NodePath                            ## WindLeaves (folhas e grama voando)
 @export var state_duration: Vector2 = Vector2(20.0, 50.0)    ## segundos em cada estado (sorteado)
-@export var transition_time: float = 12.0                    ## segundos pra trocar de estado
+@export var transition_time: float = 18.0                    ## segundos pra trocar de estado
 @export var start_state: State = State.BREEZE
 @export_group("Poeira")
 @export var dust_push: float = 0.35        ## quanto a poeira é levada pelo vento

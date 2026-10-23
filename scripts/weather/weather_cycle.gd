@@ -2,7 +2,7 @@ extends Node
 ## Clima da cena: ciclo de dia e noite + chuva.
 ## Ciclo: a cena sempre começa de dia e vai passando por
 ## manhã → tarde (laranja) → noite ao longo de `cycle_duration` segundos.
-## Ao chegar na noite, para. Regras em .docs/plans/06-clima.md.
+## Ao chegar na noite, para. Regras em .docs/plans/05-clima.md.
 ##
 ## Controla: pesos do céu (shaders/weather/day_night_sky.gdshader), cor/força/ângulo
 ## da luz principal, luz ambiente e névoa.
@@ -40,7 +40,7 @@ enum Palette { VINIL, BOTW }
 
 ## Fases-chave do ciclo (phase 0..1). Entre duas, os valores são interpolados.
 ## Padrão visual: cores vivas de brinquedo (Link's Awakening), nunca lavado.
-## Ver tabela em .docs/plans/06-clima.md.
+## Ver tabela em .docs/plans/05-clima.md.
 const KEYS := [
 	{ "phase": 0.0, "dusk": 0.0, "night": 0.0,
 	  "sun_color": Color(1.0, 0.95, 0.85), "sun_energy": 1.0, "sun_pitch": -52.0,

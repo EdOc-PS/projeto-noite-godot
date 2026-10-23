@@ -14,8 +14,10 @@ projeto-noite/
 │   ├── CREDITOS.md           # créditos e licenças dos assets
 │   └── plans/                # documentos numerados: NN-nome-minusculo.md
 │       ├── 01..06, 10, 13, 14-*.md  # planos por etapa/sistema
-│       └── 11-estilo-visual.md      # estilo: cartoon estilizado, pincelado
+│       └── 07-estilo-visual.md      # estilo: cartoon estilizado, pincelado
 ├── project.godot
+├── addons/                    # plugins do editor, só o que o projeto usa
+│   └── terrain_3d/            #   Terrain3D 1.0.2 (relevo esculpível); só binários de Windows
 ├── scenes/                    # cenas, por tipo (áreas jogáveis serão recriadas)
 │   ├── characters/            #   player/ (e NPCs/inimigos no futuro)
 │   ├── vfx/                   #   efeitos reutilizáveis (tilt-shift)
@@ -30,15 +32,15 @@ projeto-noite/
 │   ├── vegetation/            #   wind_applier (vento nas plantas)
 │   └── ui/
 ├── assets/                    # arquivos de terceiros, por tipo e depois por categoria
-│   └── ui/                    #   input_prompts/, cursors/, emotes/  (models/ etc. voltam com os assets do Kenney)
+│   └── ui/                    #   input_prompts/, cursors/, emotes/  (cidade do Kenney entra em models/)
 ├── shaders/                   # .gdshader, uma pasta por tipo:
 │   ├── silhouette/            #   silhueta atrás de paredes
 │   ├── post_process/          #   efeitos de tela (tilt_shift)
 │   └── ui/                    #   interface (ui_icon_glow)
-└── (fora do projeto) ../../Jogo - 3D/projeto-noite_sources/   # pacotes originais dos assets
+└── (fora do projeto) ../../Jogo - 3D/projeto-noite_sources/   # pacotes originais (assets/, addons/)
 ```
 
-Pastas que ainda não existem (`assets/models/`, `shaders/weather/`, `shaders/nature/`, `tools/`...) são criadas de novo quando houver conteúdo, seguindo as convenções abaixo.
+Pastas que ainda não existem (`assets/models/`, `assets/textures/vegetation/`, `shaders/weather/`, `shaders/nature/`, `tools/`...) são criadas de novo quando houver conteúdo, seguindo as convenções abaixo.
 
 ## Convenção de assets (`assets/`)
 
@@ -71,11 +73,17 @@ assets/<tipo>/<categoria>/<nome_do_kit>/
 
 Ver [PROJETO-NOITE.md](PROJETO-NOITE.md#assets--fonte) para a origem de cada kit.
 
+## Plugins (`addons/`)
+
+Só entra em `addons/` a pasta do plugin, sem demo, exemplos nem binários de plataformas que o jogo não usa. O pacote completo fica em `projeto-noite_sources/addons/<plugin>_<versão>/`.
+
+- **Terrain3D** (1.0.2, Tokisan Games, MIT): relevo esculpível (lagos, caminhos levemente afundados, ondulações) com colisão. Binários mantidos: Windows. Para exportar para outra plataforma, copiar o binário correspondente de `projeto-noite_sources/addons/terrain_3d_v1.0.2/addons/terrain_3d/bin/`.
+
 ## Autoloads (Singletons)
 
 - `InputDevice` (`scripts/core/input_device.gd`): detecta se o jogador está no teclado/mouse ou no controle (último input) e emite `device_changed`; usado pela UI pra mostrar os ícones certos.
 - `FpsCounter` (`scripts/ui/fps_counter.gd`): contador de FPS no canto inferior esquerdo, em todas as cenas; F3 mostra/esconde.
-- `SceneTransition` (`scripts/core/scene_transition.gd`): única forma de trocar de cenário — `SceneTransition.change_scene(path)`. Faz o wipe de bolhas e descobre a tela ao iniciar o jogo. Regras em [13-transicoes.md](plans/13-transicoes.md).
+- `SceneTransition` (`scripts/core/scene_transition.gd`): única forma de trocar de cenário — `SceneTransition.change_scene(path)`. Faz o wipe de bolhas e descobre a tela ao iniciar o jogo. Regras em [08-transicoes.md](plans/08-transicoes.md).
 - `GameState` (`scripts/core/game_state.gd`, ainda não criado): estado do jogador que persiste entre a troca de cena Dia ↔ Noite (vida, itens, progresso). Único autoload previsto no escopo inicial; novos autoloads devem ser justificados aqui quando adicionados.
 
 ## Convenções gerais

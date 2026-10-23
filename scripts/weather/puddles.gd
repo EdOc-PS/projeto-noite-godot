@@ -1,7 +1,7 @@
 extends MeshInstance3D
 ## Poças no chão (área plana em volta deste node). Crescem com a chuva e secam
 ## devagar. Grupo `wet_receivers`: o WeatherCycle chama `set_wetness()`.
-## Só pra chão plano (o plano fica em y deste node). Ver .docs/plans/06-clima.md.
+## Só pra chão plano (o plano fica em y deste node). Ver .docs/plans/05-clima.md.
 
 const SHADER := preload("res://shaders/weather/puddles.gdshader")
 

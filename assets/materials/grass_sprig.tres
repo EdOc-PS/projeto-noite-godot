@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/nature/grass_sprig.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/textures/vegetation/sprig_0093.png" id="2_sprite"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/base_color = Color(0.3, 0.52, 0.0, 1)
+shader_parameter/tip_color = Color(1, 1, 0.96, 1)
+shader_parameter/noise_scale = 20.0
+shader_parameter/sway_strength = 0.05
+shader_parameter/sway_speed = 1.4
+shader_parameter/sway_height = 0.4
+shader_parameter/use_sprite = false
+shader_parameter/sprite = ExtResource("2_sprite")
+shader_parameter/shade_amount = 0.0
+shader_parameter/billboard = false
+shader_parameter/sprite_alpha = Vector2(0.4, 0.5)
+render_priority = 1
+shader_parameter/wind_dir = Vector2(1, -0.02)

@@ -2,7 +2,7 @@ extends GPUParticles3D
 ## Poeira no ar (manhã): grãozinhos claros flutuando devagar onde bate sol,
 ## com transparências diferentes (uns bem visíveis, outros quase somem). O emissor segue o jogador. Grupo
 ## `morning_fx`: o WeatherCycle controla `amount_ratio` (cheio de manhã, some
-## até a tarde, nada à noite/chuva). Regras em .docs/plans/06-clima.md.
+## até a tarde, nada à noite/chuva). Regras em .docs/plans/05-clima.md.
 
 ## Grupo que controla a quantidade: `morning_fx` (poeira da manhã) ou
 ## `night_fx` (poeira da noite, junto dos vagalumes).

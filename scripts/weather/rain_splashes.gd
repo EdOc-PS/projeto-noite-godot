@@ -2,7 +2,7 @@ extends Node3D
 ## Respingos da chuva no chão (valores do NIMBLUX Lite): **ondas** (anéis que
 ## se abrem no chão) e **coroas** (gotinhas quicando pra cima). Num raio em
 ## volta do jogador. Grupo `rain_fx`: o WeatherCycle chama `set_intensity()`.
-## Regras em .docs/plans/06-clima.md.
+## Regras em .docs/plans/05-clima.md.
 
 @export var radius: float = 9.0                   ## raio em volta do jogador
 @export var ground_height: float = 0.02           ## altura do chão (um pouco acima, pra não brigar com ele)

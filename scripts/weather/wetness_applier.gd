@@ -4,7 +4,7 @@ extends Node
 ## verticais ganham água escorrendo (`rain_streaks.gdshader` como next_pass).
 ## Secam devagar quando para. Folhagem fica de fora (molhada fica com cara de
 ## plástico). Grupo `wet_receivers`: o WeatherCycle chama `set_wetness()`.
-## Regras em .docs/plans/06-clima.md.
+## Regras em .docs/plans/05-clima.md.
 
 const STREAKS := preload("res://shaders/weather/rain_streaks.gdshader")
 

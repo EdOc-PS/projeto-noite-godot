@@ -1,10 +1,12 @@
 extends GPUParticles3D
 ## Riscos de vento (estilo Death's Door / Zelda): linhas brancas finas que
-## passam rápido na direção do vento, com uma leve ondulação, e somem.
+## passam na direção do vento, com um leve vai-e-volta (nado de tubarão), e somem.
 ## Cada risco é o rastro (trail) de uma partícula, com malha em cruz pra ser
 ## visível de qualquer ângulo. O emissor acompanha o jogador, então sempre há
 ## riscos na área da câmera, sem precisar cobrir o mapa inteiro.
 ## Configurado todo aqui; ajuste pelos exports.
+
+const SWIM_SHADER := preload("res://shaders/weather/wind_streak_particles.gdshader")
 
 @export var wind_dir: Vector2 = Vector2(1.0, 0.3)  ## mesmo vento do wind_sway
 @export var streak_count: int = 4                  ## riscos ao mesmo tempo (poucos = sutil)
@@ -18,10 +20,14 @@ extends GPUParticles3D
 ## Velocidade sorteada por risco (multiplicador): como o rastro dura o mesmo
 ## tempo, risco mais rápido = mais COMPRIDO. Faixa larga = comprimentos variados.
 @export var speed_range: Vector2 = Vector2(0.8, 1.2)
-## Quanto o risco faz curva/laço (turbulência): baixo = quase reto; alto =
-## faz voltas (os "loops" do vento).
-@export var curl: float = 0.12
-@export var curl_size: float = 4.0         ## tamanho das curvas (menor = laços mais fechados)
+## "Nado de tubarão": vai e volta pros lados enquanto passa (m/s; 0 = reto).
+## Opacidade sorteada por risco (multiplica o alfa de `streak_color`).
+@export var alpha_range: Vector2 = Vector2(0.3, 0.7)
+@export var swim_amp: float = 0.7
+@export var swim_freq: float = 0.6        ## vai-e-volta por segundo
+## (antigos, sem uso: a ondulação por turbulência dava trancos e laços)
+@export var curl: float = 0.0
+@export var curl_size: float = 4.0
 ## Duração do rastro (s): comprimento do risco = velocidade × isso.
 @export var trail_length: float = 1.0
 ## Largura sorteada por risco (multiplicador da `width`): uns finos, outros grossos.
@@ -55,53 +61,33 @@ func _ready() -> void:
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	mat.vertex_color_use_as_albedo = true
 	mat.use_particle_trails = true
+	# some perto da câmera (como o Wind VFX da Vefects: "camera depth fade"),
+	# pra risco nunca passar colado na tela
+	mat.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_PIXEL_ALPHA
+	mat.distance_fade_min_distance = 4.0
+	mat.distance_fade_max_distance = 9.0
 	mat.albedo_color = streak_color
 	_mat = mat
 	ribbon.material = mat
 	draw_pass_1 = ribbon
 
-	# fade in e fade out. O rastro guarda a cor dos últimos `trail_lifetime` s,
-	# então a ponta precisa estar transparente bem antes da partícula morrer:
-	# senão a cauda ainda visível some de uma vez quando ela morre.
-	var tail := trail_lifetime / lifetime  # fração da vida que o rastro cobre
-	var g := Gradient.new()
-	g.offsets = PackedFloat32Array([0.0, 0.3, maxf(0.95 - tail - 0.3, 0.31), 0.95 - tail, 1.0])  # fade in/out
-	g.colors = PackedColorArray([Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)])
-	var ramp := GradientTexture1D.new()
-	ramp.gradient = g
+	# fade in e fade out ficam no shader de partículas: o rastro guarda a cor dos
+	# últimos `trail_lifetime` s, então a ponta some antes da partícula morrer
+	# (`fade_end`), senão a cauda ainda visível sumia de uma vez.
 
+	# movimento num shader de partículas próprio: anda reto no vento e faz o
+	# "nado de tubarão" (vai e volta leve pros lados num seno), sem turbulência
 	var dir := wind_dir.normalized()
-	var pm := ParticleProcessMaterial.new()
-	pm.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
-	pm.emission_box_extents = Vector3(area.x * 0.5, (height_range.y - height_range.x) * 0.5, area.y * 0.5)
-	pm.direction = Vector3(dir.x, 0.0, dir.y)
-	pm.spread = 6.0
-	pm.flatness = 1.0
-	pm.initial_velocity_min = speed * speed_range.x
-	pm.initial_velocity_max = speed * speed_range.y
-	pm.gravity = Vector3.ZERO
-	pm.color_ramp = ramp
-	# fade também na espessura: o rastro não herda a transparência do histórico,
-	# então só a cor fazia o risco "surgir" de uma vez; agora nasce fino,
-	# engrossa e afina até sumir
-	var grow := Curve.new()
-	grow.add_point(Vector2(0.0, 0.0))
-	grow.add_point(Vector2(0.35, 1.0))
-	grow.add_point(Vector2(0.45, 1.0))
-	grow.add_point(Vector2(1.0, 0.0))
-	var grow_tex := CurveTexture.new()
-	grow_tex.curve = grow
-	pm.scale_curve = grow_tex
-	pm.scale_min = width_range.x
-	pm.scale_max = width_range.y
-	# ondulação: o rastro desenha uma curva suave, não uma reta
-	pm.turbulence_enabled = curl > 0.0  # curl 0 = passa reto (sem ondular)
-	pm.turbulence_noise_strength = 1.2 if curl < 0.3 else 4.0  # laços precisam de força
-	pm.turbulence_noise_scale = curl_size
-	pm.turbulence_influence_min = curl * 0.4
-	pm.turbulence_influence_max = curl
-	# sem colisão: o risco que encostava no chão sumia NA HORA (sem fade);
-	# ele já anda reto e alto (height_range), então não atravessa o chão
+	var pm := ShaderMaterial.new()
+	pm.shader = SWIM_SHADER
+	pm.set_shader_parameter(&"emission_extents", Vector3(area.x * 0.5, (height_range.y - height_range.x) * 0.5, area.y * 0.5))
+	pm.set_shader_parameter(&"wind_dir", Vector3(dir.x, 0.0, dir.y))
+	pm.set_shader_parameter(&"speed_range", speed_range * speed)
+	pm.set_shader_parameter(&"width_range", width_range)
+	pm.set_shader_parameter(&"alpha_range", alpha_range)
+	pm.set_shader_parameter(&"swim_amp", swim_amp)
+	pm.set_shader_parameter(&"swim_freq", swim_freq)
+	pm.set_shader_parameter(&"fade_end", clampf(0.95 - trail_lifetime / lifetime, 0.5, 0.95))
 	process_material = pm
 
 	position.y = (height_range.x + height_range.y) * 0.5

@@ -2,7 +2,7 @@ extends Node3D
 ## Raios de sol (manhã e tarde): faixas de luz quente atravessando o ar na
 ## direção do sol, numa área (ex.: entre as árvores). Mais fortes e alaranjados
 ## à tarde, sutis de manhã, somem à noite e na chuva. Grupo `ray_fx`: o
-## WeatherCycle chama `set_light(força, cor)`. Regras em .docs/plans/06-clima.md.
+## WeatherCycle chama `set_light(força, cor)`. Regras em .docs/plans/05-clima.md.
 
 const SHADER := preload("res://shaders/weather/sun_ray.gdshader")
 

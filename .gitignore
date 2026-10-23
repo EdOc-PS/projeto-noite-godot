@@ -2,3 +2,6 @@
 .godot/
 /android/
 
+# cópias temporárias que o Godot cria das DLLs de GDExtension enquanto está aberto
+~*.dll
+/libterrain.*.dll
