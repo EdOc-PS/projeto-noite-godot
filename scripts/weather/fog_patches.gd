@@ -13,7 +13,7 @@ extends Node3D
 @export var area: Vector2 = Vector2(36.0, 36.0)        ## onde nascem, em volta do jogador
 @export var size_min: Vector3 = Vector3(5.0, 2.0, 3.5) ## tamanho da mancha (m)
 @export var size_max: Vector3 = Vector3(9.0, 3.5, 6.5)
-@export var color: Color = Color(0.72, 0.57, 0.38)     ## poeira: terroso
+@export var color: Color = Color(0.86, 0.7, 0.5)       ## poeira: marrom claro (contrasta com o verde)
 @export var density: float = 1.4                       ## densidade no auge
 @export var speed: Vector2 = Vector2(1.5, 2.6)         ## m/s na direção do vento
 @export var life: Vector2 = Vector2(10.0, 16.0)         ## segundos de cada mancha
