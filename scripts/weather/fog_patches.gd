@@ -14,6 +14,7 @@ extends Node3D
 @export var size_min: Vector3 = Vector3(5.0, 2.0, 3.5) ## tamanho da mancha (m)
 @export var size_max: Vector3 = Vector3(9.0, 3.5, 6.5)
 @export var color: Color = Color(0.95, 0.85, 0.45)      ## poeira: amarela
+@export var emission: float = 0.55                     ## brilho próprio (névoa densa escurece o fundo; sem isso fica marrom)
 @export var density: float = 2.5                       ## densidade no auge
 @export var speed: Vector2 = Vector2(1.5, 2.6)         ## m/s na direção do vento
 @export var life: Vector2 = Vector2(10.0, 16.0)         ## segundos de cada mancha
@@ -63,6 +64,7 @@ func _ready() -> void:
 		p.vol.shape = RenderingServer.FOG_VOLUME_SHAPE_ELLIPSOID
 		p.mat = FogMaterial.new()
 		p.mat.albedo = color
+		p.mat.emission = color * emission  # amarela clara, não um marrom escurecido
 		p.mat.density_texture = _noise_tex
 		p.mat.edge_fade = 0.15  # borda curta: os gomos do ruído é que fazem o contorno fofo
 		p.mat.height_falloff = 0.8  # densa embaixo, topo em gomos (como camada de nuvem)
