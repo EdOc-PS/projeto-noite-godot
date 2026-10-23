@@ -11,10 +11,10 @@ extends Node3D
 
 @export var count: int = 8
 @export var area: Vector2 = Vector2(36.0, 36.0)        ## onde nascem, em volta do jogador
-@export var size_min: Vector3 = Vector3(5.0, 1.2, 3.0) ## tamanho da mancha (m)
-@export var size_max: Vector3 = Vector3(9.0, 2.2, 6.0)
-@export var color: Color = Color(0.86, 0.78, 0.6)      ## poeira: terroso claro
-@export var density: float = 0.6                       ## densidade no auge
+@export var size_min: Vector3 = Vector3(5.0, 2.0, 3.5) ## tamanho da mancha (m)
+@export var size_max: Vector3 = Vector3(9.0, 3.5, 6.5)
+@export var color: Color = Color(0.72, 0.57, 0.38)     ## poeira: terroso
+@export var density: float = 1.4                       ## densidade no auge
 @export var speed: Vector2 = Vector2(1.5, 2.6)         ## m/s na direção do vento
 @export var life: Vector2 = Vector2(10.0, 16.0)         ## segundos de cada mancha
 @export var noise_scale: float = 0.35                  ## frequência do ruído (maior = mais fofo/picado)
@@ -53,7 +53,7 @@ func _ready() -> void:
 		p.mat = FogMaterial.new()
 		p.mat.albedo = color
 		p.mat.density_texture = _noise_tex
-		p.mat.edge_fade = 0.35
+		p.mat.edge_fade = 0.5  # borda bem esfumada: volume fofo, sem casca
 		p.mat.height_falloff = 0.4  # mais densa embaixo (levantando do chão)
 		p.vol.material = p.mat
 		add_child(p.vol)
