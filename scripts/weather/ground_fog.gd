@@ -11,9 +11,9 @@ extends FogVolume
 const SHADER := preload("res://shaders/weather/ground_fog.gdshader")
 
 @export var area: float = 120.0                    ## lado da caixa (m)
-@export var fog_height: float = 0.35               ## altura da caixa (m): névoa bem baixa
+@export var fog_height: float = 0.6                ## altura da caixa (m): baixa (fina demais faz faixas)
 @export var fog_color: Color = Color(1, 1, 1)      ## branca por enquanto
-@export var fog_density: float = 1.6
+@export var fog_density: float = 0.9
 @export var move: Vector2 = Vector2.ZERO           ## m/s (0 = parada)
 @export_group("Texturas")
 @export var noise_texture: Texture2D               ## vazio = gera
