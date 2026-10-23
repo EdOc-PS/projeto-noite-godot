@@ -39,9 +39,10 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export_range(0.0, 1.0) var sprig_chance: float = 0.01  ## fração dos pontos de grama que viram raminho
 @export var sprig_min_distance: float = 3.0  ## distância mínima entre raminhos (m)
 @export var sprig_over: Vector2 = Vector2(1.45, 1.65)  ## escala do raminho (×altura da grama no lugar)
-## Grama caída no chão (meshes 2 e 3): poucas, só onde NÃO tem grama.
-@export var litter_mesh_ids: PackedInt32Array = [2, 3]
-@export_range(0.0, 1.0) var litter_chance: float = 0.012  ## fração dos pontos sem grama
+## Grama caída no chão (meshes 2–7: 2 sprites × verde escuro, amarela, branca):
+## poucas, só onde NÃO tem grama.
+@export var litter_mesh_ids: PackedInt32Array = [2, 3, 4, 5, 6, 7]
+@export_range(0.0, 1.0) var litter_chance: float = 0.006  ## fração dos pontos sem grama
 @export var litter_min_distance: float = 1.5
 @export var grass_seed: int = 11
 

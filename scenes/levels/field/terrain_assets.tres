@@ -8,8 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
 [ext_resource type="Texture2D" path="res://assets/textures/terrain/dirt.png" id="tex_dirt"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_litter.gltf" id="litter"]
-[ext_resource type="Material" path="res://assets/materials/grass_litter_drops.tres" id="mat_litter_a"]
-[ext_resource type="Material" path="res://assets/materials/grass_litter_leaves.tres" id="mat_litter_b"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_drops_verde.tres" id="m_grass_litter_drops_verde"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_drops_amarela.tres" id="m_grass_litter_drops_amarela"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_drops_branca.tres" id="m_grass_litter_drops_branca"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_leaves_verde.tres" id="m_grass_litter_leaves_verde"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_leaves_amarela.tres" id="m_grass_litter_leaves_amarela"]
+[ext_resource type="Material" path="res://assets/materials/grass_litter_leaves_branca.tres" id="m_grass_litter_leaves_branca"]
 
 [sub_resource type="Terrain3DMeshAsset" id="ma0"]
 name = "Tufo"
@@ -36,20 +40,60 @@ albedo_texture = ExtResource("tex_ground")
 normal_texture = ExtResource("tex_ground_n")
 
 [sub_resource type="Terrain3DMeshAsset" id="ma2"]
-name = "Grama caída (gotas)"
+name = "Grama caída drops verde"
 id = 2
 scene_file = ExtResource("litter")
-material_override = ExtResource("mat_litter_a")
+material_override = ExtResource("m_grass_litter_drops_verde")
 cast_shadows = 0
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma3"]
-name = "Grama caída (folhas)"
+name = "Grama caída drops amarela"
 id = 3
 scene_file = ExtResource("litter")
-material_override = ExtResource("mat_litter_b")
+material_override = ExtResource("m_grass_litter_drops_amarela")
+cast_shadows = 0
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma4"]
+name = "Grama caída drops branca"
+id = 4
+scene_file = ExtResource("litter")
+material_override = ExtResource("m_grass_litter_drops_branca")
+cast_shadows = 0
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma5"]
+name = "Grama caída leaves verde"
+id = 5
+scene_file = ExtResource("litter")
+material_override = ExtResource("m_grass_litter_leaves_verde")
+cast_shadows = 0
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma6"]
+name = "Grama caída leaves amarela"
+id = 6
+scene_file = ExtResource("litter")
+material_override = ExtResource("m_grass_litter_leaves_amarela")
+cast_shadows = 0
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma7"]
+name = "Grama caída leaves branca"
+id = 7
+scene_file = ExtResource("litter")
+material_override = ExtResource("m_grass_litter_leaves_branca")
 cast_shadows = 0
 last_lod = 0
 last_shadow_lod = 0
@@ -63,5 +107,5 @@ normal_texture = ExtResource("tex_ground_n")
 uv_scale = 0.1
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])
