@@ -11,7 +11,7 @@ shader_type fog;
 uniform vec3 fog_color : source_color = vec3(1.0);
 uniform float emission_amount = 0.25;          // brilho próprio (não escurecer o verde)
 uniform float density = 1.6;
-uniform float fog_height = 1.6;                // m acima do chão onde quase acaba
+uniform float fog_height = 0.8;                // m acima do chão onde quase acaba
 uniform float height_falloff = 2.2;            // maior = topo mais definido
 uniform float ground_y = 0.0;
 
@@ -19,7 +19,7 @@ uniform sampler3D noise_tex : repeat_enable, filter_linear;
 uniform float noise_scale = 14.0;              // m por repetição da camada grande
 uniform float detail_scale = 4.5;              // m por repetição da camada de detalhe
 uniform vec3 wind = vec3(0.6, 0.0, -0.01);     // m/s (direção do vento)
-uniform float noise_low : hint_range(0.0, 1.0) = 0.38;   // abaixo disso: vazio
+uniform float noise_low : hint_range(0.0, 1.0) = 0.22;   // abaixo disso: vazio
 uniform float noise_high : hint_range(0.0, 1.0) = 0.7;   // acima disso: cheio
 uniform float edge_fade = 6.0;                 // m de fade nas bordas da caixa
 
@@ -27,7 +27,7 @@ void fog() {
 	vec3 p = WORLD_POSITION;
 	float h = max(p.y - ground_y, 0.0);
 	// colada no chão, some até fog_height
-	float height_mask = exp(-height_falloff * h / max(fog_height, 0.01)) * (1.0 - smoothstep(fog_height * 0.8, fog_height * 1.3, h));
+	float height_mask = exp(-height_falloff * h / max(fog_height, 0.01)) * (1.0 - smoothstep(fog_height * 0.75, fog_height, h));
 
 	// camada grande (bancos de névoa) + detalhe (fiapos), andando com o vento
 	float big = texture(noise_tex, (p + wind * TIME) / noise_scale).r;
