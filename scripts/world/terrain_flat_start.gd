@@ -116,6 +116,8 @@ func _make_dirt_patches() -> void:
 ## Quanto de terra (0 = grama, 1 = terra) num ponto do chão. Contorno torto pelo
 ## ruído; o degradê ocupa `dirt_edge` metros pra fora da mancha.
 func _dirt_amount(x: float, z: float) -> float:
+	if dirt_patches <= 0:
+		return 0.0
 	if _dirt.is_empty():
 		_make_dirt_patches()
 	var a := 0.0
