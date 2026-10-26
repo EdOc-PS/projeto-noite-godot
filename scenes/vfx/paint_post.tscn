@@ -4,10 +4,10 @@
 
 [sub_resource type="ShaderMaterial" id="PaintMaterial"]
 shader = ExtResource("paint_shader")
-shader_parameter/paint_amount = 0.35
+shader_parameter/paint_amount = 0.85
 shader_parameter/paint_radius = 2
-shader_parameter/sharpen = 0.2
-shader_parameter/saturation = 1.15
+shader_parameter/sharpen = 0.0
+shader_parameter/saturation = 1.0
 
 [node name="PaintLayer" type="CanvasLayer"]
 layer = 1
