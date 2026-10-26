@@ -136,3 +136,18 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Material `grass_star.tres` (`grass_body`, dois lados, sem borda): verde levemente escuro no pé (0.34,0.52,0.14) → (0.5,0.67,0.2) → verde-amarelado suave (0.7,0.79,0.32), aquarela leve (`paint_wobble` 0,12).
 - Terreno semeia com ele (`grass_mesh_ids` = 3). Tufos 3D (0) e 2D (2) guardados no pincel.
 - Balanço/dobra/toque: mesmos do `grass_body` (vento global, rajada com `bend_limit`, jogador achata). `sway_height` 0,28 (tufo mais baixo: as lâminas curtas das pontas também balançam).
+
+### Tufos de cartas pra visão isométrica (2026-10-25)
+Pesquisa (técnicas usadas em jogos de câmera de cima/isométrica):
+- **Cartas cruzadas em estrela** (3–4 quads em pé cruzando no centro) com textura alfa de lâminas: de qualquer ângulo sempre há carta de frente, nunca vira "risco".
+- **Textura em cinza + cor no shader**: o PNG é só máscara e sombra; o degradê pé → ponta vem do material, então dá pra trocar a paleta sem refazer textura.
+- **Normal pra cima** em todas as cartas: luz igual no tufo todo (senão a carta de costas pro sol fica escura e o tufo "pisca" ao girar).
+- **Alpha scissor (discard), não transparência**: sem problema de ordem e mais leve.
+- **Borda das manchas com tufos parciais** (meia estrela / leque, mais baixos): a borda vista de cima fica macia, sem tufo cheio recortado.
+- Variação: rotação e escala aleatórias, célula do atlas sorteada e espelhada por carta; vento pelo `UV.y`/altura (pé parado).
+
+Implementado:
+- Atlas `assets/textures/vegetation/grass/grass_blades.png` (`tools/gen_grass_card_textures.py`): célula 0 = 5–7 lâminas curvas; célula 1 = 2–3 lâminas de ponta cortada (como as referências).
+- Meshes (`gen_grass_tufts.py`, `CARDS`): 4 `grass_card_star` (4 cartas), 5 `grass_card_half` (3 meias-cartas em leque de 120°), 6 `grass_card_fan` (2 cartas em X fechado, baixo). Material `grass_card.tres` (`grass_body` com `use_sprite`, mesmas cores do tufo estrela).
+- Semeadura: `grass_mesh_ids` = 4 no meio; `edge_mesh_ids` = 5, 6 onde a densidade < `edge_density` (0,5): meia estrela na faixa rala, leque na beiradinha.
+- O tufo estrela geométrico (3) continua no pincel.

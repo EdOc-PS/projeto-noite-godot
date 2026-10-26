@@ -34,6 +34,11 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## +`grass_dense_growth` (0,8 = 80% mais alto), variando por ondas.
 @export var grass_dense_growth: float = 0.8
 @export var grass_mesh_ids: PackedInt32Array = [0]
+## Tufos da BORDA das manchas (vista de cima, um tufo cheio na borda fica
+## recortado e feio): [0] onde a mancha já está rala, [1] na beiradinha.
+## Vazio = só `grass_mesh_ids` em todo lugar.
+@export var edge_mesh_ids: PackedInt32Array = []
+@export_range(0.0, 1.0) var edge_density: float = 0.5  ## abaixo dessa densidade usa os tufos de borda
 ## Raminhos de folhinhas brancas (mesh 1), espalhados pouco por toda a grama.
 @export var sprig_mesh_ids: PackedInt32Array = [1]
 @export_range(0.0, 1.0) var sprig_chance: float = 0.01  ## fração dos pontos de grama que viram raminho
@@ -158,7 +163,7 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + sprig_mesh_ids:
+	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids:
 		per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
 	_seed_area(Vector2.ZERO, grass_area, grass_mesh_ids, rng, noise, height_noise, per_mesh, sprigs)
@@ -191,6 +196,10 @@ func _seed_area(center: Vector2, size: float, ids: PackedInt32Array, rng: Random
 				var s := rng.randf_range(grass_scale.x, grass_scale.y)
 				var b := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s * h, s))
 				var id: int = ids[rng.randi() % ids.size()]
+				if not edge_mesh_ids.is_empty() and density < edge_density:
+					# beiradinha (metade de baixo) = último tufo de borda; rala = o primeiro
+					var k := 0 if density > edge_density * 0.5 else edge_mesh_ids.size() - 1
+					id = edge_mesh_ids[k]
 				if not sprig_mesh_ids.is_empty() and rng.randf() < sprig_chance and _far_from(sprigs, p, sprig_min_distance):
 					sprigs.append(p)
 					id = sprig_mesh_ids[rng.randi() % sprig_mesh_ids.size()]
