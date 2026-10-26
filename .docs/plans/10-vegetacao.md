@@ -215,3 +215,4 @@ Implementado:
 - Movimento igual ao da grama: balanço em oval, dobra com rajada (rigidez e onda próprias por flor, `bend_limit`), jogador abre e achata — tudo pela origem de cada flor, então cada uma balança separada. Pela altura (y): flor e caule (mesmo transform) andam juntos.
 - Borda das flores na cor da própria flor (pétala vizinha × `outline_shade` 0,8); a branca do chão sem borda (`outline_px` 0 no `head_white`).
 - Topo da borda da grama arredondado: `outline_round` 2,5 (casca engorda pros lados e sobe perto da ponta, fecha em cúpula).
+- Pé da grama mais claro (2026-10-26): `base_color` (0.52,0.7,0.1), `mid_color` (0.56,0.74,0.14); ponta igual.
