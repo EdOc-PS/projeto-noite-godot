@@ -52,13 +52,15 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var flower_head_ids: PackedInt32Array = [3, 4, 7]   ## branca, azul, vermelha (a rosa, 6, saiu do campo; fica no pincel)
 @export var flower_stem_ids: PackedInt32Array = [-1, 5, 5]   ## 5 = caule universal
 @export var flower_scales: PackedFloat32Array = [1.3, 1.15, 1.3]
-@export var flower_weights: PackedFloat32Array = [3.0, 1.0, 1.0]  ## chance de cada tipo por monte
+@export var flower_weights: PackedFloat32Array = [5.0, 1.0, 1.0]  ## chance de cada tipo por monte
 ## true = só BEM dentro da grama (densidade >= `flower_in_grass_density`); false = só fora dela
 @export var flower_in_grass: Array[bool] = [false, true, true]
 @export_range(0.0, 1.0) var flower_in_grass_density: float = 0.8
-@export var flower_clumps: int = 45
+@export var flower_clumps: int = 70
 @export var flower_clump_size: Vector2i = Vector2i(4, 10)
 @export var flower_clump_radius: float = 0.9
+## Monte maior por tipo (mesma ordem): × flores no monte; o raio cresce junto (√). Branca 2,5.
+@export var flower_clump_mult: PackedFloat32Array = [2.5, 1.0, 1.0]
 @export var flower_size: Vector2 = Vector2(0.8, 1.25)
 ## Raio do desenho das flores na carta (fração da escala): duas cartas nunca
 ## ficam mais perto que a soma dos raios (flor nunca dentro de outra flor).
@@ -258,13 +260,15 @@ func _seed_flowers(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite
 				break
 		if not ok:
 			continue
-		for j in rng.randi_range(flower_clump_size.x, flower_clump_size.y):
-			var r := sqrt(rng.randf()) * flower_clump_radius
+		var mult := flower_clump_mult[k] if k < flower_clump_mult.size() else 1.0
+		var cr := flower_clump_radius * sqrt(mult)
+		for j in roundi(rng.randi_range(flower_clump_size.x, flower_clump_size.y) * mult):
+			var r := sqrt(rng.randf()) * cr
 			var a := rng.randf() * TAU
 			var q := center + Vector2(cos(a), sin(a)) * r
 			if not _flower_spot_ok(k, q, noise):
 				continue
-			var sc := rng.randf_range(flower_size.x, flower_size.y) * lerpf(1.0, 0.75, r / flower_clump_radius) * flower_scales[k]
+			var sc := rng.randf_range(flower_size.x, flower_size.y) * lerpf(1.0, 0.75, r / cr) * flower_scales[k]
 			var rad := sc * flower_spread
 			var free := true
 			for o in placed:
