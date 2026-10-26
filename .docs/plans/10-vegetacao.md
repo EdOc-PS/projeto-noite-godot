@@ -222,3 +222,4 @@ Implementado:
 - Flor branca do chão no branco do raminho (pétala (1,1,0.96), miolo branco), Shaded: 40% das flores num tom 0,8–0,88 (2026-10-26).
 - Flores (2026-10-26): nunca uma dentro da outra — cada carta de flores guarda um raio (`flower_spread` 0,34 × escala) e não nasce mais perto de outra que a soma dos raios (vale pra todos os tipos). Caule UNIVERSAL: `flowers_stem.png` + `assets/materials/flowers/stem.tres`, mesh 5 "Caule (todas as flores)"; os caules por cor saíram. Pincel agora: 3 branca, 4 azul, 5 caule, 6 rosa (fora do campo), 7 vermelha.
 - Mais flores brancas (2026-10-26): 70 montes, peso branca 5 : 1 : 1, monte da branca 2,5× maior (`flower_clump_mult`), sem sobrepor.
+- Flores brancas menos e em montes REDONDOS (2026-10-26): 40 montes, peso 2 : 1 : 1, monte da branca 1,6×; cada monte tenta até 8× o número de flores pra encher o círculo (sem sobrepor). Kuwahara `_KernelSize` 4.
