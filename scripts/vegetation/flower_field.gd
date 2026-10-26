@@ -1,10 +1,15 @@
 extends Node3D
-## Tufos de florzinhas em PNG (estilo BotW) espalhados pelo campo em montes
-## de um tipo só. Cada tufo é uma carta cruzada (2 planos) com o shader
-## flower_card; um MultiMesh por tipo.
+## Tufos de florzinhas em PNG espalhados pelo campo em montes de um tipo só.
+## Câmera isométrica (de cima): as flores ficam numa carta DEITADA, virada pra
+## cima (`textures` = cabeças vistas de cima). Se existir `<textura>_stem.png`,
+## o tipo ganha caules em cartas cruzadas e a carta das flores sobe até
+## `HEAD`; sem caule (branca) ela fica rente ao chão. Um MultiMesh por tipo.
 ## Regras: .docs/plans/10-vegetacao.md.
 
 const SHADER := preload("res://shaders/nature/flower_card.gdshader")
+const HEAD := 0.72       ## altura das flores com caule (igual ao HEAD do gen_flower_textures.py)
+const GROUND := 0.03     ## altura das flores sem caule (rente ao chão)
+const TOP_SIZE := 0.8    ## lado da carta deitada (fração da altura do tufo)
 
 @export var textures: Array[Texture2D] = []
 @export var clump_count: int = 40                  ## montes de flores
@@ -76,11 +81,13 @@ func _ready() -> void:
 				s *= size_scales[k]
 			var b := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s, s))
 			per_tex[k].append(Transform3D(b, q))
-	var mesh := _cross_mesh()
 	for i in textures.size():
-		var mat := ShaderMaterial.new()
-		mat.shader = SHADER
-		mat.set_shader_parameter(&"albedo_tex", textures[i])
+		var stem_path := textures[i].resource_path.replace(".png", "_stem.png")
+		var stem: Texture2D = load(stem_path) if ResourceLoader.exists(stem_path) else null
+		var mesh := ArrayMesh.new()
+		_add_flat(mesh, HEAD if stem else GROUND, _material(textures[i], true))
+		if stem:
+			_add_cross(mesh, _material(stem, false))
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.mesh = mesh
@@ -89,9 +96,15 @@ func _ready() -> void:
 			mm.set_instance_transform(j, per_tex[i][j])
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = mm
-		mmi.material_override = mat
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(mmi)
+
+func _material(tex: Texture2D, flat: bool) -> ShaderMaterial:
+	var mat := ShaderMaterial.new()
+	mat.shader = SHADER
+	mat.set_shader_parameter(&"albedo_tex", tex)
+	mat.set_shader_parameter(&"flat_card", flat)
+	return mat
 
 ## Mesma conta da semeadura: tem grama onde o ruído passa do limite.
 func _in_grass(p: Vector3) -> bool:
@@ -112,16 +125,28 @@ func _blocked(p: Vector3) -> bool:
 			return true
 	return false
 
-## Duas cartas 1x1 cruzadas, base em y = 0 (UV.y = 1 embaixo).
-func _cross_mesh() -> ArrayMesh:
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+## Carta deitada (virada pra cima) de lado TOP_SIZE na altura `y`.
+func _add_flat(mesh: ArrayMesh, y: float, mat: Material) -> void:
+	var h := TOP_SIZE * 0.5
+	var v := [Vector3(-h, y, -h), Vector3(h, y, -h), Vector3(h, y, h), Vector3(-h, y, h)]
+	var uv := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
+	_add_quads(mesh, [v], uv, mat)
+
+## Duas cartas 1x1 cruzadas em pé (caules), base em y = 0 (UV.y = 1 embaixo).
+func _add_cross(mesh: ArrayMesh, mat: Material) -> void:
+	var quads := []
 	for ang in [0.0, PI * 0.5]:
 		var dx := Vector3(cos(ang), 0.0, sin(ang)) * 0.5
-		var v := [-dx, dx, dx + Vector3.UP, -dx + Vector3.UP]
-		var uv := [Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0)]
+		quads.append([-dx, dx, dx + Vector3.UP, -dx + Vector3.UP])
+	_add_quads(mesh, quads, [Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0)], mat)
+
+func _add_quads(mesh: ArrayMesh, quads: Array, uv: Array, mat: Material) -> void:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for v in quads:
 		for idx in [0, 1, 2, 0, 2, 3]:
 			st.set_normal(Vector3.UP)
 			st.set_uv(uv[idx])
 			st.add_vertex(v[idx])
-	return st.commit()
+	st.commit(mesh)
+	mesh.surface_set_material(mesh.get_surface_count() - 1, mat)

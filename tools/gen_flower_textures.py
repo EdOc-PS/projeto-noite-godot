@@ -1,10 +1,11 @@
 """Gera os PNGs das florzinhas do campo (estilo BotW: tufos de flores em tons
-pastel, com caules de alturas diferentes, misturados na grama). Cada imagem é
-um tufo; o shader shaders/nature/flower_card.gdshader desenha em cartas
-cruzadas. Regras: .docs/plans/10-vegetacao.md.
+pastel). A câmera é isométrica (de cima), então as flores ficam numa carta
+DEITADA, viradas pra cima: flowers_<tipo>.png são as cabeças vistas de cima.
+Os tipos com caule ganham flowers_<tipo>_stem.png (só caules, cartas cruzadas
+em pé até a altura HEAD). Shader: shaders/nature/flower_card.gdshader. Regras: .docs/plans/10-vegetacao.md.
 
 Uso: python tools/gen_flower_textures.py
-Saída: assets/textures/vegetation/flowers/flowers_<tipo>.png
+Saída: assets/textures/vegetation/flowers/flowers_<tipo>.png (+ _stem.png)
 """
 import math, os, random, struct, zlib
 
@@ -63,39 +64,11 @@ def flower_hit(dx, dy, r, shape):
     return 1 if d < r * (0.75 + 0.25 * abs(math.cos(a * 2.5))) else 0  # round: 5 pétalas largas
 
 
-def make(kind, seed):
-    petal, center, shape, radius, count, height = KINDS[kind]
-    rng = random.Random(seed)
-    S = N * SS
-    n = rng.randint(*count)
-    # caules: base embaixo, alturas diferentes, leve curva
-    stems = []
-    for i in range(n):
-        bx = S * (0.2 + 0.6 * (i + rng.random() * 0.8) / n)
-        top_y = S * rng.uniform(*height)  # flor só no topo; altura por tipo
-        tx = bx + rng.uniform(-0.08, 0.08) * S
-        mx = (bx + tx) / 2 + rng.uniform(-0.05, 0.05) * S
-        r = radius * SS * rng.uniform(0.8, 1.15)
-        stems.append((bx, S - 1, mx, (S + top_y) / 2, tx, top_y, r, rng.uniform(0.9, 1.05)))
-    w = 1.6 * SS
-    acc = [0.0] * (N * N * 4)
-    for y in range(S):
-        for x in range(S):
-            col = None
-            for (bx, by, mx, my, tx, ty, r, shade) in stems:
-                hit = flower_hit(x - tx, y - ty, r, shape)
-                if hit:
-                    c = center if hit == 2 else petal
-                    # pétala mais clara em cima, mais escura embaixo (dois tons)
-                    k = shade * (1.0 if y < ty else 0.9)
-                    col = (c[0] * k, c[1] * k, c[2] * k)
-                    break
-                if seg_dist(x, y, bx, by, mx, my) < w or seg_dist(x, y, mx, my, tx, ty) < w:
-                    col = STEM if x < (bx + tx) / 2 else STEM_DARK
-            if col is None:
-                continue
-            i = ((y // SS) * N + (x // SS)) * 4
-            acc[i] += col[0]; acc[i + 1] += col[1]; acc[i + 2] += col[2]; acc[i + 3] += 1.0
+HEAD = 0.72  # altura das flores (fração da carta) nos tipos com caule; tem que bater com flower_field.gd
+TOP_SHAPE = {"spike": "ball"}  # espiga vista de cima vira bolinha
+
+
+def _pack(acc):
     out = bytearray(N * N * 4)
     k = SS * SS
     for i in range(0, len(acc), 4):
@@ -108,9 +81,71 @@ def make(kind, seed):
     return out
 
 
+def make_top(kind, seed):
+    """Flores vistas DE CIMA (carta deitada): cabeças espalhadas num disco."""
+    petal, center, shape, radius, count, _ = KINDS[kind]
+    shape = TOP_SHAPE.get(shape, shape)
+    rng = random.Random(seed)
+    S = N * SS
+    heads = []
+    for _ in range(rng.randint(*count)):
+        for _try in range(40):
+            d = S * 0.33 * math.sqrt(rng.random()); a = rng.uniform(0, math.tau)
+            x, y = S / 2 + math.cos(a) * d, S / 2 + math.sin(a) * d
+            r = radius * SS * 1.3 * rng.uniform(0.8, 1.15)
+            if all(math.hypot(x - hx, y - hy) > (r + hr) * 0.8 for hx, hy, hr, _, _ in heads):
+                break
+        heads.append((x, y, r, rng.uniform(0, math.tau), rng.uniform(0.9, 1.05)))
+    acc = [0.0] * (N * N * 4)
+    for y in range(S):
+        for x in range(S):
+            for (hx, hy, r, rot, shade) in heads:
+                dx, dy = x - hx, y - hy
+                if abs(dx) > r * 2 or abs(dy) > r * 2:
+                    continue
+                c, sn = math.cos(rot), math.sin(rot)
+                hit = flower_hit(dx * c - dy * sn, dx * sn + dy * c, r, shape)
+                if hit:
+                    col = center if hit == 2 else petal
+                    k = shade * (1.0 if dy < 0 else 0.92)  # metade de baixo um pouco mais escura
+                    i = ((y // SS) * N + (x // SS)) * 4
+                    acc[i] += col[0] * k; acc[i + 1] += col[1] * k; acc[i + 2] += col[2] * k; acc[i + 3] += 1.0
+                    break
+    return _pack(acc)
+
+
+def make_stems(kind, seed):
+    """Só os caules (carta em pé), do chão até HEAD, onde a carta deitada das flores fica."""
+    rng = random.Random(seed)
+    S = N * SS
+    n = rng.randint(*KINDS[kind][4])
+    top_y = S * (1.0 - HEAD)
+    stems = []
+    for i in range(n):
+        bx = S * (0.25 + 0.5 * (i + rng.random() * 0.8) / n)
+        tx = bx + rng.uniform(-0.1, 0.1) * S
+        mx = (bx + tx) / 2 + rng.uniform(-0.05, 0.05) * S
+        stems.append((bx, S - 1, mx, (S + top_y) / 2, tx, top_y))
+    w = 1.6 * SS
+    acc = [0.0] * (N * N * 4)
+    for y in range(int(top_y) - 2, S):
+        for x in range(S):
+            for (bx, by, mx, my, tx, ty) in stems:
+                if seg_dist(x, y, bx, by, mx, my) < w or seg_dist(x, y, mx, my, tx, ty) < w:
+                    col = STEM if x < (bx + tx) / 2 else STEM_DARK
+                    i = ((y // SS) * N + (x // SS)) * 4
+                    acc[i] += col[0]; acc[i + 1] += col[1]; acc[i + 2] += col[2]; acc[i + 3] += 1.0
+                    break
+    return _pack(acc)
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     for j, kind in enumerate(KINDS):
         path = os.path.join(OUT, f"flowers_{kind}.png")
-        write_png(path, N, N, make(kind, 100 + j))
+        write_png(path, N, N, make_top(kind, 100 + j))
         print("ok:", path)
+        if kind != "white":  # a branca é rente ao chão: sem caule
+            path = os.path.join(OUT, f"flowers_{kind}_stem.png")
+            write_png(path, N, N, make_stems(kind, 200 + j))
+            print("ok:", path)

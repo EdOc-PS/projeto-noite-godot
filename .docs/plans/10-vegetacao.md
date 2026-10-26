@@ -86,3 +86,8 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 ### Ajuste 2026-10-25
 - Flores maiores (flor e caule): `size_scales` 0,7 (branca) / 1,15 (azul, rosa) / 1,3 (vermelha). A branca fica colada no chão (flores a 84–92% da altura da carta, caule escondido).
 - Tufo de grama mais fino e pontudo: `CYL_RADIUS` 0,75, `CYL_TIP` 4,5 (ponta em cone fino), lâminas espalhadas num raio de 0,2 m (menos coladas).
+
+### Ajuste 2026-10-25 (2)
+- Flores viradas pra cima (câmera isométrica): as cabeças ficam numa carta DEITADA (`flowers_<tipo>.png`, vista de cima). Tipos com caule ganham `flowers_<tipo>_stem.png` em cartas cruzadas e a carta das flores fica a 72% da altura; a branca fica rente ao chão (3 cm).
+- Tufos menos colados: `grass_spacing` 0,45.
+- Teste: tufo SEM borda (`next_pass` tirado de `grass_tuft.tres`; o `grass_tuft_outline.tres` continua guardado). Pra voltar a borda, põe ele de novo em `next_pass`.
