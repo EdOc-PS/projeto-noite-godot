@@ -213,3 +213,4 @@ Implementado:
 - Borda nas flores (carta das flores): no `flower_card.gdshaderinc`, pixel vazio a até `outline_px` (3) pixels de uma pétala vira contorno `outline_color` (0.3,0.42,0.1). Caule sem borda.
 - `render_priority` 1 nos materiais `assets/materials/flowers/*` (só vale entre transparentes: o caule; a carta das flores é recorte opaco e fica por profundidade).
 - Movimento igual ao da grama: balanço em oval, dobra com rajada (rigidez e onda próprias por flor, `bend_limit`), jogador abre e achata — tudo pela origem de cada flor, então cada uma balança separada. Pela altura (y): flor e caule (mesmo transform) andam juntos.
+- Borda das flores na cor da própria flor (pétala vizinha × `outline_shade` 0,8); a branca do chão sem borda (`outline_px` 0 no `head_white`).

@@ -8,3 +8,4 @@ render_priority = 1
 shader = ExtResource("1_shader")
 shader_parameter/albedo_tex = ExtResource("2_tex")
 shader_parameter/flat_card = true
+shader_parameter/outline_px = 0.0

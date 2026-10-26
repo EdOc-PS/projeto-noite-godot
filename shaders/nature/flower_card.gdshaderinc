@@ -5,8 +5,9 @@ uniform bool flat_card = false;       // carta deitada das flores: anda inteira 
 uniform float stem_dark = 0.45;        // cor no pé do caule (× cor)
 uniform float stem_alpha_base = 0.0;   // opacidade no pé do caule
 // borda das flores (só a carta das flores): pixel vazio colado num pixel de
-// pétala vira contorno, igual à borda da grama
-uniform vec3 outline_color : source_color = vec3(0.3, 0.42, 0.1);
+// pétala vira contorno NA COR DA PRÓPRIA FLOR (a pétala vizinha), num tom
+// `outline_shade` (1 = mesma cor; menor = mais escuro)
+uniform float outline_shade : hint_range(0.0, 1.0) = 0.8;
 uniform float outline_px = 3.0;        // espessura em pixels da textura (0 = sem borda)
 
 // Movimento IGUAL ao da grama (grass_body.gdshaderinc): balanço em oval, dobra
@@ -81,12 +82,17 @@ void fragment() {
 	if (outline_px > 0.0 && c.a < alpha_cut) {
 		vec2 px = outline_px / vec2(textureSize(albedo_tex, 0));
 		float near = 0.0;
+		vec3 near_col = vec3(0.0);
 		for (int i = 0; i < 8; i++) {
 			float ang = float(i) * 0.785398;
-			near = max(near, texture(albedo_tex, UV + vec2(cos(ang), sin(ang)) * px).a);
+			vec4 t = texture(albedo_tex, UV + vec2(cos(ang), sin(ang)) * px);
+			if (t.a > near) {
+				near = t.a;
+				near_col = t.rgb;
+			}
 		}
 		if (near >= alpha_cut) {
-			ALBEDO = outline_color;
+			ALBEDO = near_col * outline_shade;
 			a_out = 1.0;
 		}
 	}
