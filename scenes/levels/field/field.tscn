@@ -188,7 +188,7 @@ area = Vector3(16, 0.6, 16)
 [node name="FlowerField" type="Node3D" parent="."]
 script = ExtResource("14_flowers")
 textures = Array[Texture2D]([ExtResource("fl_white"), ExtResource("fl_white"), ExtResource("fl_white"), ExtResource("fl_blue"), ExtResource("fl_pink"), ExtResource("fl_red")])
-size_scales = PackedFloat32Array(0.7, 0.7, 0.7, 1.15, 1.15, 1.3)
+size_scales = PackedFloat32Array(0.95, 0.95, 0.95, 1.15, 1.15, 1.3)
 placement = PackedInt32Array(1, 1, 1, 2, 2, 2)
 clump_count = 45
 area_half_size = 18.0

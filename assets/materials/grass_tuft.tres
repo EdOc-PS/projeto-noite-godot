@@ -1,8 +1,10 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://bkye1nki5tjc1"]
 
 [ext_resource type="Shader" uid="uid://vyf2wx8cf1tw" path="res://shaders/nature/grass_tuft.gdshader" id="1_shader"]
+[ext_resource type="Material" path="res://assets/materials/grass_tuft_outline.tres" id="2_outline"]
 
 [resource]
+next_pass = ExtResource("2_outline")
 render_priority = 0
 shader = ExtResource("1_shader")
 shader_parameter/base_color = Color(0.34, 0.53, 0.08, 1)

@@ -91,3 +91,8 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Flores viradas pra cima (câmera isométrica): as cabeças ficam numa carta DEITADA (`flowers_<tipo>.png`, vista de cima). Tipos com caule ganham `flowers_<tipo>_stem.png` em cartas cruzadas e a carta das flores fica a 72% da altura; a branca fica rente ao chão (3 cm).
 - Tufos menos colados: `grass_spacing` 0,45.
 - Teste: tufo SEM borda (`next_pass` tirado de `grass_tuft.tres`; o `grass_tuft_outline.tres` continua guardado). Pra voltar a borda, põe ele de novo em `next_pass`.
+
+### Ajuste 2026-10-25 (3)
+- `grass_spacing` de volta a 0,26 e borda de volta (`next_pass`).
+- Lâminas dentro do tufo menos coladas: pés a no mínimo 7 cm (`CYL_GAP`), raio do tufo 0,24 m, menos lâminas (`CYL_BLADES` 0,5), mais inclinadas pra fora.
+- Branca maior: `size_scales` 0,95.
