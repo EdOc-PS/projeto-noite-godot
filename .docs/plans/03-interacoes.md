@@ -1,10 +1,6 @@
 # Plano 04 — Interações do cenário
 
-<<<<<<<< HEAD:.docs/plans/03-interacoes.md
 Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Prompt de interação: [02-ui.md](02-ui.md) · Passagens: [08-transicoes.md](08-transicoes.md)
-========
-Referência: [PROJETO-NOITE.md](../PROJETO-NOITE.md) · Prompt de interação: [03-ui.md](03-ui.md) · Passagens: [TRANSICOES.md](../TRANSICOES.md)
->>>>>>>> origin/master:.docs/plans/04-interacoes.md
 
 Catálogo de coisas que o jogador pode fazer no **Calm Place**. A casa-loja (`inside_house`) é a **safe house**: cozinhar (vida), comprar upgrades, melhorar armas e a porta pro mundo da gameplay. Serve de cardápio: escolher, implementar e marcar o status.
 
@@ -56,14 +52,10 @@ Catálogo de coisas que o jogador pode fazer no **Calm Place**. A casa-loja (`in
 | Pegar o pacote na porta | Coleta + Leitura | `package` | Item da história (ex.: primeiro equipamento pra noite). |
 | Calçar as botas | Reação | `boots` | Desbloqueia corrida ou som de passo diferente. |
 | Pegar vagalume | Coleta | perto do poste | Vagalume vai num pote; vira luz que segue o jogador na dungeon. |
-<<<<<<<< HEAD:.docs/plans/03-interacoes.md
 | **Cozinhar** (mecânica, estilo Breath of the Wild) | Novo tipo: combinar ingredientes + **visão de interação** (câmera no fogão, ver plano 05) | fogão da casa-loja (`CookPrompt` → `StoveView`) | Misturar itens coletados e cozinhar um prato (cura, bônus pra noite). Mecânica a desenhar. |
 | **Melhorar armas** (ferreiro) | Menu + visão de interação | ferraria medieval da casa (mesa `ForgeTable`, bigorna `Anvil`, amolador `Grindstone`), junto com a compra de upgrades | Upgrade de armas antes de ir pra gameplay. Prompt ainda não colocado. |
 | **Comprar upgrades** | Menu + **visão de interação** (câmera na mesa da ferraria) | ferraria da casa (`ShopPrompt` → `CounterView`) | Loja de quem ajuda o personagem. |
 | **Dormir na cama** | Passagem (pesada) | dentro da casa | Sequência de "cair no sono" → mundo da noite (ver [09-carregamento.md](09-carregamento.md)). |
-========
-| **Dormir na cama** | Passagem (pesada) | dentro da casa | Sequência de "cair no sono" → mundo da noite (ver [CARREGAMENTO.md](../CARREGAMENTO.md)). |
->>>>>>>> origin/master:.docs/plans/04-interacoes.md
 
 ## O que precisa existir antes
 
