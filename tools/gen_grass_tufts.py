@@ -1,5 +1,5 @@
 """Gera a grama (glTF) usada pelo pincel do Terrain3D:
-assets/models/grass/grass_tuft.gltf      — tufo de 5 lâminas-cilindro soltas, ponta fina
+assets/models/grass/grass_tuft.gltf      — tufo de 5 lâminas-cilindro soltas, topo redondo
 assets/models/grass/grass_tuft_edge.gltf — tufo de borda das manchas (3 lâminas, mais baixo)
 assets/models/grass/grass_sprig.gltf     — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
@@ -29,7 +29,7 @@ CYL_RINGS = 4      # anéis ao longo da altura
 CYL_RADIUS = 1.2   # raio do tubo no pé, em fração da meia-largura da lâmina (gordinho)
 CYL_GAP = 0.015    # folga mínima entre os tubos no pé (m): lâminas nunca coladas
 CYL_TAPER = 0.12   # quanto o tubo afina até em cima
-CYL_TIP = 3.6      # altura da ponta em raios (ponta fina; 1 = meia esfera)
+CYL_TIP = 1.0      # altura da ponta em raios: 1 = meia esfera (topo REDONDO)
 # Shaded (como os sprites Shaded do Kenney): umas lâminas na cor cheia, outras
 # na MESMA cor mais escura. 40% das lâminas escuras, com tom 0,68–0,78.
 DARK_CHANCE = 0.4
@@ -92,8 +92,10 @@ def tuft_cyl(seed, blades, radius, height, width):
         for j in range(1, 6):
             t = j / 5
             y = body + cap * t
-            rr = rt * (1.0 - t ** 1.3) ** 0.85 if j < 5 else 0.0
-            rg = [(p, (n[0] * (1.0 - t * 0.7), 0.4 + 0.6 * t, n[2] * (1.0 - t * 0.7))) for p, n in ring(y, rr)]
+            # meia esfera: raio = cos, normal da esfera (topo redondo, não pontudo)
+            k_ = math.sqrt(max(1.0 - t * t, 0.0)) if j < 5 else 0.0
+            rr = rt * k_
+            rg = [(p, (n[0] * k_, t, n[2] * k_)) for p, n in ring(y, rr)]
             rings.append((rg, y))
         for (r_a, ya), (r_b, yb) in zip(rings, rings[1:]):
             for k in range(CYL_SIDES):

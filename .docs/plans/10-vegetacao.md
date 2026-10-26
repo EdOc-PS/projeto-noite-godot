@@ -216,3 +216,4 @@ Implementado:
 - Borda das flores na cor da própria flor (pétala vizinha × `outline_shade` 0,8); a branca do chão sem borda (`outline_px` 0 no `head_white`).
 - Topo da borda da grama arredondado: `outline_round` 2,5 (casca engorda pros lados e sobe perto da ponta, fecha em cúpula).
 - Pé da grama mais claro (2026-10-26): `base_color` (0.52,0.7,0.1), `mid_color` (0.56,0.74,0.14); ponta igual.
+- Correção (2026-10-26): o arredondado era o TOPO DA LÂMINA, não a borda. `outline_round` saiu; lâmina com topo em meia esfera (`CYL_TIP` 1, raio = √(1−t²), normais de esfera). A borda segue o topo redondo.
