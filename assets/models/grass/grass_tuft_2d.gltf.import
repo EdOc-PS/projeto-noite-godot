@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://dh1k05n800axp"
+path="res://.godot/imported/grass_tuft_2d.gltf-41b9b7a23ebab9f220d89667f0cc5f9e.scn"
 
 [deps]
 
 source_file="res://assets/models/grass/grass_tuft_2d.gltf"
+dest_files=["res://.godot/imported/grass_tuft_2d.gltf-41b9b7a23ebab9f220d89667f0cc5f9e.scn"]
 
 [params]
 
