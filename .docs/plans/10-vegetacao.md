@@ -187,3 +187,8 @@ Implementado:
 - Metade x ≥ 0: `right_mesh_ids` = 9, `right_edge_mesh_ids` = 10 (novo), `right_spacing` 0,14. O tufo de cilindros antigo (mesh 0) fica guardado no pincel.
 - Ajuste (2026-10-26): `grass_area` 32 m (flores 16); metade 3D mais espaçada (`right_spacing` 0,2); tufo iso 3D mais em pé (`ISO3D_TILT` 0,4 da inclinação) e mais gordo (`ISO3D_ROUND` 1,1).
 - Metade direita de volta ao tufo de cilindros original e redondo (mesh 0: `CYL_BLADES` 0,6, `CYL_TIP` 2,4, `right_spacing` 0,27). Tufos iso 3D (9, 10) guardados no pincel.
+
+### Tufo de cilindros: 7 lâminas soltas, ponta fechada e tufo de borda (2026-10-26)
+- `grass_tuft`: exatamente 7 lâminas, raio 0,17 m. Cada pé é sorteado até ficar SEPARADO dos outros (distância ≥ soma dos raios dos tubos + `CYL_GAP` 0,015 m); se não couber, o raio do tufo abre aos poucos. Altura e grossura continuam variando por lâmina.
+- Ponta fechada num ponto (último anel com raio 0): sumiu o furinho/bolinha no topo.
+- Novo `grass_tuft_edge` (mesh 11, "Tufo borda"): 4 lâminas, mais baixas e finas, raio 0,13 m. Metade direita: `right_edge_mesh_ids` = 11.

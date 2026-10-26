@@ -21,15 +21,17 @@ OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "models", "gra
 ARC = 6  # segmentos do semicírculo da ponta
 
 TUFTS = {
-    # nome: (seed, lâminas, raio, altura das lâminas (m), meia-largura)
-    "grass_tuft": (21, (14, 18), 0.14, (0.32, 0.52), (0.03, 0.05)),
+    # nome: (seed, lâminas (exato), raio, altura das lâminas (m), meia-largura)
+    "grass_tuft": (21, 7, 0.17, (0.32, 0.52), (0.03, 0.05)),
+    # borda das manchas: menos lâminas, mais baixas e finas
+    "grass_tuft_edge": (22, 4, 0.13, (0.22, 0.36), (0.026, 0.042)),
 }
 # Cada lâmina do tufo é um CILINDRO (tubo que afina um pouco) com a ponta
 # pontuda de bico arredondado, curvando pra fora.
 CYL_SIDES = 6      # lados do tubo (mais lados = mais redondo, mais pesado)
 CYL_RINGS = 4      # anéis ao longo da altura
 CYL_RADIUS = 1.2   # raio do tubo no pé, em fração da meia-largura da lâmina (gordinho)
-CYL_BLADES = 0.6   # fração das lâminas do tufo de fita (lâmina gorda: menos lâminas)
+CYL_GAP = 0.015    # folga mínima entre os tubos no pé (m): lâminas nunca coladas
 CYL_TAPER = 0.12   # quanto o tubo afina até em cima
 CYL_TIP = 2.4      # altura da ponta em raios (pontuda com bico arredondado; 1 = meia esfera)
 # Shaded (como os sprites Shaded do Kenney): umas lâminas na cor cheia, outras
@@ -49,12 +51,23 @@ def tuft_cyl(seed, blades, radius, height, width):
         pos.append(p); nor.append(tuple(c / l for c in n)); uv.append((0.5, 1.0 - min(t, 1.0)))
         col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
 
-    for _ in range(max(3, round(rnd.randint(*blades) * CYL_BLADES))):
-        a = rnd.uniform(0, math.tau)
-        d = radius * math.sqrt(rnd.random())
-        bx, bz = math.cos(a) * d, math.sin(a) * d
-        h = rnd.uniform(*height)
+    feet = []  # (x, z, raio do tubo)
+    for _ in range(blades):
         w = rnd.uniform(*width)
+        r_new = w * CYL_RADIUS
+        # sorteia o pé até ficar SEPARADO dos outros (soma dos raios + folga);
+        # se não couber, abre o raio do tufo aos poucos
+        reach = radius
+        for tries in range(400):
+            a = rnd.uniform(0, math.tau)
+            d = reach * math.sqrt(rnd.random())
+            bx, bz = math.cos(a) * d, math.sin(a) * d
+            if all(math.hypot(bx - fx, bz - fz) >= r_new + fr + CYL_GAP for fx, fz, fr in feet):
+                break
+            if tries % 50 == 49:
+                reach *= 1.1
+        feet.append((bx, bz, r_new))
+        h = rnd.uniform(*height)
         rnd.uniform(0, math.tau)  # (yaw do tufo de fita: mantém o sorteio parecido)
         lean = rnd.uniform(0.03, 0.12) if d > 1e-6 else 0.0
         lx, lz = math.cos(a) * lean, math.sin(a) * lean
@@ -79,12 +92,12 @@ def tuft_cyl(seed, blades, radius, height, width):
             rings.append((ring(y, r0 * (1.0 - CYL_TAPER * j / CYL_RINGS)), y))
         # ponta: pontuda, mas com o bico arredondado (ogiva). O raio cai devagar
         # no começo e fecha num bico redondinho, não numa agulha.
+        # o último anel é um PONTO (raio 0): fecha a ponta, sem furinho/bolinha no topo
         for j in range(1, 6):
             t = j / 5
             y = body + cap * t
-            rr = rt * (1.0 - t ** 1.6) ** 0.6
-            slope = cap / max(rt, 1e-4)
-            rg = [(p, (n[0], 0.4 + 0.6 * t, n[2])) for p, n in ring(y, max(rr, rt * 0.08))]
+            rr = rt * (1.0 - t ** 1.6) ** 0.6 if j < 5 else 0.0
+            rg = [(p, (n[0] * (1.0 - t * 0.7), 0.4 + 0.6 * t, n[2] * (1.0 - t * 0.7))) for p, n in ring(y, rr)]
             rings.append((rg, y))
         for (r_a, ya), (r_b, yb) in zip(rings, rings[1:]):
             for k in range(CYL_SIDES):
