@@ -113,11 +113,8 @@ material = SubResource("mat")
 assets = ExtResource("assets_file")
 top_level = true
 script = ExtResource("1_flat")
-grass_mesh_ids = PackedInt32Array(7)
-edge_mesh_ids = PackedInt32Array(8)
-right_mesh_ids = PackedInt32Array(0)
-right_edge_mesh_ids = PackedInt32Array(11)
-right_spacing = 0.27
+grass_mesh_ids = PackedInt32Array(0)
+edge_mesh_ids = PackedInt32Array(2)
 sprig_mesh_ids = PackedInt32Array(1)
 metadata/_edit_lock_ = true
 
@@ -197,7 +194,7 @@ textures = Array[Texture2D]([ExtResource("fl_white"), ExtResource("fl_white"), E
 size_scales = PackedFloat32Array(1.3, 1.3, 1.3, 1.15, 1.15, 1.3)
 placement = PackedInt32Array(1, 1, 1, 2, 2, 2)
 clump_count = 45
-area_half_size = 16.0
+area_half_size = 13.0
 
 [node name="DustMotes" type="GPUParticles3D" parent="."]
 script = ExtResource("15_motes")

@@ -192,3 +192,10 @@ Implementado:
 - `grass_tuft`: exatamente 7 lâminas, raio 0,17 m. Cada pé é sorteado até ficar SEPARADO dos outros (distância ≥ soma dos raios dos tubos + `CYL_GAP` 0,015 m); se não couber, o raio do tufo abre aos poucos. Altura e grossura continuam variando por lâmina.
 - Ponta fechada num ponto (último anel com raio 0): sumiu o furinho/bolinha no topo.
 - Novo `grass_tuft_edge` (mesh 11, "Tufo borda"): 4 lâminas, mais baixas e finas, raio 0,13 m. Metade direita: `right_edge_mesh_ids` = 11.
+
+## ESTADO ATUAL DA GRAMA (2026-10-26) — vale este bloco, o histórico acima é só registro
+- Só um tipo de grama: tufo de lâminas-cilindro (`grass_tuft`, mesh 0) + tufo de borda (`grass_tuft_edge`, mesh 2) + raminho branco 3D (`grass_sprig`, mesh 1). Removidos: tufo 2D, estrela, cartas, billboards, tufos iso (chato e 3D), atlas `grass_clumps`, `grass_tuft_2d.gdshader`, `gen_grass_card_textures.py`. O corte meio a meio saiu.
+- `grass_tuft`: 6 lâminas soltas (nunca coladas: `CYL_GAP`), raio 0,16 m; borda: 3 lâminas, mais baixas, raio 0,12 m. Ponta mais fina (`CYL_TIP` 3,6), fechada num ponto.
+- Cor (a do tufo de lâminas chatas): pé (0.4,0.58,0.05) → (0.48,0.66,0.1) → ponta (0.6,0.76,0.2), aquarela 0,1.
+- Opacidade igual à do raminho: `sprite_alpha` 0,4–0,5 sorteada por tufo (`SPRITE_ALPHA`), inclusive na borda (`grass_outline` com o mesmo sorteio).
+- Campo: `grass_area` 26 m, `grass_spacing` 0,27; flores `area_half_size` 13.

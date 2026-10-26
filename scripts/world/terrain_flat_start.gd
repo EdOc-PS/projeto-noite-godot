@@ -23,8 +23,8 @@ const GRASS_MARKER := "grass_seeded.txt"
 			_regenerate()
 
 @export_group("Grama inicial")
-@export var grass_area: float = 32.0                 ## lado do quadrado semeado (m)
-@export var grass_spacing: float = 0.14              ## distância média entre tufos na mancha
+@export var grass_area: float = 26.0                 ## lado do quadrado semeado (m)
+@export var grass_spacing: float = 0.27              ## distância média entre tufos na mancha
 @export_range(-1.0, 1.0) var grass_threshold: float = 0.06  ## maior = menos manchas
 @export var grass_noise_frequency: float = 0.09      ## menor = manchas maiores
 ## Regras de tamanho: .docs/plans/10-vegetacao.md. A altura NÃO pode esticar
@@ -39,12 +39,6 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## Vazio = só `grass_mesh_ids` em todo lugar.
 @export var edge_mesh_ids: PackedInt32Array = []
 @export_range(0.0, 1.0) var edge_density: float = 0.5  ## abaixo dessa densidade usa os tufos de borda
-## Comparação MEIO A MEIO: se não estiver vazio, a metade x >= 0 do campo usa
-## estes tufos (e `right_edge_mesh_ids` na borda das manchas) com `right_spacing`; a metade x < 0 fica com
-## `grass_mesh_ids`/`edge_mesh_ids` e `grass_spacing`.
-@export var right_mesh_ids: PackedInt32Array = []
-@export var right_edge_mesh_ids: PackedInt32Array = []  ## tufos de borda da metade x >= 0
-@export var right_spacing: float = 0.27
 ## Raminhos de folhinhas brancas (mesh 1), espalhados pouco por toda a grama.
 @export var sprig_mesh_ids: PackedInt32Array = [1]
 @export_range(0.0, 1.0) var sprig_chance: float = 0.01  ## fração dos pontos de grama que viram raminho
@@ -169,15 +163,11 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + edge_mesh_ids + right_mesh_ids + right_edge_mesh_ids + sprig_mesh_ids:
+	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids:
 		per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
 	var half := grass_area / 2.0
-	if right_mesh_ids.is_empty():
-		_seed_area(Rect2(-half, -half, grass_area, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
-	else:
-		_seed_area(Rect2(-half, -half, half, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
-		_seed_area(Rect2(0.0, -half, half, grass_area), right_mesh_ids, right_edge_mesh_ids, right_spacing, rng, noise, height_noise, per_mesh, sprigs)
+	_seed_area(Rect2(-half, -half, grass_area, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
 	for id in per_mesh:
 		if not (per_mesh[id] as Array).is_empty():
 			instancer.add_transforms(id, per_mesh[id])

@@ -1,11 +1,7 @@
-"""Gera a grama (glTF) usada pelo pincel do Terrain3D, um modelo de cada:
-assets/models/grass/grass_tuft.gltf  — tufo de lâminas-cilindro, ponta pontuda de bico arredondado
-assets/models/grass/grass_tuft_2d.gltf — tufo de lâminas CHATAS (2D, do jogo antigo: mais leve)
-assets/models/grass/grass_star.gltf — tufo ESTRELA: cartas em pé cruzadas no centro, cada uma um pente de lâminas
-assets/models/grass/grass_bb_full/edge.gltf — tufos BILLBOARD (uma carta virada pra câmera), cheio e de borda
-assets/models/grass/grass_iso_full/edge.gltf — tufo 3D LEVE pra câmera isométrica (lâminas chatas inclinadas pra fora), cheio e de borda
-assets/models/grass/grass_iso3d_full/edge.gltf — o tufo iso em versão 3D (lâminas-tubo), cheio e de borda
-assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
+"""Gera a grama (glTF) usada pelo pincel do Terrain3D:
+assets/models/grass/grass_tuft.gltf      — tufo de 6 lâminas-cilindro soltas, ponta fina
+assets/models/grass/grass_tuft_edge.gltf — tufo de borda das manchas (3 lâminas, mais baixo)
+assets/models/grass/grass_sprig.gltf     — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
 Rodar: python tools/gen_grass_tufts.py
@@ -22,9 +18,9 @@ ARC = 6  # segmentos do semicírculo da ponta
 
 TUFTS = {
     # nome: (seed, lâminas (exato), raio, altura das lâminas (m), meia-largura)
-    "grass_tuft": (21, 7, 0.17, (0.32, 0.52), (0.03, 0.05)),
+    "grass_tuft": (21, 6, 0.16, (0.32, 0.52), (0.03, 0.05)),
     # borda das manchas: menos lâminas, mais baixas e finas
-    "grass_tuft_edge": (22, 4, 0.13, (0.22, 0.36), (0.026, 0.042)),
+    "grass_tuft_edge": (22, 3, 0.12, (0.22, 0.36), (0.026, 0.042)),
 }
 # Cada lâmina do tufo é um CILINDRO (tubo que afina um pouco) com a ponta
 # pontuda de bico arredondado, curvando pra fora.
@@ -33,7 +29,7 @@ CYL_RINGS = 4      # anéis ao longo da altura
 CYL_RADIUS = 1.2   # raio do tubo no pé, em fração da meia-largura da lâmina (gordinho)
 CYL_GAP = 0.015    # folga mínima entre os tubos no pé (m): lâminas nunca coladas
 CYL_TAPER = 0.12   # quanto o tubo afina até em cima
-CYL_TIP = 2.4      # altura da ponta em raios (pontuda com bico arredondado; 1 = meia esfera)
+CYL_TIP = 3.6      # altura da ponta em raios (ponta fina; 1 = meia esfera)
 # Shaded (como os sprites Shaded do Kenney): umas lâminas na cor cheia, outras
 # na MESMA cor mais escura. 40% das lâminas escuras, com tom 0,68–0,78.
 DARK_CHANCE = 0.4
@@ -96,7 +92,7 @@ def tuft_cyl(seed, blades, radius, height, width):
         for j in range(1, 6):
             t = j / 5
             y = body + cap * t
-            rr = rt * (1.0 - t ** 1.6) ** 0.6 if j < 5 else 0.0
+            rr = rt * (1.0 - t ** 1.3) ** 0.85 if j < 5 else 0.0
             rg = [(p, (n[0] * (1.0 - t * 0.7), 0.4 + 0.6 * t, n[2] * (1.0 - t * 0.7))) for p, n in ring(y, rr)]
             rings.append((rg, y))
         for (r_a, ya), (r_b, yb) in zip(rings, rings[1:]):
@@ -107,255 +103,6 @@ def tuft_cyl(seed, blades, radius, height, width):
                 for tri in ((0, 2, 1), (0, 3, 2)):
                     for i in tri:
                         add(quad[i][0], quad[i][1], ys[i] / h, shade)
-    return pos, nor, uv, col, edge
-
-
-# Tufo 2D (como o grass_tuft do jogo antigo, tools/gen_models.py): cada lâmina
-# é uma folha chata de 5 pontos (base, meio, ponta pontuda), dos dois lados,
-# inclinando pra fora do centro. Bem mais leve que o tufo de cilindros.
-TUFTS_2D = {
-    # nome: (seed, lâminas, raio, altura (m), meia-largura)
-    "grass_tuft_2d": (21, 26, 0.14, (0.34, 0.58), (0.03, 0.045)),
-}
-# Lâmina da referência (grama em pé, tipo foto do campo lima): chata, larga no
-# pé, afina devagar até a ponta pontuda, quase em pé com uma curvinha suave
-# pra um lado (não deita). 5 alturas por lâmina pra curva ficar lisa.
-BLADE_T = (0.0, 0.3, 0.55, 0.8, 1.0)
-BLADE_W = (1.0, 0.9, 0.7, 0.4, 0.0)
-
-
-def tuft_flat(seed, blades, radius, height, width):
-    rnd = random.Random(seed)
-    pos, nor, uv, col, edge = [], [], [], [], []
-    for _ in range(blades):
-        a = rnd.uniform(0, math.tau); d = radius * math.sqrt(rnd.random())
-        bx, bz = math.cos(a) * d, math.sin(a) * d
-        h = rnd.uniform(*height); w = rnd.uniform(*width)
-        yaw = rnd.uniform(0, math.tau)
-        side = (math.cos(yaw), math.sin(yaw))
-        # curva pra frente da lâmina (perpendicular à largura), pouca: fica em pé
-        bend = rnd.uniform(0.04, 0.14) * h * rnd.choice((-1, 1))
-        fx, fz = -side[1], side[0]
-        out = rnd.uniform(0.0, 0.05) if d > 1e-6 else 0.0  # abre só um pouco pra fora
-        ox, oz = math.cos(a) * out, math.sin(a) * out
-        shade = rnd.uniform(0.85, 1.0)
-        rows = []
-        for t, wf in zip(BLADE_T, BLADE_W):
-            cx = bx + fx * bend * t * t + ox * t
-            cz = bz + fz * bend * t * t + oz * t
-            hw = w * wf
-            rows.append(((cx - side[0] * hw, h * t, cz - side[1] * hw), (cx + side[0] * hw, h * t, cz + side[1] * hw), t))
-        for face in (1, -1):
-            n = (fx * 0.4 * face, 0.9, fz * 0.4 * face)
-            l = math.sqrt(sum(c * c for c in n)); n = tuple(c / l for c in n)
-            for (l0, r0, t0), (l1, r1, t1) in zip(rows, rows[1:]):
-                q = [(l0, t0), (r0, t0), (r1, t1), (l1, t1)]
-                tris = [(0, 1, 2), (0, 2, 3)] if t1 < 1.0 else [(0, 1, 2)]
-                for tri in tris:
-                    for i in (tri if face == 1 else (tri[0], tri[2], tri[1])):
-                        pos.append(q[i][0]); nor.append(n); uv.append((0.5, 1.0 - q[i][1]))
-                        col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
-    return pos, nor, uv, col, edge
-
-
-# Tufo ESTRELA (referência de jogo isométrico): 4 cartas em pé cruzando no
-# centro (vistas de cima formam uma estrela de 8 pontas), cada carta é um
-# "pente" de lâminas finas lado a lado, mais altas no meio e mais baixas nas
-# pontas da carta. De qualquer ângulo da câmera sempre tem carta de frente:
-# volume com poucos triângulos, bom pra visão isométrica.
-STAR = {
-    # nome: (seed, cartas, lâminas por carta, meia-largura da carta (m), altura (m))
-    "grass_star": (31, 4, 16, 0.22, (0.26, 0.42)),
-}
-
-
-def tuft_star(seed, cards, blades, half, height):
-    rnd = random.Random(seed)
-    pos, nor, uv, col, edge = [], [], [], [], []
-    top = height[1] * 1.1  # altura de referência do degradê (UV.y)
-    for c in range(cards):
-        ang = math.pi * c / cards + rnd.uniform(-0.12, 0.12)
-        side = (math.cos(ang), math.sin(ang))
-        fx, fz = -side[1], side[0]
-        for b in range(blades):
-            u = -1.0 + 2.0 * (b + rnd.uniform(0.2, 0.8)) / blades  # -1..1 ao longo da carta
-            x0 = u * half
-            # mais alta no meio da carta, baixa nas pontas (silhueta de leque)
-            h = rnd.uniform(*height) * (1.0 - 0.45 * u * u)
-            w = rnd.uniform(0.018, 0.03)
-            lean = u * rnd.uniform(0.05, 0.12) + rnd.uniform(-0.03, 0.03)  # abre em leque
-            bend = rnd.uniform(-0.03, 0.03)  # curvinha pra fora do plano
-            shade = rnd.uniform(0.88, 1.0)
-            pts = [(x0 - w, 0.0, 0.0), (x0 + w, 0.0, 0.0), (x0 - w * 0.5 + lean * 0.6, 0.6, bend * 0.36), (x0 + w * 0.5 + lean * 0.6, 0.6, bend * 0.36), (x0 + lean, 1.0, bend)]
-            verts = [(side[0] * px + fx * pz, h * t, side[1] * px + fz * pz) for px, t, pz in pts]
-            for face in (1, -1):
-                n = (fx * 0.45 * face, 0.9, fz * 0.45 * face)
-                l = math.sqrt(sum(k * k for k in n)); n = tuple(k / l for k in n)
-                for tri in ((0, 1, 2), (1, 3, 2), (2, 3, 4)):
-                    for i in (tri if face == 1 else (tri[0], tri[2], tri[1])):
-                        pos.append(verts[i]); nor.append(n); uv.append((0.5, 1.0 - verts[i][1] / top))
-                        col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
-    return pos, nor, uv, col, edge
-
-
-# Tufos BILLBOARD (grama estilizada pra câmera isométrica fixa): UMA carta que o
-# shader vira sempre pra câmera (grass_body `billboard`), com o atlas
-# assets/textures/vegetation/grass/grass_clumps.png (tools/gen_grass_card_textures.py).
-# Normal pra cima: a luz do tufo é a mesma do chão. Dois tipos:
-#   grass_bb_full — tufo cheio (célula 0), meio das manchas
-#   grass_bb_edge — tufo ralo e baixo (célula 1), borda das manchas
-# Cada tufo tem VÁRIAS cartas em lugares diferentes (UV2 = centro da carta;
-# cada uma vira pra câmera em volta do próprio centro): visto de cima o tufo
-# fica cheio, sem buraco. O pé afunda 3 cm no chão pra não aparecer a linha reta.
-BILLBOARDS = {
-    # nome: [(célula, x, z, largura, altura, espelha)]  (célula 2 = atlas inteiro do raminho)
-    "grass_bb_full": [(0, 0.0, 0.0, 0.62, 0.6, False), (0, -0.15, -0.12, 0.5, 0.5, True),
-                      (1, 0.16, -0.08, 0.46, 0.44, False), (1, 0.02, 0.15, 0.48, 0.4, True)],
-    "grass_bb_edge": [(1, 0.0, 0.0, 0.5, 0.48, False), (1, -0.12, 0.1, 0.42, 0.38, True)],
-    "grass_sprig_bb": [(2, 0.0, 0.0, 0.5, 0.5, False)],
-}
-SINK = 0.03
-
-
-def tuft_billboard(cards):
-    pos, nor, uv, col, edge = [], [], [], [], []
-    for cell, cx, cz, width, height, mirror in cards:
-        u0, u1 = (0.0, 1.0) if cell == 2 else (cell * 0.5, cell * 0.5 + 0.5)
-        if mirror:
-            u0, u1 = u1, u0
-        q = [((cx - width / 2, -SINK, cz), (u0, 1.0)), ((cx + width / 2, -SINK, cz), (u1, 1.0)),
-             ((cx + width / 2, height, cz), (u1, 0.0)), ((cx - width / 2, height, cz), (u0, 0.0))]
-        for tri in ((0, 1, 2), (0, 2, 3)):
-            for i in tri:
-                pos.append(q[i][0]); nor.append((0.0, 1.0, 0.0)); uv.append(q[i][1])
-                col.append((1.0, 1.0, 1.0, 1.0)); edge.append((cx, cz))
-    return pos, nor, uv, col, edge
-
-
-# Tufo 3D leve pra câmera ISOMÉTRICA (de cima). Problema das cartas 2D: de cima
-# dá pra ver que é um plano. Aqui cada lâmina é uma folha chata de verdade com
-# direção FIXA no mundo (não vira pra câmera), e:
-#  - as lâminas INCLINAM PRA FORA do centro (25–45°): de cima a câmera vê a face
-#    das lâminas abrindo em roseta, não o fio delas; o tufo cobre um disco;
-#  - curva suave (a ponta deita mais que o pé);
-#  - normal "de cúpula": mistura de pra cima com pra fora do centro do tufo, a
-#    luz corre lisa no tufo todo (parece um montinho, não lâminas soltas);
-#  - poucos triângulos (5 pontos por lâmina, dois lados).
-ISO = {
-    # nome: (seed, lâminas, área do pé (m), altura (m), meia-largura, inclinação (graus))
-    "grass_iso_full": (61, 7, 0.11, (0.28, 0.48), (0.03, 0.05), (8, 32)),
-    "grass_iso_edge": (62, 3, 0.09, (0.18, 0.32), (0.028, 0.045), (15, 40)),
-}
-# Formato da lâmina das referências (PNG): pé LARGO e reto até ~1/3, depois
-# afina em curva até a ponta fina; a lâmina curva pra um lado. Às vezes duas
-# lâminas saem do mesmo pé (uma menor, abrindo pro outro lado).
-ISO_T = (0.0, 0.3, 0.5, 0.68, 0.84, 1.0)
-ISO_W = (1.0, 0.97, 0.85, 0.62, 0.32, 0.0)
-
-
-def tuft_iso(seed, blades, area, height, width, tilt):
-    rnd = random.Random(seed)
-    pos, nor, uv, col, edge = [], [], [], [], []
-    hmax = height[1]
-    # pés espalhados de forma solta (não em círculo): 3–4 grupinhos sorteados na área
-    groups = [(rnd.uniform(-area, area) * 0.5, rnd.uniform(-area, area) * 0.5) for _ in range(rnd.randint(3, 4))]
-    feet = []
-    while len(feet) < blades:
-        gx, gz = rnd.choice(groups)
-        bx, bz = gx + rnd.gauss(0, area * 0.18), gz + rnd.gauss(0, area * 0.18)
-        yaw = rnd.uniform(0, math.tau)
-        h = rnd.uniform(*height)
-        feet.append((bx, bz, yaw, h, rnd.uniform(*width)))
-        if rnd.random() < 0.3 and len(feet) < blades:  # par: outra lâmina do mesmo pé
-            feet.append((bx + rnd.uniform(-0.01, 0.01), bz + rnd.uniform(-0.01, 0.01), yaw + math.pi + rnd.uniform(-0.6, 0.6), h * rnd.uniform(0.5, 0.75), rnd.uniform(*width) * 0.8))
-    for bx, bz, yaw, h, w in feet:
-        lean = (math.cos(yaw), math.sin(yaw))         # pra onde a lâmina curva
-        tl = math.radians(rnd.uniform(*tilt))
-        twist = rnd.uniform(-0.5, 0.5)
-        side = (-lean[1] * math.cos(twist) - lean[0] * math.sin(twist), lean[0] * math.cos(twist) - lean[1] * math.sin(twist))
-        shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
-        rows = []
-        for t, wf in zip(ISO_T, ISO_W):
-            ang = tl * t * t * 1.6                      # curva: reto no pé, deita na ponta
-            reach = h * t * math.sin(min(ang, 1.2)) * 0.8
-            y = h * t * math.cos(min(ang, 1.2) * 0.6)
-            cx, cz = bx + lean[0] * reach, bz + lean[1] * reach
-            hw = w * wf
-            rows.append(((cx - side[0] * hw, y, cz - side[1] * hw), (cx + side[0] * hw, y, cz + side[1] * hw), y))
-        # dois lados (frente e verso com a ordem invertida): a borda (casca com
-        # cull_front) precisa do verso. A normal da FACE vai em COLOR.gba pra
-        # casca; a normal de cúpula fica pra luz.
-        for face in (1, -1):
-            for (l0, r0, y0), (l1, r1, y1) in zip(rows, rows[1:]):
-                quad = [(l0, y0), (r0, y0), (r1, y1), (l1, y1)]
-                tris = [(0, 1, 2), (0, 2, 3)] if l1 != r1 else [(0, 1, 2)]
-                a_, b_, c_ = quad[0][0], quad[1][0], quad[2][0]
-                e1 = tuple(b_[k] - a_[k] for k in range(3)); e2 = tuple(c_[k] - a_[k] for k in range(3))
-                fn = (e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0])
-                fl = math.sqrt(sum(c * c for c in fn)) or 1.0
-                fn = tuple(c / fl * face for c in fn)
-                for tri in tris:
-                    for k in (tri if face == 1 else (tri[0], tri[2], tri[1])):
-                        p, y = quad[k]
-                        n = (p[0] * 2.0, 1.0, p[2] * 2.0)  # normal de cúpula: pra cima + pra fora
-                        l = math.sqrt(sum(c * c for c in n))
-                        pos.append(p); nor.append(tuple(c / l for c in n)); uv.append((0.5, 1.0 - min(y / hmax, 1.0)))
-                        col.append((shade, fn[0] * 0.5 + 0.5, fn[1] * 0.5 + 0.5, fn[2] * 0.5 + 0.5)); edge.append((0.0, 0.0))
-    return pos, nor, uv, col, edge
-
-
-# Versão 3D do tufo iso: MESMO arranjo (mesmos pés, curvas, pares, sorteio igual
-# pela mesma seed), mas cada lâmina é um TUBO (5 lados) seguindo a linha do meio
-# da lâmina chata, raio = meia-largura dela × ISO3D_ROUND. A ponta fecha fina.
-# Material grass_tuft.tres (borda pela casca funciona com tubo).
-ISO3D = {"grass_iso3d_full": "grass_iso_full", "grass_iso3d_edge": "grass_iso_edge"}
-ISO3D_SIDES = 5
-ISO3D_ROUND = 1.1   # lâmina gordinha
-ISO3D_TILT = 0.4    # fração da inclinação do tufo chato: bem mais em pé, como o 3D antigo
-
-
-def tuft_iso3d(seed, blades, area, height, width, tilt):
-    rnd = random.Random(seed)
-    pos, nor, uv, col, edge = [], [], [], [], []
-    hmax = height[1]
-    groups = [(rnd.uniform(-area, area) * 0.5, rnd.uniform(-area, area) * 0.5) for _ in range(rnd.randint(3, 4))]
-    feet = []
-    while len(feet) < blades:
-        gx, gz = rnd.choice(groups)
-        bx, bz = gx + rnd.gauss(0, area * 0.18), gz + rnd.gauss(0, area * 0.18)
-        yaw = rnd.uniform(0, math.tau)
-        h = rnd.uniform(*height)
-        feet.append((bx, bz, yaw, h, rnd.uniform(*width)))
-        if rnd.random() < 0.3 and len(feet) < blades:
-            feet.append((bx + rnd.uniform(-0.01, 0.01), bz + rnd.uniform(-0.01, 0.01), yaw + math.pi + rnd.uniform(-0.6, 0.6), h * rnd.uniform(0.5, 0.75), rnd.uniform(*width) * 0.8))
-    for bx, bz, yaw, h, w in feet:
-        lean = (math.cos(yaw), math.sin(yaw))
-        tl = math.radians(rnd.uniform(*tilt)) * ISO3D_TILT
-        rnd.uniform(-0.5, 0.5)  # (torção da lâmina chata: mantém o sorteio igual)
-        shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
-        rings = []
-        for t, wf in zip(ISO_T, ISO_W):
-            ang = tl * t * t * 1.6
-            reach = h * t * math.sin(min(ang, 1.2)) * 0.8
-            y = h * t * math.cos(min(ang, 1.2) * 0.6)
-            c = (bx + lean[0] * reach, y, bz + lean[1] * reach)
-            r = max(w * wf * ISO3D_ROUND, 0.0015)
-            ring = []
-            for k in range(ISO3D_SIDES):
-                a = math.tau * k / ISO3D_SIDES
-                n = (math.cos(a), 0.25, math.sin(a))
-                ring.append(((c[0] + math.cos(a) * r, c[1], c[2] + math.sin(a) * r), n))
-            rings.append((ring, y))
-        for (ra, ya), (rb, yb) in zip(rings, rings[1:]):
-            for k in range(ISO3D_SIDES):
-                k2 = (k + 1) % ISO3D_SIDES
-                quad = [ra[k], ra[k2], rb[k2], rb[k]]
-                ys = [ya, ya, yb, yb]
-                for tri in ((0, 2, 1), (0, 3, 2)):
-                    for i in tri:
-                        n = quad[i][1]; l = math.sqrt(sum(x * x for x in n))
-                        pos.append(quad[i][0]); nor.append(tuple(x / l for x in n)); uv.append((0.5, 1.0 - min(ys[i] / hmax, 1.0)))
-                        col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
     return pos, nor, uv, col, edge
 
 
@@ -495,26 +242,6 @@ def main():
     for name, (seed, blades, radius, height, width) in TUFTS.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *tuft_cyl(seed, blades, radius, height, width))
-        print(os.path.abspath(path))
-    for name, args in TUFTS_2D.items():
-        path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_flat(*args))
-        print(os.path.abspath(path))
-    for name, args in STAR.items():
-        path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_star(*args))
-        print(os.path.abspath(path))
-    for name, args in ISO.items():
-        path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_iso(*args))
-        print(os.path.abspath(path))
-    for name, src in ISO3D.items():
-        path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_iso3d(*ISO[src]))
-        print(os.path.abspath(path))
-    for name, args in BILLBOARDS.items():
-        path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_billboard(args))
         print(os.path.abspath(path))
     for name, (seed, height) in SPRIGS_3D.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
