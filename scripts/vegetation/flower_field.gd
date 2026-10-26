@@ -21,11 +21,21 @@ const SHADER := preload("res://shaders/nature/flower_card.gdshader")
 @export var avoid_margin: float = 0.4
 @export var max_avoid_size: float = 12.0  ## malhas maiores que isso não contam (chão)
 
+## Onde cada tipo nasce (mesma ordem de `textures`): 0 = qualquer lugar,
+## 1 = só no chão (fora da grama), 2 = só no meio da grama. A grama é a mesma
+## mancha de ruído da semeadura do Terrain3D (terrain_flat_start.gd): manter
+## `grass_seed`, `grass_frequency` e `grass_threshold` iguais aos de lá.
+@export var placement: PackedInt32Array = []
+@export var grass_seed: int = 11
+@export var grass_frequency: float = 0.09
+@export var grass_threshold: float = 0.06
+
 var _avoid: Array[Rect2] = []
+var _grass_noise := FastNoiseLite.new()
 
 ## Regra de vegetação (10-vegetacao.md): flores ficam em MONTES de um tipo só
 ## (um monte vermelho, um monte roxo...), nunca misturadas no mesmo monte.
-## Podem ficar em qualquer lugar do campo (na grama ou fora dela).
+## Cada tipo pode ficar só no chão, só na grama ou em qualquer lugar (`placement`).
 func _ready() -> void:
 	if textures.is_empty():
 		return
@@ -38,9 +48,21 @@ func _ready() -> void:
 	var per_tex: Array = []
 	for t in textures:
 		per_tex.append([])
+	_grass_noise.seed = grass_seed
+	_grass_noise.frequency = grass_frequency
 	for c in clump_count:
-		var center := Vector3(rng.randf_range(-area_half_size, area_half_size), 0.0, rng.randf_range(-area_half_size, area_half_size))
 		var k := rng.randi() % textures.size()  # um tipo por monte
+		var mode := placement[k] if k < placement.size() else 0
+		var center := Vector3.ZERO
+		var found := false
+		for _try in 30:  # sorteia até cair no lugar certo (chão ou grama)
+			center = Vector3(rng.randf_range(-area_half_size, area_half_size), 0.0, rng.randf_range(-area_half_size, area_half_size))
+			var g := _in_grass(global_position + center)
+			if mode == 0 or (mode == 1 and not g) or (mode == 2 and g):
+				found = true
+				break
+		if not found:
+			continue
 		var n := rng.randi_range(clump_size.x, clump_size.y)
 		for j in n:
 			var r := sqrt(rng.randf()) * clump_radius
@@ -70,6 +92,10 @@ func _ready() -> void:
 		mmi.material_override = mat
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(mmi)
+
+## Mesma conta da semeadura: tem grama onde o ruído passa do limite.
+func _in_grass(p: Vector3) -> bool:
+	return _grass_noise.get_noise_2d(p.x, p.z) > grass_threshold + 0.05
 
 func _collect_rects(n: Node) -> void:
 	if n is MeshInstance3D:

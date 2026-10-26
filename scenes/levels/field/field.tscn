@@ -189,6 +189,7 @@ area = Vector3(16, 0.6, 16)
 script = ExtResource("14_flowers")
 textures = Array[Texture2D]([ExtResource("fl_white"), ExtResource("fl_white"), ExtResource("fl_white"), ExtResource("fl_blue"), ExtResource("fl_pink"), ExtResource("fl_red")])
 size_scales = PackedFloat32Array(0.45, 0.45, 0.45, 0.75, 0.75, 0.85)
+placement = PackedInt32Array(1, 1, 1, 2, 2, 2)
 clump_count = 45
 area_half_size = 18.0
 
