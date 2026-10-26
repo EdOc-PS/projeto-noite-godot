@@ -5,9 +5,9 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_shader")
-shader_parameter/base_color = Color(0.27, 0.47, 0.04, 1)
-shader_parameter/tip_color = Color(0.8, 0.92, 0.22, 1)
-shader_parameter/mid_color = Color(0.55, 0.76, 0.08, 1)
+shader_parameter/base_color = Color(0.3, 0.5, 0.07, 1)
+shader_parameter/tip_color = Color(0.62, 0.82, 0.3, 1)
+shader_parameter/mid_color = Color(0.46, 0.68, 0.13, 1)
 shader_parameter/noise_scale = 20.0
 shader_parameter/shade_amount = 1.0
 shader_parameter/light_floor = 0.78
@@ -36,4 +36,5 @@ shader_parameter/shimmer_speed = 18.0
 shader_parameter/shimmer_color = Color(1, 0.93, 0.66, 1)
 shader_parameter/shimmer_spacing = 160.0
 shader_parameter/shimmer_width = 22.0
-shader_parameter/paint_wobble = 0.08
+shader_parameter/paint_wobble = 0.0
+shader_parameter/mid_pos = 0.55

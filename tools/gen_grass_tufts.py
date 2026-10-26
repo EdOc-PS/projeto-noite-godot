@@ -104,8 +104,13 @@ def tuft_cyl(seed, blades, radius, height, width):
 # inclinando pra fora do centro. Bem mais leve que o tufo de cilindros.
 TUFTS_2D = {
     # nome: (seed, lâminas, raio, altura (m), meia-largura)
-    "grass_tuft_2d": (21, 30, 0.16, (0.24, 0.4), (0.025, 0.04)),
+    "grass_tuft_2d": (21, 26, 0.14, (0.34, 0.58), (0.03, 0.045)),
 }
+# Lâmina da referência (grama em pé, tipo foto do campo lima): chata, larga no
+# pé, afina devagar até a ponta pontuda, quase em pé com uma curvinha suave
+# pra um lado (não deita). 5 alturas por lâmina pra curva ficar lisa.
+BLADE_T = (0.0, 0.3, 0.55, 0.8, 1.0)
+BLADE_W = (1.0, 0.9, 0.7, 0.4, 0.0)
 
 
 def tuft_flat(seed, blades, radius, height, width):
@@ -116,19 +121,29 @@ def tuft_flat(seed, blades, radius, height, width):
         bx, bz = math.cos(a) * d, math.sin(a) * d
         h = rnd.uniform(*height); w = rnd.uniform(*width)
         yaw = rnd.uniform(0, math.tau)
-        lean = rnd.uniform(0.05, 0.18)
-        lx, lz = (math.cos(a) * lean, math.sin(a) * lean) if d > 1e-6 else (0.0, 0.0)
         side = (math.cos(yaw), math.sin(yaw))
-        shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
-        pts = [(-w, 0.0), (w, 0.0), (-w * 0.6, 0.55), (w * 0.6, 0.55), (0.0, 1.0)]
-        verts = [(bx + side[0] * sx + lx * t * t, h * t, bz + side[1] * sx + lz * t * t) for sx, t in pts]
+        # curva pra frente da lâmina (perpendicular à largura), pouca: fica em pé
+        bend = rnd.uniform(0.04, 0.14) * h * rnd.choice((-1, 1))
+        fx, fz = -side[1], side[0]
+        out = rnd.uniform(0.0, 0.05) if d > 1e-6 else 0.0  # abre só um pouco pra fora
+        ox, oz = math.cos(a) * out, math.sin(a) * out
+        shade = rnd.uniform(0.85, 1.0)
+        rows = []
+        for t, wf in zip(BLADE_T, BLADE_W):
+            cx = bx + fx * bend * t * t + ox * t
+            cz = bz + fz * bend * t * t + oz * t
+            hw = w * wf
+            rows.append(((cx - side[0] * hw, h * t, cz - side[1] * hw), (cx + side[0] * hw, h * t, cz + side[1] * hw), t))
         for face in (1, -1):
-            n = (-side[1] * 0.35 * face, 0.9, side[0] * 0.35 * face)  # quase pra cima: luz suave
+            n = (fx * 0.4 * face, 0.9, fz * 0.4 * face)
             l = math.sqrt(sum(c * c for c in n)); n = tuple(c / l for c in n)
-            for tri in ((0, 1, 2), (1, 3, 2), (2, 3, 4)):
-                for i in (tri if face == 1 else (tri[0], tri[2], tri[1])):
-                    pos.append(verts[i]); nor.append(n); uv.append((0.5, 1.0 - pts[i][1]))
-                    col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
+            for (l0, r0, t0), (l1, r1, t1) in zip(rows, rows[1:]):
+                q = [(l0, t0), (r0, t0), (r1, t1), (l1, t1)]
+                tris = [(0, 1, 2), (0, 2, 3)] if t1 < 1.0 else [(0, 1, 2)]
+                for tri in tris:
+                    for i in (tri if face == 1 else (tri[0], tri[2], tri[1])):
+                        pos.append(q[i][0]); nor.append(n); uv.append((0.5, 1.0 - q[i][1]))
+                        col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
     return pos, nor, uv, col, edge
 
 

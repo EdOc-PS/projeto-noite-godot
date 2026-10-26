@@ -120,3 +120,7 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 
 ### Verde da referência (2026-10-25)
 - Tufo 2D voltou pro `grass_body` (`grass_tuft_2d.gdshader`); o `grass_old.gdshader` ficou guardado sem uso. Cores pela foto de referência (grama lima saturada): pé verde fechado (0.27,0.47,0.04) → meio lima (0.55,0.76,0.08) → ponta verde-amarelo vivo (0.8,0.92,0.22), aquarela leve (`paint_wobble` 0,08).
+
+### Tufo 2D refeito pela print (2026-10-25)
+- Lâminas em pé (abrem no máx. 5 cm), chatas, largas no pé e afinando até a ponta, curvinha suave pra frente (5 alturas por lâmina: `BLADE_T`/`BLADE_W`). 26 lâminas, 0,34–0,58 m.
+- Degradê liso sem aquarela (`paint_wobble` 0): pé verde (0.3,0.5,0.07) → meio (0.46,0.68,0.13) → ponta verde claro (0.62,0.82,0.3). Nada de amarelo vivo.
