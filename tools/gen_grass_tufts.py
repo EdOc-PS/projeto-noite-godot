@@ -235,8 +235,8 @@ def tuft_billboard(cards):
 #  - poucos triângulos (5 pontos por lâmina, dois lados).
 ISO = {
     # nome: (seed, lâminas, área do pé (m), altura (m), meia-largura, inclinação (graus))
-    "grass_iso_full": (61, 11, 0.14, (0.28, 0.48), (0.03, 0.05), (8, 32)),
-    "grass_iso_edge": (62, 5, 0.12, (0.18, 0.32), (0.028, 0.045), (15, 40)),
+    "grass_iso_full": (61, 7, 0.11, (0.28, 0.48), (0.03, 0.05), (8, 32)),
+    "grass_iso_edge": (62, 3, 0.09, (0.18, 0.32), (0.028, 0.045), (15, 40)),
 }
 # Formato da lâmina das referências (PNG): pé LARGO e reto até ~1/3, depois
 # afina em curva até a ponta fina; a lâmina curva pra um lado. Às vezes duas
