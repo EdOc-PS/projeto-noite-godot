@@ -3,6 +3,7 @@ assets/models/grass/grass_tuft.gltf  — tufo de lâminas-cilindro, ponta pontud
 assets/models/grass/grass_tuft_2d.gltf — tufo de lâminas CHATAS (2D, do jogo antigo: mais leve)
 assets/models/grass/grass_star.gltf — tufo ESTRELA: cartas em pé cruzadas no centro, cada uma um pente de lâminas
 assets/models/grass/grass_bb_full/edge.gltf — tufos BILLBOARD (uma carta virada pra câmera), cheio e de borda
+assets/models/grass/grass_iso_full/edge.gltf — tufo 3D LEVE pra câmera isométrica (lâminas chatas inclinadas pra fora), cheio e de borda
 assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
@@ -223,6 +224,60 @@ def tuft_billboard(cards):
     return pos, nor, uv, col, edge
 
 
+# Tufo 3D leve pra câmera ISOMÉTRICA (de cima). Problema das cartas 2D: de cima
+# dá pra ver que é um plano. Aqui cada lâmina é uma folha chata de verdade com
+# direção FIXA no mundo (não vira pra câmera), e:
+#  - as lâminas INCLINAM PRA FORA do centro (25–45°): de cima a câmera vê a face
+#    das lâminas abrindo em roseta, não o fio delas; o tufo cobre um disco;
+#  - curva suave (a ponta deita mais que o pé);
+#  - normal "de cúpula": mistura de pra cima com pra fora do centro do tufo, a
+#    luz corre lisa no tufo todo (parece um montinho, não lâminas soltas);
+#  - poucos triângulos (5 pontos por lâmina, dois lados).
+ISO = {
+    # nome: (seed, lâminas, raio do pé (m), altura (m), meia-largura, inclinação (graus))
+    "grass_iso_full": (61, 22, 0.1, (0.28, 0.46), (0.022, 0.034), (25, 45)),
+    "grass_iso_edge": (62, 10, 0.08, (0.18, 0.3), (0.02, 0.03), (35, 55)),
+}
+
+
+def tuft_iso(seed, blades, radius, height, width, tilt):
+    rnd = random.Random(seed)
+    pos, nor, uv, col, edge = [], [], [], [], []
+    hmax = height[1]
+    for i in range(blades):
+        # direção pra fora espalhada por igual (ângulo de ouro) + sorteio
+        a = i * math.radians(137.5) + rnd.uniform(-0.3, 0.3)
+        out = (math.cos(a), math.sin(a))
+        d = radius * math.sqrt(rnd.random())
+        bx, bz = out[0] * d, out[1] * d
+        h = rnd.uniform(*height); w = rnd.uniform(*width)
+        tl = math.radians(rnd.uniform(*tilt)) * (0.6 + 0.4 * (d / radius if radius else 1))
+        side = (-out[1], out[0])  # largura da lâmina: de lado (a face olha pra fora/cima)
+        twist = rnd.uniform(-0.35, 0.35)
+        side = (side[0] * math.cos(twist) - out[0] * math.sin(twist), side[1] * math.cos(twist) - out[1] * math.sin(twist))
+        shade = rnd.uniform(0.82, 1.0)
+        rows = []
+        for t, wf in ((0.0, 1.0), (0.35, 0.85), (0.65, 0.6), (0.88, 0.3), (1.0, 0.0)):
+            ang = tl * (0.4 + 0.6 * t)  # curva: a ponta deita mais
+            reach = h * t * math.sin(ang)
+            y = h * t * math.cos(ang)
+            cx, cz = bx + out[0] * reach, bz + out[1] * reach
+            hw = w * wf
+            rows.append(((cx - side[0] * hw, y, cz - side[1] * hw), (cx + side[0] * hw, y, cz + side[1] * hw), y))
+        for (l0, r0, y0), (l1, r1, y1) in zip(rows, rows[1:]):
+            quad = [(l0, y0), (r0, y0), (r1, y1), (l1, y1)]
+            tris = [(0, 1, 2), (0, 2, 3)] if l1 != r1 else [(0, 1, 2)]
+            for tri in tris:
+                for k in tri:
+                    p, y = quad[k]
+                    # normal de cúpula: pra cima + pra fora do centro do tufo
+                    n = (p[0] * 2.0, 1.0, p[2] * 2.0)
+                    l = math.sqrt(sum(c * c for c in n))
+                    pos.append(p); nor.append(tuple(c / l for c in n)); uv.append((0.5, 1.0 - min(y / hmax, 1.0)))
+                    col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
+    return pos, nor, uv, col, edge
+
+
 # Raminho 3D (o sprite_0093 do Kenney refeito em geometria): caule fino em tubo,
 # galhos diagonais saindo dele, cada um terminando numa folha em gota (elipsoide),
 # e folhinhas menores ao longo dos galhos. Meshes 3 e 4 do pincel.
@@ -361,6 +416,10 @@ def main():
     for name, args in STAR.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *tuft_star(*args))
+        print(os.path.abspath(path))
+    for name, args in ISO.items():
+        path = os.path.join(OUT_DIR, name + ".gltf")
+        write_gltf(path, name, *tuft_iso(*args))
         print(os.path.abspath(path))
     for name, args in BILLBOARDS.items():
         path = os.path.join(OUT_DIR, name + ".gltf")

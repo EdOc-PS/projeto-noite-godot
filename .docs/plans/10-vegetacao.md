@@ -155,3 +155,13 @@ Implementado:
 - Por que o tufo parecia vazio de cima: uma carta só é uma faixa reta; vista de cima sobra chão em volta. Solução (pesquisa: hexaquo.at grass series parte 2 — várias lâminas/cartas por tufo em posições e alturas diferentes, pé afundado): o tufo agora tem VÁRIAS cartas billboard em lugares diferentes — cheio = 4 cartas (centro + 3 em volta, alturas variadas, espelhadas), borda = 2. Cada carta vira pra câmera em volta do PRÓPRIO centro (`UV2` = x, z do pé; shader `grass_body` `billboard`). Pé afundado 3 cm. Atlas cheio com 15–18 lâminas.
 - Cor um tiquinho mais escura: pé (0.53,0.7,0.01), ponta (0.7,0.82,0.28).
 - Raminho branco: novo `grass_sprig_bb` (mesh 6, "Raminho billboard"): o PNG `sprig_0093` (Kenney Shaded) numa carta billboard com o mesmo shader da grama (vento, jogador, `sprite_alpha` 0,85–0,95), tons brancos. O raminho 3D (mesh 1) continua guardado. `sprig_mesh_ids` = 6.
+
+### Tufo 3D leve pra isométrica (2026-10-26) — substitui os billboards no terreno
+- Billboard/carta 2D reprovado: de cima dá pra ver que é um plano. Volta pra lâminas de geometria (como o tufo do jogo antigo), com direção FIXA no mundo.
+- `grass_iso_full` (mesh 7, 22 lâminas) e `grass_iso_edge` (mesh 8, 10 lâminas, mais baixo e mais deitado) em `gen_grass_tufts.py` (`ISO`):
+  - lâminas INCLINAM PRA FORA 25–45° (borda 35–55°): de cima a câmera vê a face das lâminas abrindo em roseta, não o fio; o tufo cobre um disco;
+  - curva (a ponta deita mais que o pé), leve torção por lâmina;
+  - normal de "cúpula" (pra cima + pra fora do centro): luz lisa no tufo todo;
+  - leve: 5 pontos por lâmina, ~7 triângulos.
+- Material `grass_iso.tres` (`grass_body`, dois lados): mais escuro que o billboard — pé (0.4,0.58,0.05) → (0.48,0.66,0.1) → ponta (0.6,0.76,0.2).
+- `grass_mesh_ids` = 7, `edge_mesh_ids` = 8. Billboards (4, 5, 6) guardados no pincel.
