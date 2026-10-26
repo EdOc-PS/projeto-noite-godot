@@ -101,3 +101,8 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Tufo opaco de novo (tirado o teste de opacidade 0,8); `grass_spacing` 0,27.
 - Flores com caule: CADA flor (não só o centro do monte) precisa estar `grass_margin` (0,12) pra dentro da mancha de grama, onde ela é densa e alta; o caule não aparece mais na borda.
 - Caule das flores mais grosso (2,6 px).
+
+### Ajuste 2026-10-25 (5)
+- Caule fino de novo (1,6 px) com efeito chiclete: escurece (`stem_dark` 0,45) e some (`stem_alpha_base` 0) indo pro pé. Shader próprio `flower_stem.gdshader` (transparente); corpo comum em `flower_card.gdshaderinc`.
+- Branca bem maior (`size_scales` 1,3) e mais espaçada (menos flores, mais afastadas na textura).
+- `grass_margin` 0,2: flores com caule mais pro meio da grama.

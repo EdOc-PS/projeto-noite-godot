@@ -7,6 +7,7 @@ extends Node3D
 ## Regras: .docs/plans/10-vegetacao.md.
 
 const SHADER := preload("res://shaders/nature/flower_card.gdshader")
+const STEM_SHADER := preload("res://shaders/nature/flower_stem.gdshader")
 const HEAD := 0.72       ## altura das flores com caule (igual ao HEAD do gen_flower_textures.py)
 const GROUND := 0.03     ## altura das flores sem caule (rente ao chão)
 const TOP_SIZE := 0.8    ## lado da carta deitada (fração da altura do tufo)
@@ -35,7 +36,7 @@ const TOP_SIZE := 0.8    ## lado da carta deitada (fração da altura do tufo)
 @export var grass_frequency: float = 0.09
 @export var grass_threshold: float = 0.06
 ## Quanto pra dentro da mancha de grama as flores com caule ficam (maior = mais pro meio, onde a grama é densa e alta).
-@export var grass_margin: float = 0.12
+@export var grass_margin: float = 0.2
 
 var _avoid: Array[Rect2] = []
 var _grass_noise := FastNoiseLite.new()
@@ -109,7 +110,7 @@ func _ready() -> void:
 
 func _material(tex: Texture2D, flat: bool) -> ShaderMaterial:
 	var mat := ShaderMaterial.new()
-	mat.shader = SHADER
+	mat.shader = SHADER if flat else STEM_SHADER
 	mat.set_shader_parameter(&"albedo_tex", tex)
 	mat.set_shader_parameter(&"flat_card", flat)
 	return mat

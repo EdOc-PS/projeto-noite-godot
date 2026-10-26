@@ -19,7 +19,7 @@ STEM_DARK = (0.36, 0.53, 0.08)
 # tipo: (cor das pétalas, cor do miolo, formato, raio da flor em px, n de flores,
 #        altura do topo das flores na imagem (0 = topo, 1 = base))
 KINDS = {
-    "white": ((0.97, 0.97, 0.93), (0.95, 0.88, 0.55), "daisy", 13, (6, 9), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
+    "white": ((0.97, 0.97, 0.93), (0.95, 0.88, 0.55), "daisy", 16, (4, 6), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
     "blue": ((0.56, 0.68, 0.96), (0.98, 0.9, 0.55), "daisy", 16, (4, 7), (0.12, 0.4)),       # azul, com caule
     "pink": ((0.98, 0.66, 0.78), (0.98, 0.9, 0.55), "daisy", 17, (4, 6), (0.06, 0.35)),        # rosa, com caule
     "red": ((0.94, 0.52, 0.5), (0.86, 0.42, 0.42), "spike", 16, (4, 6), (0.04, 0.3)),       # vermelho pastel em espiga reta
@@ -90,10 +90,10 @@ def make_top(kind, seed):
     heads = []
     for _ in range(rng.randint(*count)):
         for _try in range(40):
-            d = S * 0.33 * math.sqrt(rng.random()); a = rng.uniform(0, math.tau)
+            d = S * (0.4 if kind == "white" else 0.33) * math.sqrt(rng.random()); a = rng.uniform(0, math.tau)
             x, y = S / 2 + math.cos(a) * d, S / 2 + math.sin(a) * d
             r = radius * SS * 1.3 * rng.uniform(0.8, 1.15)
-            if all(math.hypot(x - hx, y - hy) > (r + hr) * 0.8 for hx, hy, hr, _, _ in heads):
+            if all(math.hypot(x - hx, y - hy) > (r + hr) * (1.25 if kind == "white" else 0.8) for hx, hy, hr, _, _ in heads):
                 break
         heads.append((x, y, r, rng.uniform(0, math.tau), rng.uniform(0.9, 1.05)))
     acc = [0.0] * (N * N * 4)
@@ -126,7 +126,7 @@ def make_stems(kind, seed):
         tx = bx + rng.uniform(-0.1, 0.1) * S
         mx = (bx + tx) / 2 + rng.uniform(-0.05, 0.05) * S
         stems.append((bx, S - 1, mx, (S + top_y) / 2, tx, top_y))
-    w = 2.6 * SS  # caule mais grosso
+    w = 1.6 * SS
     acc = [0.0] * (N * N * 4)
     for y in range(int(top_y) - 2, S):
         for x in range(S):
