@@ -223,3 +223,10 @@ Implementado:
 - Flores (2026-10-26): nunca uma dentro da outra — cada carta de flores guarda um raio (`flower_spread` 0,34 × escala) e não nasce mais perto de outra que a soma dos raios (vale pra todos os tipos). Caule UNIVERSAL: `flowers_stem.png` + `assets/materials/flowers/stem.tres`, mesh 5 "Caule (todas as flores)"; os caules por cor saíram. Pincel agora: 3 branca, 4 azul, 5 caule, 6 rosa (fora do campo), 7 vermelha.
 - Mais flores brancas (2026-10-26): 70 montes, peso branca 5 : 1 : 1, monte da branca 2,5× maior (`flower_clump_mult`), sem sobrepor.
 - Flores brancas menos e em montes REDONDOS (2026-10-26): 40 montes, peso 2 : 1 : 1, monte da branca 1,6×; cada monte tenta até 8× o número de flores pra encher o círculo (sem sobrepor). Kuwahara `_KernelSize` 4.
+
+### Arbustos: 3 testes lado a lado (2026-10-26) — nó `Bushes` do field (x −4,75 / −2,25 / 0,25, z −9)
+- `BushBlob` (feito do zero, `tools/gen_bushes.py`): montinho de 10 bolas low-poly (icosfera nível 2) fundidas, levemente amassadas, tom Shaded por bola. Material `bush_blob.tres` = shader da grama opaco + borda (`bush_outline.tres`).
+- `BushCard` (do PNG `assets/textures/vegetation/bushes/bush_card.png`): 3 cartas em pé cruzadas (estrela), alfa do PNG, o cinza do PNG vira o sombreado. Shader `bush_card.gdshader` (grama, dois lados), sem borda.
+- `BushPack` (Quaternius `Bush_Common`, CC0): cartas de folha do pacote com as regras da grama (degradê, vento, jogador), sem borda.
+- Os três: cores da grama, degradê pela ALTURA (`gradient_height`, novo no `grass_body`), normal "de bola" (`sphere_normal`: luz macia de arbusto fofo), balanço fraco, projetam sombra. Script `scripts/vegetation/bush.gd` (@tool) troca o material do modelo.
+- Flor branca: monte = 1–2 cartas soltas (`flower_clump_mult` 0,2); cada carta já é um grupinho solto de 4–6 flores, como a referência.

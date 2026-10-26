@@ -44,6 +44,13 @@ uniform vec3 ground_color : source_color = vec3(0.569, 0.745, 0.004);
 uniform vec2 sprite_alpha = vec2(1.0, 1.0);  // opacidade do sprite, sorteada por raminho entre x e y
 // Carta virada sempre pra câmera, girando só no eixo Y (raminho).
 uniform bool billboard = false;
+// degradê pé → ponta pela ALTURA local (m) em vez do UV.y: pra malhas que não
+// são lâminas (arbustos). 0 = usa o UV.y como na grama.
+uniform float gradient_height = 0.0;
+// normal "de bola" (pra fora do centro do objeto + pra cima): luz macia de
+// arbusto fofo em vez de folha por folha. 0 = normal do mesh.
+uniform float sphere_normal = 0.0;
+uniform vec3 sphere_center = vec3(0.0, 0.4, 0.0);
 uniform float light_floor : hint_range(0.0, 1.0) = 0.78;  // brilho do lado na sombra
 
 // Brilho (tudo multiplicado pela cor da lâmina, então o shaded continua: a
@@ -89,6 +96,7 @@ global uniform float wind_gust;
 
 varying vec3 v_world;
 varying float v_rand;  // número fixo por planta (0..1)
+varying float v_h01;  // 0 no pé, 1 no topo (UV.y ou altura)
 varying float v_phase;
 
 float hash(vec2 p) {
@@ -106,6 +114,10 @@ float noise(vec2 p) {
 void vertex() {
 	vec3 world_origin = MODEL_MATRIX[3].xyz;
 	v_rand = hash(world_origin.xz + vec2(3.1, 7.7));
+	v_h01 = gradient_height > 0.0 ? clamp(VERTEX.y / gradient_height, 0.0, 1.0) : 1.0 - UV.y;
+	if (sphere_normal > 0.0) {
+		NORMAL = normalize(mix(NORMAL, normalize(VERTEX - sphere_center + vec3(0.0, 0.15, 0.0)), sphere_normal));
+	}
 	if (billboard) {
 		// cada carta vira pra câmera em volta do PRÓPRIO centro (UV2 = x, z do
 		// pé da carta no espaço do tufo): um tufo pode ter várias cartas em
@@ -162,7 +174,7 @@ void fragment() {
 	float n = noise(v_world.xz / noise_scale);
 	// cada tufo: base mais escura → topo claro. As manchas de ruído pelo mundo
 	// só mexem de leve (`noise_amount`), pra não escurecer áreas inteiras.
-	float t = clamp(1.0 - UV.y + (noise(v_world.xz / paint_scale + vec2(UV.y * 3.0, 0.0)) - 0.5) * paint_wobble * 2.0, 0.0, 1.0);
+	float t = clamp(v_h01 + (noise(v_world.xz / paint_scale + vec2(v_h01 * 3.0, 0.0)) - 0.5) * paint_wobble * 2.0, 0.0, 1.0);
 	vec3 col = t < mid_pos ? mix(base_color, mid_color, smoothstep(0.0, mid_pos, t))
 		: mix(mid_color, tip_color, smoothstep(mid_pos, 1.0, t));
 	col *= mix(1.0, mix(0.9, 1.05, n), noise_amount);
@@ -179,7 +191,7 @@ void fragment() {
 	col = mix(col, col * 0.62, side_on * edge_amount);
 	ALBEDO = col;
 	// brilho: degradê de luz subindo pra ponta + borda clara contra o céu
-	float height01 = 1.0 - UV.y;
+	float height01 = v_h01;
 	float tip = smoothstep(glow_start, 1.0, height01);
 	float fres = pow(1.0 - clamp(abs(dot(NORMAL, VIEW)), 0.0, 1.0), 3.0);
 	EMISSION = col * (tip * tip_glow + fres * rim_glow * height01);
@@ -203,7 +215,7 @@ void fragment() {
 #ifdef SPRITE_ALPHA
 	// alpha_by_height: degradê pela altura (pé = sprite_alpha.y, topo = .x);
 	// senão, sorteado por planta entre .x e .y
-	ALPHA = alpha_by_height ? mix(sprite_alpha.y, sprite_alpha.x, 1.0 - UV.y) : mix(sprite_alpha.x, sprite_alpha.y, v_rand);
+	ALPHA = alpha_by_height ? mix(sprite_alpha.y, sprite_alpha.x, v_h01) : mix(sprite_alpha.x, sprite_alpha.y, v_rand);
 #endif
 	if (outline_only) {
 		float e = UV2.x;
@@ -234,6 +246,6 @@ void light() {
 	if (backlight > 0.0 && LIGHT_IS_DIRECTIONAL) {
 		// sol atrás da grama (olhando pra ele): a ponta acende, como folha contra a luz
 		float back = smoothstep(-0.2, 1.0, dot(VIEW, -LIGHT));
-		DIFFUSE_LIGHT += LIGHT_COLOR * backlight_color * back * backlight * (1.0 - UV.y) * ATTENUATION / PI;
+		DIFFUSE_LIGHT += LIGHT_COLOR * backlight_color * back * backlight * v_h01 * ATTENUATION / PI;
 	}
 }

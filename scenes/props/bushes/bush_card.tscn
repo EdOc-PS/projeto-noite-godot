@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/vegetation/bush.gd" id="1_bush"]
+[ext_resource type="Material" path="res://assets/materials/bushes/bush_card.tres" id="2_mat"]
+[ext_resource type="PackedScene" path="res://assets/models/bushes/bush_card.gltf" id="3_model"]
+
+[node name="Bush_card" type="Node3D"]
+script = ExtResource("1_bush")
+material = ExtResource("2_mat")
+
+[node name="Model" parent="." instance=ExtResource("3_model")]

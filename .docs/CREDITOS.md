@@ -27,6 +27,12 @@ Só as nossas: `textures/terrain/grass.png` (verde liso, #91BE01), `dirt.png` (m
 |---|---|---|---|
 | Foliage Sprites (`PNG/Shaded/sprite_0093` → `sprig_0093.png`; `sprite_0081/0086/0084` → folhas voando `leaf_drop/leaf_maple/leaf_lobed.png`) | Kenney ([kenney.nl](https://www.kenney.nl)) | `textures/vegetation/`, `textures/effects/leaves/` (pacote completo em `projeto-noite_sources/textures/kenney_foliage_sprites/`) | CC0 |
 
+## Modelos de terceiros
+
+| Modelo | Autor | Pasta | Licença |
+|---|---|---|---|
+| `Bush_Common` + `Leaves_TwistedTree_C.png` (Stylized Nature MegaKit) | Quaternius ([quaternius.com](https://quaternius.com)) | `assets/models/bushes/` (teste de arbusto; pacote em `projeto-noite_sources/natureza-arquivada/`) | CC0 |
+
 ## Shaders de terceiros
 
 | Shader | Autor | Onde | Licença |

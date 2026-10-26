@@ -59,8 +59,8 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var flower_clumps: int = 40
 @export var flower_clump_size: Vector2i = Vector2i(4, 10)
 @export var flower_clump_radius: float = 0.9
-## Monte maior por tipo (mesma ordem): × flores no monte; o raio cresce junto (√). Branca 2,5.
-@export var flower_clump_mult: PackedFloat32Array = [1.6, 1.0, 1.0]
+## Tamanho do monte por tipo (mesma ordem): × flores no monte; o raio acompanha (√). Branca 0,2: 1–2 cartas soltas (cada carta já é um grupinho de 4–6 flores).
+@export var flower_clump_mult: PackedFloat32Array = [0.2, 1.0, 1.0]
 @export var flower_size: Vector2 = Vector2(0.8, 1.25)
 ## Raio do desenho das flores na carta (fração da escala): duas cartas nunca
 ## ficam mais perto que a soma dos raios (flor nunca dentro de outra flor).
