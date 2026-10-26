@@ -16,6 +16,12 @@
 
 uniform vec3 base_color : source_color = vec3(0.53, 0.64, 0.12);
 uniform vec3 tip_color : source_color = vec3(0.64, 0.76, 0.2);
+// degradê em 3 tons (verde claro -> verde-amarelo -> amarelo aquarela) com a
+// divisa "borrada" por ruído, como tinta aquarela escorrendo
+uniform vec3 mid_color : source_color = vec3(0.72, 0.82, 0.25);
+uniform float mid_pos : hint_range(0.05, 0.95) = 0.5;  // altura do verde-amarelo
+uniform float paint_wobble : hint_range(0.0, 0.5) = 0.18;  // quanto a divisa entre os tons ondula
+uniform float paint_scale = 0.35;  // metros por mancha da aquarela
 uniform float noise_scale = 20.0;      // metros por mancha (noiseScale do original)
 uniform float noise_amount : hint_range(0.0, 1.0) = 0.3;
 uniform float shade_amount : hint_range(0.0, 1.0) = 1.0;
@@ -142,7 +148,9 @@ void fragment() {
 	float n = noise(v_world.xz / noise_scale);
 	// cada tufo: base mais escura → topo claro. As manchas de ruído pelo mundo
 	// só mexem de leve (`noise_amount`), pra não escurecer áreas inteiras.
-	vec3 col = mix(base_color, tip_color, 1.0 - UV.y);
+	float t = clamp(1.0 - UV.y + (noise(v_world.xz / paint_scale + vec2(UV.y * 3.0, 0.0)) - 0.5) * paint_wobble * 2.0, 0.0, 1.0);
+	vec3 col = t < mid_pos ? mix(base_color, mid_color, smoothstep(0.0, mid_pos, t))
+		: mix(mid_color, tip_color, smoothstep(mid_pos, 1.0, t));
 	col *= mix(1.0, mix(0.9, 1.05, n), noise_amount);
 	col *= mix(1.0, COLOR.r, shade_amount);
 	if (use_sprite) {

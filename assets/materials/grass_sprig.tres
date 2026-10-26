@@ -7,6 +7,8 @@
 shader = ExtResource("1_shader")
 shader_parameter/base_color = Color(0.3, 0.52, 0.0, 1)
 shader_parameter/tip_color = Color(1, 1, 0.96, 1)
+shader_parameter/mid_color = Color(0.65, 0.76, 0.48, 1)
+shader_parameter/paint_wobble = 0.0
 shader_parameter/noise_scale = 20.0
 shader_parameter/sway_strength = 0.05
 shader_parameter/sway_speed = 1.4

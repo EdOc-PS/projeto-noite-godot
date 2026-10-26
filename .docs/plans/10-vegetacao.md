@@ -110,3 +110,6 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 ### Teste 2026-10-25: tufo 2D
 - Novo `grass_tuft_2d` (mesh 2 do pincel, "Tufo 2D"): lâminas CHATAS de 5 pontos, dos dois lados, como o tufo do jogo antigo (`gen_models.py`). Mais leve que o de cilindros. Material `grass_tuft_2d.tres` (mesmo corpo, `cull_disabled`, sem borda).
 - O terreno semeia com ele (`grass_mesh_ids` = 2 na cena). O tufo 3D (mesh 0) continua no pincel: pra voltar, `grass_mesh_ids` = 0.
+
+### Cor da grama 2026-10-25
+- Degradê em 3 tons no `grass_body`: pé verde claro (`base_color` 0.46,0.72,0.2) → verde-amarelo (`mid_color`, em `mid_pos` 0,5) → ponta amarelo aquarela (`tip_color` 0.97,0.9,0.48). A divisa entre os tons ondula por ruído (`paint_wobble` 0,18, `paint_scale` 0,35 m), como tinta aquarela. Vale pros tufos 2D e 3D; o raminho fica sem ondulação.
