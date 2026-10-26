@@ -297,7 +297,8 @@ def tuft_iso(seed, blades, area, height, width, tilt):
 # Material grass_tuft.tres (borda pela casca funciona com tubo).
 ISO3D = {"grass_iso3d_full": "grass_iso_full", "grass_iso3d_edge": "grass_iso_edge"}
 ISO3D_SIDES = 5
-ISO3D_ROUND = 0.75
+ISO3D_ROUND = 1.1   # lâmina gordinha
+ISO3D_TILT = 0.4    # fração da inclinação do tufo chato: bem mais em pé, como o 3D antigo
 
 
 def tuft_iso3d(seed, blades, area, height, width, tilt):
@@ -316,7 +317,7 @@ def tuft_iso3d(seed, blades, area, height, width, tilt):
             feet.append((bx + rnd.uniform(-0.01, 0.01), bz + rnd.uniform(-0.01, 0.01), yaw + math.pi + rnd.uniform(-0.6, 0.6), h * rnd.uniform(0.5, 0.75), rnd.uniform(*width) * 0.8))
     for bx, bz, yaw, h, w in feet:
         lean = (math.cos(yaw), math.sin(yaw))
-        tl = math.radians(rnd.uniform(*tilt))
+        tl = math.radians(rnd.uniform(*tilt)) * ISO3D_TILT
         rnd.uniform(-0.5, 0.5)  # (torção da lâmina chata: mantém o sorteio igual)
         shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
         rings = []

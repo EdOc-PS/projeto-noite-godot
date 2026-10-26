@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://dpllpwtmhjcx4"
+path="res://.godot/imported/grass_iso3d_edge.gltf-1eb8ed4e30408aa3fb23eee37dc9222f.scn"
 
 [deps]
 
 source_file="res://assets/models/grass/grass_iso3d_edge.gltf"
+dest_files=["res://.godot/imported/grass_iso3d_edge.gltf-1eb8ed4e30408aa3fb23eee37dc9222f.scn"]
 
 [params]
 
