@@ -117,3 +117,6 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 ### Grama do jogo antigo no tufo 2D (2026-10-25)
 - `grass_tuft_2d.tres` agora usa `shaders/nature/grass_old.gdshader`: cópia do `wind_sway_body` do projeto-noite-old (GrassField `stylized`). Cores da ÁREA DE TESTE antiga (test_area.tscn, GrassField): base (0.55,0.78,0.3) → ponta (0.88,0.96,0.58), multiplicado por manchas de ruído (FastNoise 0,02, 20 m), rim azulado, translucidez amarela na ponta (`veg_backlight` 0,4 e `veg_rim_scale` 0,5 fixos no shader, no antigo vinham do BotwPost) e luz do `shaders/includes/toon_light.gdshaderinc` (copiado).
 - O tufo 3D (`grass_tuft.tres`, `grass_body`) não mudou.
+
+### Verde da referência (2026-10-25)
+- Tufo 2D voltou pro `grass_body` (`grass_tuft_2d.gdshader`); o `grass_old.gdshader` ficou guardado sem uso. Cores pela foto de referência (grama lima saturada): pé verde fechado (0.27,0.47,0.04) → meio lima (0.55,0.76,0.08) → ponta verde-amarelo vivo (0.8,0.92,0.22), aquarela leve (`paint_wobble` 0,08).
