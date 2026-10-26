@@ -61,6 +61,9 @@ uniform vec3 outline_color : source_color = vec3(0.16, 0.3, 0.02);
 // lâmina CHATA com normal de "cúpula" (tufo iso): a casca da borda usa a normal
 // de verdade da face, guardada em COLOR.gba (0..1), e não a normal da luz
 uniform bool outline_face_normal = false;
+// topo da BORDA arredondado: perto da ponta a casca engorda pros lados, então
+// a borda fecha em cúpula em volta da ponta fina da lâmina (0 = segue a ponta)
+uniform float outline_round = 0.0;
 uniform vec3 backlight_color : source_color = vec3(1.0, 0.95, 0.6);
 
 uniform float sway_strength = 0.06;
@@ -154,7 +157,11 @@ void vertex() {
 	// casca um pouco maior que a lâmina (largura em metros, igual em qualquer escala)
 	vec3 on = outline_face_normal ? COLOR.gba * 2.0 - 1.0 : NORMAL;
 	vec3 wn = normalize(mat3(MODEL_MATRIX) * on);
-	VERTEX += inverse(mat3(MODEL_MATRIX)) * wn * outline_size;
+	float tipz = smoothstep(0.6, 1.0, 1.0 - UV.y);
+	vec3 off = wn * outline_size;
+	off.xz *= 1.0 + tipz * outline_round;
+	off.y += tipz * outline_round * outline_size * 0.6;
+	VERTEX += inverse(mat3(MODEL_MATRIX)) * off;
 #endif
 }
 
