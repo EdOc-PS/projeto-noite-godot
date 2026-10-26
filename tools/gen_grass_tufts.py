@@ -264,17 +264,25 @@ def tuft_iso(seed, blades, radius, height, width, tilt):
             cx, cz = bx + out[0] * reach, bz + out[1] * reach
             hw = w * wf
             rows.append(((cx - side[0] * hw, y, cz - side[1] * hw), (cx + side[0] * hw, y, cz + side[1] * hw), y))
-        for (l0, r0, y0), (l1, r1, y1) in zip(rows, rows[1:]):
-            quad = [(l0, y0), (r0, y0), (r1, y1), (l1, y1)]
-            tris = [(0, 1, 2), (0, 2, 3)] if l1 != r1 else [(0, 1, 2)]
-            for tri in tris:
-                for k in tri:
-                    p, y = quad[k]
-                    # normal de cúpula: pra cima + pra fora do centro do tufo
-                    n = (p[0] * 2.0, 1.0, p[2] * 2.0)
-                    l = math.sqrt(sum(c * c for c in n))
-                    pos.append(p); nor.append(tuple(c / l for c in n)); uv.append((0.5, 1.0 - min(y / hmax, 1.0)))
-                    col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
+        # dois lados (frente e verso com a ordem invertida): a borda (casca com
+        # cull_front) precisa do verso. A normal da FACE vai em COLOR.gba pra
+        # casca; a normal de cúpula fica pra luz.
+        for face in (1, -1):
+            for (l0, r0, y0), (l1, r1, y1) in zip(rows, rows[1:]):
+                quad = [(l0, y0), (r0, y0), (r1, y1), (l1, y1)]
+                tris = [(0, 1, 2), (0, 2, 3)] if l1 != r1 else [(0, 1, 2)]
+                a_, b_, c_ = quad[0][0], quad[1][0], quad[2][0]
+                e1 = tuple(b_[k] - a_[k] for k in range(3)); e2 = tuple(c_[k] - a_[k] for k in range(3))
+                fn = (e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0])
+                fl = math.sqrt(sum(c * c for c in fn)) or 1.0
+                fn = tuple(c / fl * face for c in fn)
+                for tri in tris:
+                    for k in (tri if face == 1 else (tri[0], tri[2], tri[1])):
+                        p, y = quad[k]
+                        n = (p[0] * 2.0, 1.0, p[2] * 2.0)  # normal de cúpula: pra cima + pra fora
+                        l = math.sqrt(sum(c * c for c in n))
+                        pos.append(p); nor.append(tuple(c / l for c in n)); uv.append((0.5, 1.0 - min(y / hmax, 1.0)))
+                        col.append((shade, fn[0] * 0.5 + 0.5, fn[1] * 0.5 + 0.5, fn[2] * 0.5 + 0.5)); edge.append((0.0, 0.0))
     return pos, nor, uv, col, edge
 
 
@@ -301,6 +309,9 @@ def _frame(axis):
     return ax, u, v
 
 
+_SPRIG_SHADE = [1.0]  # tom da peça atual do raminho (Shaded: umas folhas mais escuras)
+
+
 def _tube(out, a, b, r0, r1, height, sides=6):
     pos, nor, uv, col, edge = out
     ax, u, v = _frame(tuple(b[i] - a[i] for i in range(3)))
@@ -314,7 +325,7 @@ def _tube(out, a, b, r0, r1, height, sides=6):
             for i in tri:
                 p, n = q[i]
                 pos.append(p); nor.append(n); uv.append((0.5, 1.0 - min(p[1] / height, 1.0)))
-                col.append((1.0, 1.0, 1.0, 1.0)); edge.append((0.0, 0.0))
+                col.append((_SPRIG_SHADE[0],) * 3 + (1.0,)); edge.append((0.0, 0.0))
 
 
 def _leaf(out, base, axis, length, radius, height, sides=8, rings=6):
@@ -336,7 +347,7 @@ def _leaf(out, base, axis, length, radius, height, sides=8, rings=6):
                 for i in tri:
                     p, n = q[i]
                     pos.append(p); nor.append(n); uv.append((0.5, 1.0 - min(p[1] / height, 1.0)))
-                    col.append((1.0, 1.0, 1.0, 1.0)); edge.append((0.0, 0.0))
+                    col.append((_SPRIG_SHADE[0],) * 3 + (1.0,)); edge.append((0.0, 0.0))
 
 
 def sprig_3d(seed, height):
@@ -359,11 +370,14 @@ def sprig_3d(seed, height):
         blen = height * rnd.uniform(0.18, 0.28) * (1.0 - 0.3 * t)
         end = tuple(start[i] + bdir[i] * blen for i in range(3))
         _tube(out, start, end, stem_r * 0.7, stem_r * 0.55, height)
+        _SPRIG_SHADE[0] = rnd.uniform(*DARK_SHADE) if rnd.random() < 0.45 else 1.0
         _leaf(out, end, bdir, height * 0.17, height * 0.055, height)
         # folhinha menor no meio do galho, pro lado
         mid = tuple(start[i] + bdir[i] * blen * 0.5 for i in range(3))
         sdir = _norm((bdir[0] - out_dir[2] * side, bdir[1] * 0.4, bdir[2] + out_dir[0] * side))
+        _SPRIG_SHADE[0] = rnd.uniform(*DARK_SHADE) if rnd.random() < 0.45 else 1.0
         _leaf(out, mid, sdir, height * 0.1, height * 0.038, height)
+        _SPRIG_SHADE[0] = 1.0
     return out
 
 

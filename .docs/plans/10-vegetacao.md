@@ -165,3 +165,7 @@ Implementado:
   - leve: 5 pontos por lâmina, ~7 triângulos.
 - Material `grass_iso.tres` (`grass_body`, dois lados): mais escuro que o billboard — pé (0.4,0.58,0.05) → (0.48,0.66,0.1) → ponta (0.6,0.76,0.2).
 - `grass_mesh_ids` = 7, `edge_mesh_ids` = 8. Billboards (4, 5, 6) guardados no pincel.
+
+### Borda no tufo iso + raminho 3D shaded (2026-10-26)
+- Tufo iso com borda (`next_pass` `grass_iso_outline.tres`, mesmos parâmetros de vento, `sway_height` 0,3). Lâminas agora com dois lados; como a normal da luz é de "cúpula", a casca da borda usa a normal da FACE guardada em `COLOR.gba` (`outline_face_normal` = true no `grass_body`).
+- Raminho branco de volta ao 3D (`sprig_mesh_ids` = 1). Shaded: 45% das folhas mais escuras (tom 0,68–0,78 no `COLOR.r`, `shade_amount` 1) e transparência `sprite_alpha` 0,4–0,5. O billboard (6) fica guardado.

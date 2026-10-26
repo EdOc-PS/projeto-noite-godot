@@ -52,6 +52,9 @@ uniform float edge_amount : hint_range(0.0, 1.0) = 0.0;  // borda suave: quanto 
 uniform float edge_softness : hint_range(0.5, 4.0) = 1.6;  // maior = borda mais fina
 uniform float outline_size = 0.006;  // espessura da borda (m)
 uniform vec3 outline_color : source_color = vec3(0.16, 0.3, 0.02);
+// lâmina CHATA com normal de "cúpula" (tufo iso): a casca da borda usa a normal
+// de verdade da face, guardada em COLOR.gba (0..1), e não a normal da luz
+uniform bool outline_face_normal = false;
 uniform vec3 backlight_color : source_color = vec3(1.0, 0.95, 0.6);
 
 uniform float sway_strength = 0.06;
@@ -143,7 +146,8 @@ void vertex() {
 	}
 #ifdef OUTLINE_PASS
 	// casca um pouco maior que a lâmina (largura em metros, igual em qualquer escala)
-	vec3 wn = normalize(mat3(MODEL_MATRIX) * NORMAL);
+	vec3 on = outline_face_normal ? COLOR.gba * 2.0 - 1.0 : NORMAL;
+	vec3 wn = normalize(mat3(MODEL_MATRIX) * on);
 	VERTEX += inverse(mat3(MODEL_MATRIX)) * wn * outline_size;
 #endif
 }
