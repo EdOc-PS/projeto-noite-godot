@@ -169,3 +169,7 @@ Implementado:
 ### Borda no tufo iso + raminho 3D shaded (2026-10-26)
 - Tufo iso com borda (`next_pass` `grass_iso_outline.tres`, mesmos parâmetros de vento, `sway_height` 0,3). Lâminas agora com dois lados; como a normal da luz é de "cúpula", a casca da borda usa a normal da FACE guardada em `COLOR.gba` (`outline_face_normal` = true no `grass_body`).
 - Raminho branco de volta ao 3D (`sprig_mesh_ids` = 1). Shaded: 45% das folhas mais escuras (tom 0,68–0,78 no `COLOR.r`, `shade_amount` 1) e transparência `sprite_alpha` 0,4–0,5. O billboard (6) fica guardado.
+
+### Lâmina do tufo iso pelo PNG de referência (2026-10-26)
+- Lâmina: pé largo e reto até ~1/3, afina em curva até a ponta fina (`ISO_T`/`ISO_W`), curva pra um lado sorteado (reta no pé, deita na ponta, 8–32°; borda 15–40°). 30% das lâminas saem em par do mesmo pé (a segunda menor, abrindo pro outro lado). Tons Shaded (`DARK_CHANCE`).
+- Pés soltos, não em círculo: 3–4 grupinhos sorteados numa área de 0,2 m (borda 0,16 m).

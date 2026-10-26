@@ -234,34 +234,44 @@ def tuft_billboard(cards):
 #    luz corre lisa no tufo todo (parece um montinho, não lâminas soltas);
 #  - poucos triângulos (5 pontos por lâmina, dois lados).
 ISO = {
-    # nome: (seed, lâminas, raio do pé (m), altura (m), meia-largura, inclinação (graus))
-    "grass_iso_full": (61, 22, 0.1, (0.28, 0.46), (0.022, 0.034), (25, 45)),
-    "grass_iso_edge": (62, 10, 0.08, (0.18, 0.3), (0.02, 0.03), (35, 55)),
+    # nome: (seed, lâminas, área do pé (m), altura (m), meia-largura, inclinação (graus))
+    "grass_iso_full": (61, 20, 0.2, (0.28, 0.48), (0.03, 0.05), (8, 32)),
+    "grass_iso_edge": (62, 9, 0.16, (0.18, 0.32), (0.028, 0.045), (15, 40)),
 }
+# Formato da lâmina das referências (PNG): pé LARGO e reto até ~1/3, depois
+# afina em curva até a ponta fina; a lâmina curva pra um lado. Às vezes duas
+# lâminas saem do mesmo pé (uma menor, abrindo pro outro lado).
+ISO_T = (0.0, 0.3, 0.5, 0.68, 0.84, 1.0)
+ISO_W = (1.0, 0.97, 0.85, 0.62, 0.32, 0.0)
 
 
-def tuft_iso(seed, blades, radius, height, width, tilt):
+def tuft_iso(seed, blades, area, height, width, tilt):
     rnd = random.Random(seed)
     pos, nor, uv, col, edge = [], [], [], [], []
     hmax = height[1]
-    for i in range(blades):
-        # direção pra fora espalhada por igual (ângulo de ouro) + sorteio
-        a = i * math.radians(137.5) + rnd.uniform(-0.3, 0.3)
-        out = (math.cos(a), math.sin(a))
-        d = radius * math.sqrt(rnd.random())
-        bx, bz = out[0] * d, out[1] * d
-        h = rnd.uniform(*height); w = rnd.uniform(*width)
-        tl = math.radians(rnd.uniform(*tilt)) * (0.6 + 0.4 * (d / radius if radius else 1))
-        side = (-out[1], out[0])  # largura da lâmina: de lado (a face olha pra fora/cima)
-        twist = rnd.uniform(-0.35, 0.35)
-        side = (side[0] * math.cos(twist) - out[0] * math.sin(twist), side[1] * math.cos(twist) - out[1] * math.sin(twist))
-        shade = rnd.uniform(0.82, 1.0)
+    # pés espalhados de forma solta (não em círculo): 3–4 grupinhos sorteados na área
+    groups = [(rnd.uniform(-area, area) * 0.5, rnd.uniform(-area, area) * 0.5) for _ in range(rnd.randint(3, 4))]
+    feet = []
+    while len(feet) < blades:
+        gx, gz = rnd.choice(groups)
+        bx, bz = gx + rnd.gauss(0, area * 0.18), gz + rnd.gauss(0, area * 0.18)
+        yaw = rnd.uniform(0, math.tau)
+        h = rnd.uniform(*height)
+        feet.append((bx, bz, yaw, h, rnd.uniform(*width)))
+        if rnd.random() < 0.3 and len(feet) < blades:  # par: outra lâmina do mesmo pé
+            feet.append((bx + rnd.uniform(-0.01, 0.01), bz + rnd.uniform(-0.01, 0.01), yaw + math.pi + rnd.uniform(-0.6, 0.6), h * rnd.uniform(0.5, 0.75), rnd.uniform(*width) * 0.8))
+    for bx, bz, yaw, h, w in feet:
+        lean = (math.cos(yaw), math.sin(yaw))         # pra onde a lâmina curva
+        tl = math.radians(rnd.uniform(*tilt))
+        twist = rnd.uniform(-0.5, 0.5)
+        side = (-lean[1] * math.cos(twist) - lean[0] * math.sin(twist), lean[0] * math.cos(twist) - lean[1] * math.sin(twist))
+        shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
         rows = []
-        for t, wf in ((0.0, 1.0), (0.35, 0.85), (0.65, 0.6), (0.88, 0.3), (1.0, 0.0)):
-            ang = tl * (0.4 + 0.6 * t)  # curva: a ponta deita mais
-            reach = h * t * math.sin(ang)
-            y = h * t * math.cos(ang)
-            cx, cz = bx + out[0] * reach, bz + out[1] * reach
+        for t, wf in zip(ISO_T, ISO_W):
+            ang = tl * t * t * 1.6                      # curva: reto no pé, deita na ponta
+            reach = h * t * math.sin(min(ang, 1.2)) * 0.8
+            y = h * t * math.cos(min(ang, 1.2) * 0.6)
+            cx, cz = bx + lean[0] * reach, bz + lean[1] * reach
             hw = w * wf
             rows.append(((cx - side[0] * hw, y, cz - side[1] * hw), (cx + side[0] * hw, y, cz + side[1] * hw), y))
         # dois lados (frente e verso com a ordem invertida): a borda (casca com
