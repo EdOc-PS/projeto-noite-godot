@@ -126,14 +126,16 @@ func _make_shape(seed_i: int) -> Array:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 1000 + seed_i * 77
 	var out: Array = []
-	var core := rng.randf_range(0.2, 0.24)
+	# mancha ÚNICA e cheia: corpo grande + poucos lóbulos largos (bem fundidos
+	# pelo `smoothness` baixo do shader), não um anel de bolinhas
+	var core := rng.randf_range(0.24, 0.28)
 	out.append(Vector4(0.5, 0.5, core, 1.0))
-	var lobes := rng.randi_range(6, 9)
+	var lobes := rng.randi_range(3, 5)
 	var phase := rng.randf() * TAU
 	for i in lobes:
-		var a := phase + TAU * i / lobes + rng.randf_range(-0.25, 0.25)
-		var lr := rng.randf_range(0.08, 0.15)
-		var dist := core + lr * rng.randf_range(0.2, 0.55)   # gomo meio pra fora do corpo
+		var a := phase + TAU * i / lobes + rng.randf_range(-0.4, 0.4)
+		var lr := rng.randf_range(0.13, 0.2)
+		var dist := core * rng.randf_range(0.55, 0.85)   # lóbulo bem dentro do corpo: só estica a forma
 		out.append(Vector4(0.5 + cos(a) * dist, 0.5 + sin(a) * dist, lr, 1.0))
 	while out.size() < 10:
 		out.append(Vector4.ZERO)

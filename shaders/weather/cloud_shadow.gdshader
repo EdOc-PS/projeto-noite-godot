@@ -7,7 +7,7 @@ render_mode unshaded, cull_disabled;
 // scripts/weather/drifting_clouds.gd, que sorteia os gomos de cada nuvem.
 
 uniform vec4 blobs[10];        // x, y (0..1 no plano), raio, 1 = usado
-uniform float smoothness = 12.0;  // união suave dos gomos (maior = curvas mais marcadas)
+uniform float smoothness = 5.0;   // união suave dos gomos (menor = forma mais fundida e lisa)
 
 void fragment() {
 	float acc = 0.0;

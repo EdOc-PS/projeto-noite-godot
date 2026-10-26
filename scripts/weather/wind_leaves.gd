@@ -11,7 +11,6 @@ extends Node3D
 ## Regras em .docs/plans/05-clima.md.
 
 const SHADER := preload("res://shaders/weather/wind_leaf.gdshader")
-const BLADE_TEX := preload("res://assets/textures/effects/leaves/grass_blade.png")  ## lâmina de grama (tools/gen_leaf_textures.py)
 
 @export var leaf_textures: Array[Texture2D] = [
 	preload("res://assets/textures/effects/leaves/leaf_drop.png"),
@@ -23,7 +22,6 @@ const BLADE_TEX := preload("res://assets/textures/effects/leaves/grass_blade.png
 @export var leaf_colors: PackedColorArray = [Color(0.56, 0.75, 0.2), Color(0.34, 0.53, 0.08), Color(0.78, 0.8, 0.22), Color(0.95, 0.97, 0.9)]
 @export_range(0.0, 1.0) var leaf_alpha: float = 0.9  ## opacidade das folhas
 @export var leaves_per_texture: int = 6
-@export var blade_count: int = 0                  ## lâminas de grama voando (0 = só as folhas)
 @export var area: Vector2 = Vector2(12.0, 10.0)   ## área em volta do jogador onde nascem
 @export var height_range: Vector2 = Vector2(0.4, 3.0)
 @export var wind_dir: Vector2 = Vector2(1.0, 0.3) ## mesmo vento do resto
@@ -53,8 +51,6 @@ func _ready() -> void:
 	for tex in leaf_textures:
 		for c in leaf_colors:
 			_emitters.append(_make(tex, Vector2(leaf_size, leaf_size), per_color, Color(c, leaf_alpha), true))
-	if blade_count > 0:
-		_emitters.append(_make(BLADE_TEX, Vector2(leaf_size * 0.35, leaf_size * 1.2), blade_count, Color.WHITE))
 	# chão pras folhas pousarem (as partículas só colidem com nós de colisão de partícula)
 	_ground = GPUParticlesCollisionBox3D.new()
 	_ground.size = Vector3(area.x * 4.0, 1.0, area.y * 4.0)
