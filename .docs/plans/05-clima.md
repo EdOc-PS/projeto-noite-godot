@@ -546,3 +546,6 @@ O pacote não usa rastro de partícula: cada "corrente de vento" é uma **fita c
 
 ## Sombra das nuvens (trazida do jogo antigo, 2026-10-25)
 - Nó `CloudShadows` (Decal 120 × 24 × 120 m) no field: manchas macias (`assets/textures/effects/cloud_shadows.png`, gerada por `tools/gen_cloud_shadows.py`) deslizando com o vento (`scripts/weather/cloud_shadow_decal.gd`, `wind_dir` (1, -0,02), 0,8 m/s). Cor `modulate` (0.04, 0.05, 0.14, 0.6), igual ao outside antigo. Escurece chão e grama juntos.
+
+## Sombra das nuvens — versão da área de teste (2026-10-26)
+- O Decal `CloudShadows` saiu (com `cloud_shadow_decal.gd`, `cloud_shadows.png`, `gen_cloud_shadows.py`). No lugar, `DriftingClouds` igual ao test_area do jogo antigo (`scripts/weather/drifting_clouds.gd` + `shaders/weather/cloud_shadow.gdshader`): 3 planos invisíveis no céu (7 m) que só projetam sombra do Sol, em forma de nuvem com gomos, nascendo em volta do jogador e andando com o vento (`wind_dir` (1, -0,02), 0,5 m/s).

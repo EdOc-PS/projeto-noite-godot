@@ -10,15 +10,9 @@
 [ext_resource type="Script" uid="uid://eraj037bwjjr" path="res://scripts/weather/wind_streaks.gd" id="11_streaks"]
 [ext_resource type="Script" uid="uid://bx3qh3ajlyfyd" path="res://scripts/weather/ground_fog.gd" id="12_haze"]
 [ext_resource type="Script" path="res://scripts/weather/butterflies.gd" id="13_butterflies"]
-[ext_resource type="Script" path="res://scripts/vegetation/flower_field.gd" id="14_flowers"]
 [ext_resource type="Script" path="res://scripts/weather/dust_motes.gd" id="15_motes"]
-[ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_white.png" id="fl_white"]
-[ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_blue.png" id="fl_blue"]
-[ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_pink.png" id="fl_pink"]
-[ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_red.png" id="fl_red"]
 [ext_resource type="Terrain3DAssets" uid="uid://liqswcgmjtxf" path="res://scenes/levels/field/terrain_assets.tres" id="assets_file"]
-[ext_resource type="Texture2D" path="res://assets/textures/effects/cloud_shadows.png" id="cloud_shadows_tex"]
-[ext_resource type="Script" path="res://scripts/weather/cloud_shadow_decal.gd" id="cloud_shadow_decal"]
+[ext_resource type="Script" path="res://scripts/weather/drifting_clouds.gd" id="drifting_clouds"]
 
 [sub_resource type="ProceduralSkyMaterial" id="skymat"]
 sky_top_color = Color(0.38, 0.6, 0.9, 1)
@@ -188,23 +182,10 @@ script = ExtResource("13_butterflies")
 butterfly_count = 20
 area = Vector3(16, 0.6, 16)
 
-[node name="FlowerField" type="Node3D" parent="."]
-script = ExtResource("14_flowers")
-textures = Array[Texture2D]([ExtResource("fl_white"), ExtResource("fl_white"), ExtResource("fl_white"), ExtResource("fl_blue"), ExtResource("fl_pink"), ExtResource("fl_red")])
-size_scales = PackedFloat32Array(1.3, 1.3, 1.3, 1.15, 1.15, 1.3)
-placement = PackedInt32Array(1, 1, 1, 2, 2, 2)
-clump_count = 45
-area_half_size = 13.0
 
 [node name="DustMotes" type="GPUParticles3D" parent="."]
 script = ExtResource("15_motes")
 
-[node name="CloudShadows" type="Decal" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 8, -20)
-size = Vector3(120, 24, 120)
-texture_albedo = ExtResource("cloud_shadows_tex")
-modulate = Color(0.04, 0.05, 0.14, 0.6)
-upper_fade = 0.05
-lower_fade = 0.05
-script = ExtResource("cloud_shadow_decal")
-wind_dir = Vector2(1, -0.02)
+[node name="DriftingClouds" type="Node3D" parent="." node_paths=PackedStringArray("sun")]
+script = ExtResource("drifting_clouds")
+sun = NodePath("../Sun")

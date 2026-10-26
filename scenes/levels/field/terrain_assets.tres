@@ -7,6 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://dwr7xp8l0a501" path="res://assets/textures/terrain/grass.png" id="tex_ground"]
 [ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_tuft_edge.gltf" id="tuft_edge"]
+[ext_resource type="PackedScene" path="res://assets/models/flowers/flower_head_low.gltf" id="fh_low"]
+[ext_resource type="PackedScene" path="res://assets/models/flowers/flower_head_high.gltf" id="fh_high"]
+[ext_resource type="PackedScene" path="res://assets/models/flowers/flower_stems.gltf" id="f_stems"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_white.tres" id="m_head_white"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_blue.tres" id="m_head_blue"]
+[ext_resource type="Material" path="res://assets/materials/flowers/stem_blue.tres" id="m_stem_blue"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_pink.tres" id="m_head_pink"]
+[ext_resource type="Material" path="res://assets/materials/flowers/stem_pink.tres" id="m_stem_pink"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_red.tres" id="m_head_red"]
+[ext_resource type="Material" path="res://assets/materials/flowers/stem_red.tres" id="m_stem_red"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
 
 [sub_resource type="Terrain3DMeshAsset" id="ma0"]
@@ -38,6 +48,76 @@ last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
+[sub_resource type="Terrain3DMeshAsset" id="ma3"]
+name = "Flor branca"
+id = 3
+scene_file = ExtResource("fh_low")
+cast_shadows = 0
+material_override = ExtResource("m_head_white")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma4"]
+name = "Flor azul"
+id = 4
+scene_file = ExtResource("fh_high")
+cast_shadows = 0
+material_override = ExtResource("m_head_blue")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma5"]
+name = "Flor azul caule"
+id = 5
+scene_file = ExtResource("f_stems")
+cast_shadows = 0
+material_override = ExtResource("m_stem_blue")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma6"]
+name = "Flor rosa"
+id = 6
+scene_file = ExtResource("fh_high")
+cast_shadows = 0
+material_override = ExtResource("m_head_pink")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma7"]
+name = "Flor rosa caule"
+id = 7
+scene_file = ExtResource("f_stems")
+cast_shadows = 0
+material_override = ExtResource("m_stem_pink")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma8"]
+name = "Flor vermelha"
+id = 8
+scene_file = ExtResource("fh_high")
+cast_shadows = 0
+material_override = ExtResource("m_head_red")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma9"]
+name = "Flor vermelha caule"
+id = 9
+scene_file = ExtResource("f_stems")
+cast_shadows = 0
+material_override = ExtResource("m_stem_red")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
 [sub_resource type="Terrain3DTextureAsset" id="tex0"]
 name = "Grama"
 albedo_texture = ExtResource("tex_ground")
@@ -50,5 +130,5 @@ albedo_texture = ExtResource("tex_dirt")
 normal_texture = ExtResource("tex_ground_n")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8"), SubResource("ma9")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])

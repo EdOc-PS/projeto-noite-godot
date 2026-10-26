@@ -201,3 +201,9 @@ Implementado:
 - Campo: `grass_area` 26 m, `grass_spacing` 0,27; flores `area_half_size` 13.
 - Correção (2026-10-26): a transparência de verdade piscava claro/escuro andando (o Terrain3D ordena os blocos de grama transparentes por distância e a ordem troca). Agora a grama é OPACA com transparência falsa (`fake_alpha` no `grass_body`): a cor (e a da borda) é misturada com a cor do chão (`ground_color` #91BE01) pela mesma opacidade sorteada por tufo (`sprite_alpha` 0,4–0,5). O raminho continua transparente de verdade (são poucos).
 - Raminho só no meio das manchas: `sprig_min_density` 0,7 (antes podia nascer na beirada rala, longe da grama).
+
+### Flores no Terrain3D (2026-10-26)
+- O nó `FlowerField` (e `scripts/vegetation/flower_field.gd`) saiu: as flores agora são meshes do pincel do Terrain3D, semeadas pelo `terrain_flat_start.gd` (`_seed_flowers`), então aparecem no editor e dá pra pintar/apagar com a ferramenta Instancer.
+- Malhas (`tools/gen_flower_meshes.py`, `assets/models/flowers/`): `flower_head_low` (carta deitada a 3 cm), `flower_head_high` (carta deitada a 0,72), `flower_stems` (2 cartas cruzadas). Materiais em `assets/materials/flowers/` (`head_<tipo>` com `flower_card`, `stem_<tipo>` com `flower_stem`).
+- Ids: 3 branca, 4/5 azul (flor/caule), 6/7 rosa, 8/9 vermelha. Cada flor com caule usa o MESMO transform nas duas malhas.
+- Regras: montes de um tipo (45 montes, 4–10 flores, raio 0,9 m, pesos branca 3 : 1 : 1 : 1); com caule só onde a densidade da grama ≥ 0,8 (bem dentro); a branca só fora da grama.
