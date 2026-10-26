@@ -106,3 +106,7 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Caule fino de novo (1,6 px) com efeito chiclete: escurece (`stem_dark` 0,45) e some (`stem_alpha_base` 0) indo pro pé. Shader próprio `flower_stem.gdshader` (transparente); corpo comum em `flower_card.gdshaderinc`.
 - Branca bem maior (`size_scales` 1,3) e mais espaçada (menos flores, mais afastadas na textura).
 - `grass_margin` 0,2: flores com caule mais pro meio da grama.
+
+### Teste 2026-10-25: tufo 2D
+- Novo `grass_tuft_2d` (mesh 2 do pincel, "Tufo 2D"): lâminas CHATAS de 5 pontos, dos dois lados, como o tufo do jogo antigo (`gen_models.py`). Mais leve que o de cilindros. Material `grass_tuft_2d.tres` (mesmo corpo, `cull_disabled`, sem borda).
+- O terreno semeia com ele (`grass_mesh_ids` = 2 na cena). O tufo 3D (mesh 0) continua no pincel: pra voltar, `grass_mesh_ids` = 0.

@@ -1,5 +1,6 @@
 """Gera a grama (glTF) usada pelo pincel do Terrain3D, um modelo de cada:
 assets/models/grass/grass_tuft.gltf  — tufo de lâminas-cilindro, ponta pontuda de bico arredondado
+assets/models/grass/grass_tuft_2d.gltf — tufo de lâminas CHATAS (2D, do jogo antigo: mais leve)
 assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
@@ -95,6 +96,39 @@ def tuft_cyl(seed, blades, radius, height, width):
                 for tri in ((0, 2, 1), (0, 3, 2)):
                     for i in tri:
                         add(quad[i][0], quad[i][1], ys[i] / h, shade)
+    return pos, nor, uv, col, edge
+
+
+# Tufo 2D (como o grass_tuft do jogo antigo, tools/gen_models.py): cada lâmina
+# é uma folha chata de 5 pontos (base, meio, ponta pontuda), dos dois lados,
+# inclinando pra fora do centro. Bem mais leve que o tufo de cilindros.
+TUFTS_2D = {
+    # nome: (seed, lâminas, raio, altura (m), meia-largura)
+    "grass_tuft_2d": (21, 30, 0.16, (0.24, 0.4), (0.025, 0.04)),
+}
+
+
+def tuft_flat(seed, blades, radius, height, width):
+    rnd = random.Random(seed)
+    pos, nor, uv, col, edge = [], [], [], [], []
+    for _ in range(blades):
+        a = rnd.uniform(0, math.tau); d = radius * math.sqrt(rnd.random())
+        bx, bz = math.cos(a) * d, math.sin(a) * d
+        h = rnd.uniform(*height); w = rnd.uniform(*width)
+        yaw = rnd.uniform(0, math.tau)
+        lean = rnd.uniform(0.05, 0.18)
+        lx, lz = (math.cos(a) * lean, math.sin(a) * lean) if d > 1e-6 else (0.0, 0.0)
+        side = (math.cos(yaw), math.sin(yaw))
+        shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
+        pts = [(-w, 0.0), (w, 0.0), (-w * 0.6, 0.55), (w * 0.6, 0.55), (0.0, 1.0)]
+        verts = [(bx + side[0] * sx + lx * t * t, h * t, bz + side[1] * sx + lz * t * t) for sx, t in pts]
+        for face in (1, -1):
+            n = (-side[1] * 0.35 * face, 0.9, side[0] * 0.35 * face)  # quase pra cima: luz suave
+            l = math.sqrt(sum(c * c for c in n)); n = tuple(c / l for c in n)
+            for tri in ((0, 1, 2), (1, 3, 2), (2, 3, 4)):
+                for i in (tri if face == 1 else (tri[0], tri[2], tri[1])):
+                    pos.append(verts[i]); nor.append(n); uv.append((0.5, 1.0 - pts[i][1]))
+                    col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
     return pos, nor, uv, col, edge
 
 
@@ -228,6 +262,10 @@ def main():
     for name, (seed, blades, radius, height, width) in TUFTS.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *tuft_cyl(seed, blades, radius, height, width))
+        print(os.path.abspath(path))
+    for name, args in TUFTS_2D.items():
+        path = os.path.join(OUT_DIR, name + ".gltf")
+        write_gltf(path, name, *tuft_flat(*args))
         print(os.path.abspath(path))
     for name, (seed, height) in SPRIGS_3D.items():
         path = os.path.join(OUT_DIR, name + ".gltf")

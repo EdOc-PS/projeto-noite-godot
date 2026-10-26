@@ -111,7 +111,7 @@ material = SubResource("mat")
 assets = ExtResource("assets_file")
 top_level = true
 script = ExtResource("1_flat")
-grass_mesh_ids = PackedInt32Array(0)
+grass_mesh_ids = PackedInt32Array(2)
 sprig_mesh_ids = PackedInt32Array(1)
 metadata/_edit_lock_ = true
 
