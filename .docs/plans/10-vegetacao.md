@@ -75,3 +75,9 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - **Manchas de terra automáticas** (`terrain_flat_start.gd`, `dirt_*`): 4 manchas **pequenas** de 1,5–3 m de raio (o campo tem muito mais grama livre que terra), contorno torto por ruído (não círculo perfeito), pintadas direto no mapa de controle do Terrain3D quando o chão é criado. **Degradê de 1,5 m** (`dirt_edge`) pra grama: a terra vai sendo misturada por cima da grama pelo `blend`. Dentro da terra não nasce grama nem raminho; no degradê a grama vai rareando.
 - **Degradê ao pintar à mão**: é a própria mistura do Terrain3D. A borda de cada pincelada vira mistura das duas texturas; `blend_sharpness` 0 no material do terreno deixa a passagem bem suave (o padrão era bem mais dura). Não precisa de textura de degradê. Pra borda ainda mais larga: pincel com **Strength** menor nas bordas ou a ferramenta **Spray**.
 - **Grama caída no chão**: testada (sprites 0100/0101 deitados, em 3 cores) e tirada.
+
+## Flores (`FlowerField`, `scripts/vegetation/flower_field.gd` + `shaders/nature/flower_card.gdshader`, trazidos do projeto antigo)
+
+- Tufos de flores em PNG (`assets/textures/vegetation/flowers/`, gerados por `tools/gen_flower_textures.py`) em cartas cruzadas, balançando com o vento.
+- Tipos: **branca baixinha** (quase rente ao chão, a mais comum: 3 de 6 montes), **azul** com caule, **rosa** com caule e **vermelho pastel em espiga reta**. Caule no verde da grama.
+- **Montes de um tipo só** (nunca misturar cores no mesmo monte): 45 montes em 36 × 36 m. Altura por tipo (`size_scales`: branca 0,45, azul/rosa 0,75, vermelha 0,85).
