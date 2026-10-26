@@ -173,3 +173,4 @@ Implementado:
 ### Lâmina do tufo iso pelo PNG de referência (2026-10-26)
 - Lâmina: pé largo e reto até ~1/3, afina em curva até a ponta fina (`ISO_T`/`ISO_W`), curva pra um lado sorteado (reta no pé, deita na ponta, 8–32°; borda 15–40°). 30% das lâminas saem em par do mesmo pé (a segunda menor, abrindo pro outro lado). Tons Shaded (`DARK_CHANCE`).
 - Pés soltos, não em círculo: 3–4 grupinhos sorteados numa área de 0,2 m (borda 0,16 m).
+- Menos lâminas por tufo e mais tufos (2026-10-26): cheio 11 lâminas (área 0,14 m), borda 5 (0,12 m); `grass_spacing` 0,19 (era 0,27).
