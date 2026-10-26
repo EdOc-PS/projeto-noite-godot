@@ -6,7 +6,7 @@ type="PackedScene"
 
 [deps]
 
-source_file="res://assets/models/grass_old/grass_tuft_A.gltf"
+source_file="res://assets/models/grass/grass_star.gltf"
 
 [params]
 

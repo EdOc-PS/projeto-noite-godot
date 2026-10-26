@@ -1,6 +1,7 @@
 """Gera a grama (glTF) usada pelo pincel do Terrain3D, um modelo de cada:
 assets/models/grass/grass_tuft.gltf  — tufo de lâminas-cilindro, ponta pontuda de bico arredondado
 assets/models/grass/grass_tuft_2d.gltf — tufo de lâminas CHATAS (2D, do jogo antigo: mais leve)
+assets/models/grass/grass_star.gltf — tufo ESTRELA: cartas em pé cruzadas no centro, cada uma um pente de lâminas
 assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
@@ -147,6 +148,46 @@ def tuft_flat(seed, blades, radius, height, width):
     return pos, nor, uv, col, edge
 
 
+# Tufo ESTRELA (referência de jogo isométrico): 4 cartas em pé cruzando no
+# centro (vistas de cima formam uma estrela de 8 pontas), cada carta é um
+# "pente" de lâminas finas lado a lado, mais altas no meio e mais baixas nas
+# pontas da carta. De qualquer ângulo da câmera sempre tem carta de frente:
+# volume com poucos triângulos, bom pra visão isométrica.
+STAR = {
+    # nome: (seed, cartas, lâminas por carta, meia-largura da carta (m), altura (m))
+    "grass_star": (31, 4, 16, 0.22, (0.26, 0.42)),
+}
+
+
+def tuft_star(seed, cards, blades, half, height):
+    rnd = random.Random(seed)
+    pos, nor, uv, col, edge = [], [], [], [], []
+    top = height[1] * 1.1  # altura de referência do degradê (UV.y)
+    for c in range(cards):
+        ang = math.pi * c / cards + rnd.uniform(-0.12, 0.12)
+        side = (math.cos(ang), math.sin(ang))
+        fx, fz = -side[1], side[0]
+        for b in range(blades):
+            u = -1.0 + 2.0 * (b + rnd.uniform(0.2, 0.8)) / blades  # -1..1 ao longo da carta
+            x0 = u * half
+            # mais alta no meio da carta, baixa nas pontas (silhueta de leque)
+            h = rnd.uniform(*height) * (1.0 - 0.45 * u * u)
+            w = rnd.uniform(0.018, 0.03)
+            lean = u * rnd.uniform(0.05, 0.12) + rnd.uniform(-0.03, 0.03)  # abre em leque
+            bend = rnd.uniform(-0.03, 0.03)  # curvinha pra fora do plano
+            shade = rnd.uniform(0.88, 1.0)
+            pts = [(x0 - w, 0.0, 0.0), (x0 + w, 0.0, 0.0), (x0 - w * 0.5 + lean * 0.6, 0.6, bend * 0.36), (x0 + w * 0.5 + lean * 0.6, 0.6, bend * 0.36), (x0 + lean, 1.0, bend)]
+            verts = [(side[0] * px + fx * pz, h * t, side[1] * px + fz * pz) for px, t, pz in pts]
+            for face in (1, -1):
+                n = (fx * 0.45 * face, 0.9, fz * 0.45 * face)
+                l = math.sqrt(sum(k * k for k in n)); n = tuple(k / l for k in n)
+                for tri in ((0, 1, 2), (1, 3, 2), (2, 3, 4)):
+                    for i in (tri if face == 1 else (tri[0], tri[2], tri[1])):
+                        pos.append(verts[i]); nor.append(n); uv.append((0.5, 1.0 - verts[i][1] / top))
+                        col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
+    return pos, nor, uv, col, edge
+
+
 # Raminho 3D (o sprite_0093 do Kenney refeito em geometria): caule fino em tubo,
 # galhos diagonais saindo dele, cada um terminando numa folha em gota (elipsoide),
 # e folhinhas menores ao longo dos galhos. Meshes 3 e 4 do pincel.
@@ -281,6 +322,10 @@ def main():
     for name, args in TUFTS_2D.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *tuft_flat(*args))
+        print(os.path.abspath(path))
+    for name, args in STAR.items():
+        path = os.path.join(OUT_DIR, name + ".gltf")
+        write_gltf(path, name, *tuft_star(*args))
         print(os.path.abspath(path))
     for name, (seed, height) in SPRIGS_3D.items():
         path = os.path.join(OUT_DIR, name + ".gltf")

@@ -129,3 +129,9 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - `assets/models/grass_old/grass_tuft_A/B.gltf` (+ .bin) copiados do projeto-noite-old (`tools/gen_models.py` de lá), sem a textura atlas (o shader pinta). Meshes 3 e 4 do pincel ("Tufo antigo A/B"), com sombra ligada (`cast_shadows` 1).
 - Material `grass_old_tuft.tres` = `grass_old.gdshader` (shader do jogo antigo) com as cores da área de teste: base (0.55,0.78,0.3) → ponta (0.88,0.96,0.58), manchas de ruído, rim, luz toon_light.
 - O terreno semeia com eles (`grass_mesh_ids` = 3, 4). Os tufos 3D (0) e 2D (2) continuam no pincel.
+
+### Tufo estrela (2026-10-25)
+- Removidos os tufos A/B do jogo antigo, o `grass_old.gdshader` e o `toon_light` (vieram do outro projeto).
+- Novo `grass_star` (mesh 3, "Tufo estrela", `tools/gen_grass_tufts.py`): 4 cartas em pé cruzando no centro (estrela de 8 pontas vista de cima), cada carta um pente de 16 lâminas finas em leque, mais altas no meio. De qualquer ângulo da câmera isométrica sempre há carta de frente: volume com poucos triângulos.
+- Material `grass_star.tres` (`grass_body`, dois lados, sem borda): verde levemente escuro no pé (0.34,0.52,0.14) → (0.5,0.67,0.2) → verde-amarelado suave (0.7,0.79,0.32), aquarela leve (`paint_wobble` 0,12).
+- Terreno semeia com ele (`grass_mesh_ids` = 3). Tufos 3D (0) e 2D (2) guardados no pincel.
