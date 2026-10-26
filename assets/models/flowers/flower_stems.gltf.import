@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://bxoiviv5vyiwx"
+path="res://.godot/imported/flower_stems.gltf-f918176e665e27623576de4319b3a5a7.scn"
 
 [deps]
 
 source_file="res://assets/models/flowers/flower_stems.gltf"
+dest_files=["res://.godot/imported/flower_stems.gltf-f918176e665e27623576de4319b3a5a7.scn"]
 
 [params]
 

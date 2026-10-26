@@ -24,7 +24,7 @@ const GRASS_MARKER := "grass_seeded.txt"
 
 @export_group("Grama inicial")
 @export var grass_area: float = 26.0                 ## lado do quadrado semeado (m)
-@export var grass_spacing: float = 0.27              ## distância média entre tufos na mancha
+@export var grass_spacing: float = 0.34              ## distância média entre tufos na mancha
 @export_range(-1.0, 1.0) var grass_threshold: float = 0.06  ## maior = menos manchas
 @export var grass_noise_frequency: float = 0.09      ## menor = manchas maiores
 ## Regras de tamanho: .docs/plans/10-vegetacao.md. A altura NÃO pode esticar
@@ -49,12 +49,12 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## Flores no pincel do Terrain3D (aparecem no editor e no jogo). Cada tipo:
 ## carta deitada das flores (`flower_head_ids`) + caules (`flower_stem_ids`,
 ## -1 = sem caule, rente ao chão). Montes de um tipo só (10-vegetacao.md).
-@export var flower_head_ids: PackedInt32Array = [3, 4, 6, 8]   ## branca, azul, rosa, vermelha
-@export var flower_stem_ids: PackedInt32Array = [-1, 5, 7, 9]
-@export var flower_scales: PackedFloat32Array = [1.3, 1.15, 1.15, 1.3]
-@export var flower_weights: PackedFloat32Array = [3.0, 1.0, 1.0, 1.0]  ## chance de cada tipo por monte
+@export var flower_head_ids: PackedInt32Array = [3, 4, 8]   ## branca, azul, vermelha (a rosa, 6/7, saiu do campo; fica no pincel)
+@export var flower_stem_ids: PackedInt32Array = [-1, 5, 9]
+@export var flower_scales: PackedFloat32Array = [1.3, 1.15, 1.3]
+@export var flower_weights: PackedFloat32Array = [3.0, 1.0, 1.0]  ## chance de cada tipo por monte
 ## true = só BEM dentro da grama (densidade >= `flower_in_grass_density`); false = só fora dela
-@export var flower_in_grass: Array[bool] = [false, true, true, true]
+@export var flower_in_grass: Array[bool] = [false, true, true]
 @export_range(0.0, 1.0) var flower_in_grass_density: float = 0.8
 @export var flower_clumps: int = 45
 @export var flower_clump_size: Vector2i = Vector2i(4, 10)

@@ -207,3 +207,4 @@ Implementado:
 - Malhas (`tools/gen_flower_meshes.py`, `assets/models/flowers/`): `flower_head_low` (carta deitada a 3 cm), `flower_head_high` (carta deitada a 0,72), `flower_stems` (2 cartas cruzadas). Materiais em `assets/materials/flowers/` (`head_<tipo>` com `flower_card`, `stem_<tipo>` com `flower_stem`).
 - Ids: 3 branca, 4/5 azul (flor/caule), 6/7 rosa, 8/9 vermelha. Cada flor com caule usa o MESMO transform nas duas malhas.
 - Regras: montes de um tipo (45 montes, 4–10 flores, raio 0,9 m, pesos branca 3 : 1 : 1 : 1); com caule só onde a densidade da grama ≥ 0,8 (bem dentro); a branca só fora da grama.
+- Ajuste (2026-10-26): flor rosa fora do campo (ids 6/7 continuam no pincel); grama sem a opacidade (`fake_alpha` = false); tufo com 5 lâminas mais grossas (meia-largura 0,037–0,06; borda 0,032–0,05); menos tufos (`grass_spacing` 0,34).

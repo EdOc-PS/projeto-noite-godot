@@ -17,4 +17,4 @@ shader_parameter/push_strength = 0.08
 shader_parameter/push_radius = 0.9
 shader_parameter/push_squash = 0.5
 shader_parameter/sprite_alpha = Vector2(0.4, 0.5)
-shader_parameter/fake_alpha = true
+shader_parameter/fake_alpha = false

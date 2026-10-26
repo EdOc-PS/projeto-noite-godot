@@ -1,5 +1,5 @@
 """Gera a grama (glTF) usada pelo pincel do Terrain3D:
-assets/models/grass/grass_tuft.gltf      — tufo de 6 lâminas-cilindro soltas, ponta fina
+assets/models/grass/grass_tuft.gltf      — tufo de 5 lâminas-cilindro soltas, ponta fina
 assets/models/grass/grass_tuft_edge.gltf — tufo de borda das manchas (3 lâminas, mais baixo)
 assets/models/grass/grass_sprig.gltf     — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
@@ -18,9 +18,9 @@ ARC = 6  # segmentos do semicírculo da ponta
 
 TUFTS = {
     # nome: (seed, lâminas (exato), raio, altura das lâminas (m), meia-largura)
-    "grass_tuft": (21, 6, 0.16, (0.32, 0.52), (0.03, 0.05)),
+    "grass_tuft": (21, 5, 0.16, (0.32, 0.52), (0.037, 0.06)),
     # borda das manchas: menos lâminas, mais baixas e finas
-    "grass_tuft_edge": (22, 3, 0.12, (0.22, 0.36), (0.026, 0.042)),
+    "grass_tuft_edge": (22, 3, 0.12, (0.22, 0.36), (0.032, 0.05)),
 }
 # Cada lâmina do tufo é um CILINDRO (tubo que afina um pouco) com a ponta
 # pontuda de bico arredondado, curvando pra fora.

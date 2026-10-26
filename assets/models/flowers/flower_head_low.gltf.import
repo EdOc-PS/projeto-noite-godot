@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://82ms6iwf1b1a"
+path="res://.godot/imported/flower_head_low.gltf-873528cf56d254c24c4014803e123ec2.scn"
 
 [deps]
 
 source_file="res://assets/models/flowers/flower_head_low.gltf"
+dest_files=["res://.godot/imported/flower_head_low.gltf-873528cf56d254c24c4014803e123ec2.scn"]
 
 [params]
 
