@@ -543,3 +543,6 @@ O pacote não usa rastro de partícula: cada "corrente de vento" é uma **fita c
 
 - **Aplicado**: o sumiço perto da câmera nos nossos riscos.
 - **Próximos passos possíveis**: (1) fita curva com risco que corre e se desfaz no lugar do rastro (vento mais "desenhado", menos linha); (2) poeira fininha só na ventania; (3) som de vento em loop (o pacote tem 6 sons) com volume pelo estado.
+
+## Sombra das nuvens (trazida do jogo antigo, 2026-10-25)
+- Nó `CloudShadows` (Decal 120 × 24 × 120 m) no field: manchas macias (`assets/textures/effects/cloud_shadows.png`, gerada por `tools/gen_cloud_shadows.py`) deslizando com o vento (`scripts/weather/cloud_shadow_decal.gd`, `wind_dir` (1, -0,02), 0,8 m/s). Cor `modulate` (0.04, 0.05, 0.14, 0.6), igual ao outside antigo. Escurece chão e grama juntos.
