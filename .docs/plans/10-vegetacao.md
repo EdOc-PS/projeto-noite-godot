@@ -219,3 +219,4 @@ Implementado:
 - Correção (2026-10-26): o arredondado era o TOPO DA LÂMINA, não a borda. `outline_round` saiu; lâmina com topo em meia esfera (`CYL_TIP` 1, raio = √(1−t²), normais de esfera). A borda segue o topo redondo.
 - Ponta da lâmina voltou a ser fina (`CYL_TIP` 3,6). Onda de luz dourada também nas flores com caule (azul, rosa, vermelha: flor e caule, `shimmer_strength` 0,6, mesma conta e valores da grama); a branca do chão sem.
 - Ajuste (2026-10-26): topo mais redondo (`CYL_TIP` 2,6, perfil (1-t^1,8)^0,55), lâminas ~15% mais grossas (0,043-0,069; borda 0,037-0,058), menos tufos (`grass_spacing` 0,39).
+- Flor branca do chão no branco do raminho (pétala (1,1,0.96), miolo branco), Shaded: 40% das flores num tom 0,8–0,88 (2026-10-26).
