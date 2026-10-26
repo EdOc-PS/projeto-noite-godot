@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_iso_full.gltf" id="iso_full"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_iso_edge.gltf" id="iso_edge"]
 [ext_resource type="Material" path="res://assets/materials/grass_iso.tres" id="mat_iso"]
+[ext_resource type="PackedScene" path="res://assets/models/grass/grass_iso3d_full.gltf" id="iso3d_full"]
+[ext_resource type="PackedScene" path="res://assets/models/grass/grass_iso3d_edge.gltf" id="iso3d_edge"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_sprig_bb.gltf" id="sprig_bb"]
 [ext_resource type="Material" path="res://assets/materials/grass_sprig_bb.tres" id="mat_sprig_bb"]
 [ext_resource type="Material" path="res://assets/materials/grass_tuft_2d.tres" id="mat_tuft2d"]
@@ -109,6 +111,26 @@ last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
+[sub_resource type="Terrain3DMeshAsset" id="ma9"]
+name = "Tufo iso 3D cheio"
+id = 9
+scene_file = ExtResource("iso3d_full")
+cast_shadows = 0
+material_override = ExtResource("mat_tuft")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma10"]
+name = "Tufo iso 3D borda"
+id = 10
+scene_file = ExtResource("iso3d_edge")
+cast_shadows = 0
+material_override = ExtResource("mat_tuft")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
 [sub_resource type="Terrain3DTextureAsset" id="tex0"]
 name = "Grama"
 albedo_texture = ExtResource("tex_ground")
@@ -121,5 +143,5 @@ albedo_texture = ExtResource("tex_dirt")
 normal_texture = ExtResource("tex_ground_n")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8"), SubResource("ma9"), SubResource("ma10")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])

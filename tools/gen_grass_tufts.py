@@ -4,6 +4,7 @@ assets/models/grass/grass_tuft_2d.gltf — tufo de lâminas CHATAS (2D, do jogo 
 assets/models/grass/grass_star.gltf — tufo ESTRELA: cartas em pé cruzadas no centro, cada uma um pente de lâminas
 assets/models/grass/grass_bb_full/edge.gltf — tufos BILLBOARD (uma carta virada pra câmera), cheio e de borda
 assets/models/grass/grass_iso_full/edge.gltf — tufo 3D LEVE pra câmera isométrica (lâminas chatas inclinadas pra fora), cheio e de borda
+assets/models/grass/grass_iso3d_full/edge.gltf — o tufo iso em versão 3D (lâminas-tubo), cheio e de borda
 assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
@@ -290,6 +291,60 @@ def tuft_iso(seed, blades, area, height, width, tilt):
     return pos, nor, uv, col, edge
 
 
+# Versão 3D do tufo iso: MESMO arranjo (mesmos pés, curvas, pares, sorteio igual
+# pela mesma seed), mas cada lâmina é um TUBO (5 lados) seguindo a linha do meio
+# da lâmina chata, raio = meia-largura dela × ISO3D_ROUND. A ponta fecha fina.
+# Material grass_tuft.tres (borda pela casca funciona com tubo).
+ISO3D = {"grass_iso3d_full": "grass_iso_full", "grass_iso3d_edge": "grass_iso_edge"}
+ISO3D_SIDES = 5
+ISO3D_ROUND = 0.75
+
+
+def tuft_iso3d(seed, blades, area, height, width, tilt):
+    rnd = random.Random(seed)
+    pos, nor, uv, col, edge = [], [], [], [], []
+    hmax = height[1]
+    groups = [(rnd.uniform(-area, area) * 0.5, rnd.uniform(-area, area) * 0.5) for _ in range(rnd.randint(3, 4))]
+    feet = []
+    while len(feet) < blades:
+        gx, gz = rnd.choice(groups)
+        bx, bz = gx + rnd.gauss(0, area * 0.18), gz + rnd.gauss(0, area * 0.18)
+        yaw = rnd.uniform(0, math.tau)
+        h = rnd.uniform(*height)
+        feet.append((bx, bz, yaw, h, rnd.uniform(*width)))
+        if rnd.random() < 0.3 and len(feet) < blades:
+            feet.append((bx + rnd.uniform(-0.01, 0.01), bz + rnd.uniform(-0.01, 0.01), yaw + math.pi + rnd.uniform(-0.6, 0.6), h * rnd.uniform(0.5, 0.75), rnd.uniform(*width) * 0.8))
+    for bx, bz, yaw, h, w in feet:
+        lean = (math.cos(yaw), math.sin(yaw))
+        tl = math.radians(rnd.uniform(*tilt))
+        rnd.uniform(-0.5, 0.5)  # (torção da lâmina chata: mantém o sorteio igual)
+        shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
+        rings = []
+        for t, wf in zip(ISO_T, ISO_W):
+            ang = tl * t * t * 1.6
+            reach = h * t * math.sin(min(ang, 1.2)) * 0.8
+            y = h * t * math.cos(min(ang, 1.2) * 0.6)
+            c = (bx + lean[0] * reach, y, bz + lean[1] * reach)
+            r = max(w * wf * ISO3D_ROUND, 0.0015)
+            ring = []
+            for k in range(ISO3D_SIDES):
+                a = math.tau * k / ISO3D_SIDES
+                n = (math.cos(a), 0.25, math.sin(a))
+                ring.append(((c[0] + math.cos(a) * r, c[1], c[2] + math.sin(a) * r), n))
+            rings.append((ring, y))
+        for (ra, ya), (rb, yb) in zip(rings, rings[1:]):
+            for k in range(ISO3D_SIDES):
+                k2 = (k + 1) % ISO3D_SIDES
+                quad = [ra[k], ra[k2], rb[k2], rb[k]]
+                ys = [ya, ya, yb, yb]
+                for tri in ((0, 2, 1), (0, 3, 2)):
+                    for i in tri:
+                        n = quad[i][1]; l = math.sqrt(sum(x * x for x in n))
+                        pos.append(quad[i][0]); nor.append(tuple(x / l for x in n)); uv.append((0.5, 1.0 - min(ys[i] / hmax, 1.0)))
+                        col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
+    return pos, nor, uv, col, edge
+
+
 # Raminho 3D (o sprite_0093 do Kenney refeito em geometria): caule fino em tubo,
 # galhos diagonais saindo dele, cada um terminando numa folha em gota (elipsoide),
 # e folhinhas menores ao longo dos galhos. Meshes 3 e 4 do pincel.
@@ -438,6 +493,10 @@ def main():
     for name, args in ISO.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *tuft_iso(*args))
+        print(os.path.abspath(path))
+    for name, src in ISO3D.items():
+        path = os.path.join(OUT_DIR, name + ".gltf")
+        write_gltf(path, name, *tuft_iso3d(*ISO[src]))
         print(os.path.abspath(path))
     for name, args in BILLBOARDS.items():
         path = os.path.join(OUT_DIR, name + ".gltf")

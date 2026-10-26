@@ -40,9 +40,10 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var edge_mesh_ids: PackedInt32Array = []
 @export_range(0.0, 1.0) var edge_density: float = 0.5  ## abaixo dessa densidade usa os tufos de borda
 ## Comparação MEIO A MEIO: se não estiver vazio, a metade x >= 0 do campo usa
-## estes tufos (sem tufo de borda) com `right_spacing`; a metade x < 0 fica com
+## estes tufos (e `right_edge_mesh_ids` na borda das manchas) com `right_spacing`; a metade x < 0 fica com
 ## `grass_mesh_ids`/`edge_mesh_ids` e `grass_spacing`.
 @export var right_mesh_ids: PackedInt32Array = []
+@export var right_edge_mesh_ids: PackedInt32Array = []  ## tufos de borda da metade x >= 0
 @export var right_spacing: float = 0.27
 ## Raminhos de folhinhas brancas (mesh 1), espalhados pouco por toda a grama.
 @export var sprig_mesh_ids: PackedInt32Array = [1]
@@ -168,7 +169,7 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + edge_mesh_ids + right_mesh_ids + sprig_mesh_ids:
+	for id in grass_mesh_ids + edge_mesh_ids + right_mesh_ids + right_edge_mesh_ids + sprig_mesh_ids:
 		per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
 	var half := grass_area / 2.0
@@ -176,7 +177,7 @@ func _seed_grass() -> void:
 		_seed_area(Rect2(-half, -half, grass_area, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
 	else:
 		_seed_area(Rect2(-half, -half, half, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
-		_seed_area(Rect2(0.0, -half, half, grass_area), right_mesh_ids, PackedInt32Array(), right_spacing, rng, noise, height_noise, per_mesh, sprigs)
+		_seed_area(Rect2(0.0, -half, half, grass_area), right_mesh_ids, right_edge_mesh_ids, right_spacing, rng, noise, height_noise, per_mesh, sprigs)
 	for id in per_mesh:
 		if not (per_mesh[id] as Array).is_empty():
 			instancer.add_transforms(id, per_mesh[id])
