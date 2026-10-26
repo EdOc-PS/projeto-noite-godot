@@ -7,9 +7,9 @@
 next_pass = ExtResource("2_outline")
 render_priority = 0
 shader = ExtResource("1_shader")
-shader_parameter/base_color = Color(0.46, 0.72, 0.2, 1)
-shader_parameter/tip_color = Color(0.97, 0.9, 0.48, 1)
-shader_parameter/mid_color = Color(0.74, 0.83, 0.28, 1)
+shader_parameter/base_color = Color(0.57, 0.745, 0.004, 1)
+shader_parameter/tip_color = Color(0.76, 0.7, 0.28, 1)
+shader_parameter/mid_color = Color(0.65, 0.72, 0.1, 1)
 shader_parameter/noise_scale = 20.0
 shader_parameter/shade_amount = 1.0
 shader_parameter/light_floor = 0.78
