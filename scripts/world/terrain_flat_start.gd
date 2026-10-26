@@ -23,7 +23,7 @@ const GRASS_MARKER := "grass_seeded.txt"
 			_regenerate()
 
 @export_group("Grama inicial")
-@export var grass_area: float = 50.0                 ## lado do quadrado semeado (m)
+@export var grass_area: float = 40.0                 ## lado do quadrado semeado (m)
 @export var grass_spacing: float = 0.14              ## distância média entre tufos na mancha
 @export_range(-1.0, 1.0) var grass_threshold: float = 0.06  ## maior = menos manchas
 @export var grass_noise_frequency: float = 0.09      ## menor = manchas maiores

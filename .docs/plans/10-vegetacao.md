@@ -180,3 +180,4 @@ Implementado:
 - Campo maior: `grass_area` 50 m (era 36); flores em `area_half_size` 25.
 - Metade x < 0: tufos de lâminas chatas (7 cheio, 8 borda), `grass_spacing` 0,14. Metade x ≥ 0: tufo 3D de cilindros (mesh 0) com `right_spacing` 0,27 (`right_mesh_ids` no Terrain3D; vazio = campo todo igual).
 - Tufo 3D voltou ao formato original (antes do "mais fino e pontudo"): raio 0,14, `CYL_RADIUS` 1,2, ponta de bico arredondado `CYL_TIP` 2,4, sem `CYL_GAP`.
+- Otimização (2026-10-26): `grass_area` 40 m (flores 20); tufo 3D com menos lâminas (`CYL_BLADES` 0,4 → 6–7 lâminas) e ponta um pouco mais pontuda (`CYL_TIP` 3,2).

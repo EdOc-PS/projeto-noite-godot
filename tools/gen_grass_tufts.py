@@ -28,9 +28,9 @@ TUFTS = {
 CYL_SIDES = 6      # lados do tubo (mais lados = mais redondo, mais pesado)
 CYL_RINGS = 4      # anéis ao longo da altura
 CYL_RADIUS = 1.2   # raio do tubo no pé, em fração da meia-largura da lâmina (gordinho)
-CYL_BLADES = 0.6   # fração das lâminas do tufo de fita (lâmina gorda: menos lâminas)
+CYL_BLADES = 0.4   # fração das lâminas do tufo de fita (lâmina gorda: menos lâminas)
 CYL_TAPER = 0.12   # quanto o tubo afina até em cima
-CYL_TIP = 2.4      # altura da ponta em raios (pontuda com bico arredondado; 1 = meia esfera)
+CYL_TIP = 3.2      # altura da ponta em raios (pontuda com bico arredondado; 1 = meia esfera)
 # Shaded (como os sprites Shaded do Kenney): umas lâminas na cor cheia, outras
 # na MESMA cor mais escura. 40% das lâminas escuras, com tom 0,68–0,78.
 DARK_CHANCE = 0.4
