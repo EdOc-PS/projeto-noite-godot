@@ -137,17 +137,16 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Terreno semeia com ele (`grass_mesh_ids` = 3). Tufos 3D (0) e 2D (2) guardados no pincel.
 - Balanço/dobra/toque: mesmos do `grass_body` (vento global, rajada com `bend_limit`, jogador achata). `sway_height` 0,28 (tufo mais baixo: as lâminas curtas das pontas também balançam).
 
-### Tufos de cartas pra visão isométrica (2026-10-25)
-Pesquisa (técnicas usadas em jogos de câmera de cima/isométrica):
-- **Cartas cruzadas em estrela** (3–4 quads em pé cruzando no centro) com textura alfa de lâminas: de qualquer ângulo sempre há carta de frente, nunca vira "risco".
-- **Textura em cinza + cor no shader**: o PNG é só máscara e sombra; o degradê pé → ponta vem do material, então dá pra trocar a paleta sem refazer textura.
-- **Normal pra cima** em todas as cartas: luz igual no tufo todo (senão a carta de costas pro sol fica escura e o tufo "pisca" ao girar).
-- **Alpha scissor (discard), não transparência**: sem problema de ordem e mais leve.
-- **Borda das manchas com tufos parciais** (meia estrela / leque, mais baixos): a borda vista de cima fica macia, sem tufo cheio recortado.
-- Variação: rotação e escala aleatórias, célula do atlas sorteada e espelhada por carta; vento pelo `UV.y`/altura (pé parado).
+### Grama billboard estilizada (2026-10-25) — substitui as cartas em estrela
+Pesquisa na internet (godotshaders "Stylized Cartoon Grass" e "Billboard Grass with Wind", série de grama do hexaquo.at, devlogs estilo Ghibli):
+- Grama estilizada pra câmera fixa de cima: **carta billboard em Y** (vira sempre pra câmera). Com câmera fixa o truque não aparece; de lado a carta nunca vira "risco".
+- **Pé da grama = cor do chão** naquele ponto e ponta mais clara: o tufo some dentro do chão, sem emenda (o Stylized Cartoon Grass usa a cor do terreno vista de cima no pé).
+- **Lâminas brancas no PNG**, cor toda no shader (degradê pé → ponta + ruído no mundo).
+- **Normal pra cima**: a grama recebe a mesma luz do chão (evita o tufo escuro/claro conforme gira).
+- Alpha scissor, muitos tufos pequenos por MultiMesh (aqui o instancer do Terrain3D); lâminas pontudas combinam mais com o estilo Ghibli.
 
 Implementado:
-- Atlas `assets/textures/vegetation/grass/grass_blades.png` (`tools/gen_grass_card_textures.py`): célula 0 = 5–7 lâminas curvas; célula 1 = 2–3 lâminas de ponta cortada (como as referências).
-- Meshes (`gen_grass_tufts.py`, `CARDS`): 4 `grass_card_star` (4 cartas), 5 `grass_card_half` (3 meias-cartas em leque de 120°), 6 `grass_card_fan` (2 cartas em X fechado, baixo). Material `grass_card.tres` (`grass_body` com `use_sprite`, mesmas cores do tufo estrela).
-- Semeadura: `grass_mesh_ids` = 4 no meio; `edge_mesh_ids` = 5, 6 onde a densidade < `edge_density` (0,5): meia estrela na faixa rala, leque na beiradinha.
-- O tufo estrela geométrico (3) continua no pincel.
+- Atlas `assets/textures/vegetation/grass/grass_clumps.png` (`tools/gen_grass_card_textures.py`): célula 0 = tufo cheio (11–14 lâminas em leque), célula 1 = tufo de borda (4–5 lâminas, mais baixo).
+- Meshes 4 `grass_bb_full` e 5 `grass_bb_edge` (um quad cada). Material `grass_billboard.tres` (`grass_body` com `billboard` + `use_sprite`): pé = verde do chão #91BE01, ponta (0.76,0.88,0.32), aquarela leve.
+- Só 2 tipos: `grass_mesh_ids` = 4 no meio, `edge_mesh_ids` = 5 onde a densidade < `edge_density`.
+- Removidas as cartas estrela/meia estrela/leque (`grass_card_*`, `grass_blades.png`).

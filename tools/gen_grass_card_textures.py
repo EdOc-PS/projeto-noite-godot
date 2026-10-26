@@ -1,9 +1,9 @@
-"""Gera o atlas de lâminas pras cartas de grama (tufos em estrela, vista isométrica).
-Saída: assets/textures/vegetation/grass/grass_blades.png (1024 × 512, 2 células de 512):
-  célula 0 — 5–7 lâminas compridas e curvas, pé largo e ponta fina (referência 1)
-  célula 1 — 2–3 lâminas retas com a ponta cortada torta (referência 2)
-Cinza: escuro no pé, branco na ponta (o shader grass_body pinta o degradê e usa
-o cinza só pra sombrear). Alfa = máscara, com borda suave (cobertura por pixel).
+"""Gera o atlas dos tufos de grama BILLBOARD (carta que sempre vira pra câmera).
+Saída: assets/textures/vegetation/grass/grass_clumps.png (1024 × 512, 2 células):
+  célula 0 — tufo cheio: 11–14 lâminas em leque, pé junto, pontas abertas
+  célula 1 — tufo de borda: 4–5 lâminas mais curtas e espaçadas
+Lâminas BRANCAS (a cor vem toda do shader: pé = cor do chão, ponta clara), com
+um cinza leve no pé só pra separar as lâminas. Alfa = máscara de borda suave.
 Uso: python tools/gen_grass_card_textures.py
 """
 import math, os, random, struct, zlib
@@ -12,51 +12,34 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "textures", "veget
 W, H, CELL = 1024, 512, 512
 
 
-def blade_curved(rnd, x0):
-    h = rnd.uniform(0.45, 0.95) * H
-    w = rnd.uniform(16, 26)
-    curve = rnd.uniform(-40, 40)
+def blade(rnd, x0, hmin, hmax, spread):
+    h = rnd.uniform(hmin, hmax) * H
+    w = rnd.uniform(14, 24)
+    # pé perto do centro da célula, ponta abre pra fora (leque) com curva
+    lean = (x0 - spread[0]) * spread[1] + rnd.uniform(-25, 25)
     def edges(s):
-        c = x0 + curve * s * s
-        hw = w * (1.0 - s) ** 0.75
+        c = x0 + lean * s ** 1.6
+        hw = w * (1.0 - s) ** 0.8
         return c - hw, c + hw
-    return h, edges
-
-
-def blade_cut(rnd, x0):
-    h = rnd.uniform(0.4, 0.75) * H
-    w = rnd.uniform(18, 28)
-    lean = rnd.uniform(-60, 60)
-    cut = rnd.uniform(0.55, 0.8)       # onde o lado de dentro começa a cortar
-    side = rnd.choice((-1, 1))
-    def edges(s):
-        c = x0 + lean * s
-        hw = w * (1.0 - 0.45 * s)
-        a, b = c - hw, c + hw
-        if s > cut:  # um lado vai reto até o topo, o outro corta na diagonal
-            k = (s - cut) / (1.0 - cut)
-            if side > 0:
-                b = b + (a + 2 - b) * k
-            else:
-                a = a + (b - 2 - a) * k
-        return a, b
     return h, edges
 
 
 def render():
     acc = [[0.0, 0.0] for _ in range(W * H)]  # (cobertura, cinza·cobertura)
-    for cell, (maker, count, seed) in enumerate(((blade_curved, (5, 7), 3), (blade_cut, (2, 3), 9))):
+    # célula: (lâminas, altura mín/máx, largura do pé, quanto abre, seed)
+    for cell, (count, hmin, hmax, base, opens, seed) in enumerate(((( 11, 14), 0.5, 0.95, 0.42, 0.9, 3), ((4, 5), 0.35, 0.7, 0.55, 0.6, 9))):
         rnd = random.Random(seed)
         n = rnd.randint(*count)
+        mid = cell * CELL + CELL * 0.5
         for i in range(n):
-            x0 = cell * CELL + CELL * (0.12 + 0.76 * (i + rnd.uniform(0.2, 0.8)) / n)
-            h, edges = maker(rnd, x0)
+            x0 = mid + CELL * base * ((i + rnd.uniform(0.2, 0.8)) / n - 0.5)
+            h, edges = blade(rnd, x0, hmin, hmax, (mid, opens))
             for py in range(H):
                 s = (H - 1 - py) / h  # 0 no pé, 1 na ponta
                 if s > 1.0:
                     continue
                 a, b = edges(s)
-                gray = 0.62 + 0.38 * s
+                gray = 0.8 + 0.2 * min(s * 3.0, 1.0)  # cinza só no pezinho
                 for px in range(max(int(a), cell * CELL), min(int(b) + 1, (cell + 1) * CELL)):
                     cov = max(0.0, min(px + 1, b) - max(px, a))
                     if cov <= 0:
@@ -85,6 +68,6 @@ def write_png(path, raw):
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
-    path = os.path.join(OUT, "grass_blades.png")
+    path = os.path.join(OUT, "grass_clumps.png")
     write_png(path, render())
     print("ok:", os.path.abspath(path))

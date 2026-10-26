@@ -1,16 +1,16 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://shaders/nature/grass_tuft_2d.gdshader" id="1_shader"]
-[ext_resource type="Texture2D" path="res://assets/textures/vegetation/grass/grass_blades.png" id="2_blades"]
+[ext_resource type="Texture2D" path="res://assets/textures/vegetation/grass/grass_clumps.png" id="2_clumps"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_shader")
-shader_parameter/base_color = Color(0.34, 0.52, 0.14, 1)
-shader_parameter/tip_color = Color(0.7, 0.79, 0.32, 1)
-shader_parameter/mid_color = Color(0.5, 0.67, 0.2, 1)
+shader_parameter/base_color = Color(0.57, 0.745, 0.004, 1)
+shader_parameter/tip_color = Color(0.76, 0.88, 0.32, 1)
+shader_parameter/mid_color = Color(0.6, 0.79, 0.1, 1)
 shader_parameter/noise_scale = 20.0
-shader_parameter/shade_amount = 0.5
+shader_parameter/shade_amount = 0.0
 shader_parameter/light_floor = 0.78
 shader_parameter/sway_strength = 0.06
 shader_parameter/sway_speed = 1.6
@@ -37,8 +37,9 @@ shader_parameter/shimmer_speed = 18.0
 shader_parameter/shimmer_color = Color(1, 0.93, 0.66, 1)
 shader_parameter/shimmer_spacing = 160.0
 shader_parameter/shimmer_width = 22.0
-shader_parameter/paint_wobble = 0.12
-shader_parameter/mid_pos = 0.5
+shader_parameter/paint_wobble = 0.1
+shader_parameter/mid_pos = 0.45
+shader_parameter/billboard = true
 shader_parameter/use_sprite = true
-shader_parameter/sprite = ExtResource("2_blades")
+shader_parameter/sprite = ExtResource("2_clumps")
 shader_parameter/alpha_cut = 0.5

@@ -2,7 +2,7 @@
 assets/models/grass/grass_tuft.gltf  — tufo de lâminas-cilindro, ponta pontuda de bico arredondado
 assets/models/grass/grass_tuft_2d.gltf — tufo de lâminas CHATAS (2D, do jogo antigo: mais leve)
 assets/models/grass/grass_star.gltf — tufo ESTRELA: cartas em pé cruzadas no centro, cada uma um pente de lâminas
-assets/models/grass/grass_card_star/half/fan.gltf — tufos de CARTAS com o atlas de lâminas (estrela cheia, meia estrela, leque)
+assets/models/grass/grass_bb_full/edge.gltf — tufos BILLBOARD (uma carta virada pra câmera), cheio e de borda
 assets/models/grass/grass_sprig.gltf — raminho de folhinhas brancas (sprite_0093 do Kenney em 3D)
 Tom por lâmina na cor do vértice (o "Shaded"). UV.y = 1 na base e 0 na ponta
 (cor e vento: shaders/nature/grass_body.gdshaderinc).
@@ -189,41 +189,28 @@ def tuft_star(seed, cards, blades, half, height):
     return pos, nor, uv, col, edge
 
 
-# Tufos de CARTAS texturizadas (atlas assets/textures/vegetation/grass/grass_blades.png,
-# tools/gen_grass_card_textures.py): técnica comum de grama pra câmera de cima.
-# Cada carta é um quad em pé com uma das 2 células do atlas; normal pra CIMA
-# (luz igual em todas as cartas, nenhuma fica escura por estar de costas).
-#   star — 4 cartas cruzando no centro (estrela de 8 pontas): meio das manchas
-#   half — 3 meias-cartas saindo do centro num leque de 120°: borda das manchas
-#   fan  — 2 cartas em X fechado (35°), mais baixas: ponta da borda, grama rala
-CARDS = {
-    # nome: (seed, [(ângulo°, do centro?, largura, altura)])
-    "grass_card_star": (41, [(a, False, 0.5, 0.42) for a in (0, 45, 90, 135)]),
-    "grass_card_half": (42, [(a, True, 0.27, 0.36) for a in (-60, 0, 60)]),
-    "grass_card_fan": (43, [(0, False, 0.4, 0.3), (35, False, 0.36, 0.26)]),
+# Tufos BILLBOARD (grama estilizada pra câmera isométrica fixa): UMA carta que o
+# shader vira sempre pra câmera (grass_body `billboard`), com o atlas
+# assets/textures/vegetation/grass/grass_clumps.png (tools/gen_grass_card_textures.py).
+# Normal pra cima: a luz do tufo é a mesma do chão. Dois tipos:
+#   grass_bb_full — tufo cheio (célula 0), meio das manchas
+#   grass_bb_edge — tufo ralo e baixo (célula 1), borda das manchas
+BILLBOARDS = {
+    # nome: (célula, largura (m), altura (m))
+    "grass_bb_full": (0, 0.6, 0.6),
+    "grass_bb_edge": (1, 0.5, 0.5),
 }
 
 
-def tuft_cards(seed, cards):
-    rnd = random.Random(seed)
+def tuft_billboard(cell, width, height):
     pos, nor, uv, col, edge = [], [], [], [], []
-    for ang, radial, width, height in cards:
-        a = math.radians(ang + rnd.uniform(-8, 8))
-        d = (math.cos(a), math.sin(a))
-        w = width * rnd.uniform(0.9, 1.1)
-        h = height * rnd.uniform(0.9, 1.1)
-        x0, x1 = (0.0, w) if radial else (-w / 2, w / 2)
-        cell = rnd.randint(0, 1)
-        u0, u1 = cell * 0.5, cell * 0.5 + 0.5
-        if rnd.random() < 0.5:
-            u0, u1 = u1, u0  # espelha
-        shade = rnd.uniform(0.9, 1.0)
-        q = [((d[0] * x0, 0.0, d[1] * x0), (u0, 1.0)), ((d[0] * x1, 0.0, d[1] * x1), (u1, 1.0)),
-             ((d[0] * x1, h, d[1] * x1), (u1, 0.0)), ((d[0] * x0, h, d[1] * x0), (u0, 0.0))]
-        for tri in ((0, 1, 2), (0, 2, 3)):
-            for i in tri:
-                pos.append(q[i][0]); nor.append((0.0, 1.0, 0.0)); uv.append(q[i][1])
-                col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
+    u0, u1 = cell * 0.5, cell * 0.5 + 0.5
+    q = [((-width / 2, 0.0, 0.0), (u0, 1.0)), ((width / 2, 0.0, 0.0), (u1, 1.0)),
+         ((width / 2, height, 0.0), (u1, 0.0)), ((-width / 2, height, 0.0), (u0, 0.0))]
+    for tri in ((0, 1, 2), (0, 2, 3)):
+        for i in tri:
+            pos.append(q[i][0]); nor.append((0.0, 1.0, 0.0)); uv.append(q[i][1])
+            col.append((1.0, 1.0, 1.0, 1.0)); edge.append((0.0, 0.0))
     return pos, nor, uv, col, edge
 
 
@@ -366,9 +353,9 @@ def main():
         path = os.path.join(OUT_DIR, name + ".gltf")
         write_gltf(path, name, *tuft_star(*args))
         print(os.path.abspath(path))
-    for name, args in CARDS.items():
+    for name, args in BILLBOARDS.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_cards(*args))
+        write_gltf(path, name, *tuft_billboard(*args))
         print(os.path.abspath(path))
     for name, (seed, height) in SPRIGS_3D.items():
         path = os.path.join(OUT_DIR, name + ".gltf")

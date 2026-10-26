@@ -9,10 +9,9 @@
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_tuft_2d.gltf" id="tuft2d"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_star.gltf" id="star"]
 [ext_resource type="Material" path="res://assets/materials/grass_star.tres" id="mat_star"]
-[ext_resource type="PackedScene" path="res://assets/models/grass/grass_card_star.gltf" id="card_star"]
-[ext_resource type="PackedScene" path="res://assets/models/grass/grass_card_half.gltf" id="card_half"]
-[ext_resource type="PackedScene" path="res://assets/models/grass/grass_card_fan.gltf" id="card_fan"]
-[ext_resource type="Material" path="res://assets/materials/grass_card.tres" id="mat_card"]
+[ext_resource type="PackedScene" path="res://assets/models/grass/grass_bb_full.gltf" id="bb_full"]
+[ext_resource type="PackedScene" path="res://assets/models/grass/grass_bb_edge.gltf" id="bb_edge"]
+[ext_resource type="Material" path="res://assets/materials/grass_billboard.tres" id="mat_bb"]
 [ext_resource type="Material" path="res://assets/materials/grass_tuft_2d.tres" id="mat_tuft2d"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
 
@@ -56,31 +55,21 @@ last_shadow_lod = 0
 lod0_range = 45.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma4"]
-name = "Cartas estrela"
+name = "Billboard cheio"
 id = 4
-scene_file = ExtResource("card_star")
+scene_file = ExtResource("bb_full")
 cast_shadows = 0
-material_override = ExtResource("mat_card")
+material_override = ExtResource("mat_bb")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma5"]
-name = "Cartas meia estrela"
+name = "Billboard borda"
 id = 5
-scene_file = ExtResource("card_half")
+scene_file = ExtResource("bb_edge")
 cast_shadows = 0
-material_override = ExtResource("mat_card")
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 45.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma6"]
-name = "Cartas leque"
-id = 6
-scene_file = ExtResource("card_fan")
-cast_shadows = 0
-material_override = ExtResource("mat_card")
+material_override = ExtResource("mat_bb")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
@@ -97,5 +86,5 @@ albedo_texture = ExtResource("tex_dirt")
 normal_texture = ExtResource("tex_ground_n")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])
