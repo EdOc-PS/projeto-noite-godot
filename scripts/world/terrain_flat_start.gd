@@ -23,7 +23,7 @@ const GRASS_MARKER := "grass_seeded.txt"
 			_regenerate()
 
 @export_group("Grama inicial")
-@export var grass_area: float = 36.0                 ## lado do quadrado semeado (m)
+@export var grass_area: float = 50.0                 ## lado do quadrado semeado (m)
 @export var grass_spacing: float = 0.14              ## distância média entre tufos na mancha
 @export_range(-1.0, 1.0) var grass_threshold: float = 0.06  ## maior = menos manchas
 @export var grass_noise_frequency: float = 0.09      ## menor = manchas maiores
@@ -39,6 +39,11 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## Vazio = só `grass_mesh_ids` em todo lugar.
 @export var edge_mesh_ids: PackedInt32Array = []
 @export_range(0.0, 1.0) var edge_density: float = 0.5  ## abaixo dessa densidade usa os tufos de borda
+## Comparação MEIO A MEIO: se não estiver vazio, a metade x >= 0 do campo usa
+## estes tufos (sem tufo de borda) com `right_spacing`; a metade x < 0 fica com
+## `grass_mesh_ids`/`edge_mesh_ids` e `grass_spacing`.
+@export var right_mesh_ids: PackedInt32Array = []
+@export var right_spacing: float = 0.27
 ## Raminhos de folhinhas brancas (mesh 1), espalhados pouco por toda a grama.
 @export var sprig_mesh_ids: PackedInt32Array = [1]
 @export_range(0.0, 1.0) var sprig_chance: float = 0.01  ## fração dos pontos de grama que viram raminho
@@ -163,29 +168,33 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids:
+	for id in grass_mesh_ids + edge_mesh_ids + right_mesh_ids + sprig_mesh_ids:
 		per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
-	_seed_area(Vector2.ZERO, grass_area, grass_mesh_ids, rng, noise, height_noise, per_mesh, sprigs)
+	var half := grass_area / 2.0
+	if right_mesh_ids.is_empty():
+		_seed_area(Rect2(-half, -half, grass_area, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
+	else:
+		_seed_area(Rect2(-half, -half, half, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
+		_seed_area(Rect2(0.0, -half, half, grass_area), right_mesh_ids, PackedInt32Array(), right_spacing, rng, noise, height_noise, per_mesh, sprigs)
 	for id in per_mesh:
 		if not (per_mesh[id] as Array).is_empty():
 			instancer.add_transforms(id, per_mesh[id])
 
-## Semeia um quadrado de `size` m centrado em `center` com os tufos `ids`.
-func _seed_area(center: Vector2, size: float, ids: PackedInt32Array, rng: RandomNumberGenerator,
+## Semeia o retângulo `area` (x, z) com os tufos `ids` (e `edge_ids` na borda das manchas).
+func _seed_area(area: Rect2, ids: PackedInt32Array, edge_ids: PackedInt32Array, spacing: float, rng: RandomNumberGenerator,
 		noise: FastNoiseLite, height_noise: FastNoiseLite, per_mesh: Dictionary, sprigs: Array[Vector3]) -> void:
-	var half := size / 2.0
-	var x := -half
-	while x <= half:
-		var z := -half
-		while z <= half:
-			var p := Vector3(center.x + x + rng.randf_range(-0.4, 0.4) * grass_spacing, 0.0, center.y + z + rng.randf_range(-0.4, 0.4) * grass_spacing)
+	var x := area.position.x
+	while x <= area.end.x:
+		var z := area.position.y
+		while z <= area.end.y:
+			var p := Vector3(x + rng.randf_range(-0.4, 0.4) * spacing, 0.0, z + rng.randf_range(-0.4, 0.4) * spacing)
 			# densidade cresce do limite pro centro da mancha
 			var density := clampf((noise.get_noise_2d(p.x, p.z) - grass_threshold) / 0.25, 0.0, 1.0)
 			# na terra não nasce nada; no degradê a grama vai rareando
 			var dirt := _dirt_amount(p.x, p.z)
 			if dirt > 0.0 and rng.randf() < dirt * 1.6:
-				z += grass_spacing
+				z += spacing
 				continue
 			if density > 0.0 and rng.randf() < density:
 				p.y = data.get_height(p)
@@ -196,10 +205,10 @@ func _seed_area(center: Vector2, size: float, ids: PackedInt32Array, rng: Random
 				var s := rng.randf_range(grass_scale.x, grass_scale.y)
 				var b := Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s * h, s))
 				var id: int = ids[rng.randi() % ids.size()]
-				if not edge_mesh_ids.is_empty() and density < edge_density:
+				if not edge_ids.is_empty() and density < edge_density:
 					# beiradinha (metade de baixo) = último tufo de borda; rala = o primeiro
-					var k := 0 if density > edge_density * 0.5 else edge_mesh_ids.size() - 1
-					id = edge_mesh_ids[k]
+					var k := 0 if density > edge_density * 0.5 else edge_ids.size() - 1
+					id = edge_ids[k]
 				if not sprig_mesh_ids.is_empty() and rng.randf() < sprig_chance and _far_from(sprigs, p, sprig_min_distance):
 					sprigs.append(p)
 					id = sprig_mesh_ids[rng.randi() % sprig_mesh_ids.size()]
@@ -207,8 +216,8 @@ func _seed_area(center: Vector2, size: float, ids: PackedInt32Array, rng: Random
 					# ainda fica `sprig_over` mais alto
 					b = Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * h * rng.randf_range(sprig_over.x, sprig_over.y))
 				(per_mesh[id] as Array[Transform3D]).append(Transform3D(b, p))
-			z += grass_spacing
-		x += grass_spacing
+			z += spacing
+		x += spacing
 
 func _far_from(points: Array[Vector3], p: Vector3, dist: float) -> bool:
 	for q in points:

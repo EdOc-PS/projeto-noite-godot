@@ -21,17 +21,16 @@ ARC = 6  # segmentos do semicírculo da ponta
 
 TUFTS = {
     # nome: (seed, lâminas, raio, altura das lâminas (m), meia-largura)
-    "grass_tuft": (21, (14, 18), 0.24, (0.32, 0.52), (0.03, 0.05)),
+    "grass_tuft": (21, (14, 18), 0.14, (0.32, 0.52), (0.03, 0.05)),
 }
 # Cada lâmina do tufo é um CILINDRO (tubo que afina um pouco) com a ponta
 # pontuda de bico arredondado, curvando pra fora.
 CYL_SIDES = 6      # lados do tubo (mais lados = mais redondo, mais pesado)
 CYL_RINGS = 4      # anéis ao longo da altura
-CYL_RADIUS = 0.75  # raio do tubo no pé, em fração da meia-largura da lâmina (fino)
-CYL_BLADES = 0.5   # fração das lâminas do tufo de fita (lâmina gorda: menos lâminas)
-CYL_GAP = 0.07     # distância mínima entre os pés das lâminas (m): não ficam coladas
+CYL_RADIUS = 1.2   # raio do tubo no pé, em fração da meia-largura da lâmina (gordinho)
+CYL_BLADES = 0.6   # fração das lâminas do tufo de fita (lâmina gorda: menos lâminas)
 CYL_TAPER = 0.12   # quanto o tubo afina até em cima
-CYL_TIP = 4.5      # altura da ponta em raios (bem pontuda; 1 = meia esfera)
+CYL_TIP = 2.4      # altura da ponta em raios (pontuda com bico arredondado; 1 = meia esfera)
 # Shaded (como os sprites Shaded do Kenney): umas lâminas na cor cheia, outras
 # na MESMA cor mais escura. 40% das lâminas escuras, com tom 0,68–0,78.
 DARK_CHANCE = 0.4
@@ -49,19 +48,14 @@ def tuft_cyl(seed, blades, radius, height, width):
         pos.append(p); nor.append(tuple(c / l for c in n)); uv.append((0.5, 1.0 - min(t, 1.0)))
         col.append((shade, shade, shade, 1.0)); edge.append((0.0, 0.0))
 
-    feet = []
     for _ in range(max(3, round(rnd.randint(*blades) * CYL_BLADES))):
-        for _try in range(40):  # sorteia o pé longe das outras lâminas
-            a = rnd.uniform(0, math.tau)
-            d = radius * math.sqrt(rnd.random())
-            bx, bz = math.cos(a) * d, math.sin(a) * d
-            if all(math.hypot(bx - fx, bz - fz) >= CYL_GAP for fx, fz in feet):
-                break
-        feet.append((bx, bz))
+        a = rnd.uniform(0, math.tau)
+        d = radius * math.sqrt(rnd.random())
+        bx, bz = math.cos(a) * d, math.sin(a) * d
         h = rnd.uniform(*height)
         w = rnd.uniform(*width)
         rnd.uniform(0, math.tau)  # (yaw do tufo de fita: mantém o sorteio parecido)
-        lean = rnd.uniform(0.06, 0.16) if d > 1e-6 else 0.0
+        lean = rnd.uniform(0.03, 0.12) if d > 1e-6 else 0.0
         lx, lz = math.cos(a) * lean, math.sin(a) * lean
         shade = rnd.uniform(*DARK_SHADE) if rnd.random() < DARK_CHANCE else 1.0
         r0 = w * CYL_RADIUS
@@ -87,9 +81,9 @@ def tuft_cyl(seed, blades, radius, height, width):
         for j in range(1, 6):
             t = j / 5
             y = body + cap * t
-            rr = rt * (1.0 - t) ** 0.9  # cone levemente cheio: ponta fina
+            rr = rt * (1.0 - t ** 1.6) ** 0.6
             slope = cap / max(rt, 1e-4)
-            rg = [(p, (n[0], 0.4 + 0.6 * t, n[2])) for p, n in ring(y, max(rr, rt * 0.03))]
+            rg = [(p, (n[0], 0.4 + 0.6 * t, n[2])) for p, n in ring(y, max(rr, rt * 0.08))]
             rings.append((rg, y))
         for (r_a, ya), (r_b, yb) in zip(rings, rings[1:]):
             for k in range(CYL_SIDES):

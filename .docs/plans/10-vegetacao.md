@@ -175,3 +175,8 @@ Implementado:
 - Pés soltos, não em círculo: 3–4 grupinhos sorteados numa área de 0,2 m (borda 0,16 m).
 - Menos lâminas por tufo e mais tufos (2026-10-26): cheio 11 lâminas (área 0,14 m), borda 5 (0,12 m); `grass_spacing` 0,19 (era 0,27).
 - De novo (2026-10-26): cheio 7 lâminas (0,11 m), borda 3 (0,09 m); `grass_spacing` 0,14.
+
+### Campo meio a meio pra comparar (2026-10-26)
+- Campo maior: `grass_area` 50 m (era 36); flores em `area_half_size` 25.
+- Metade x < 0: tufos de lâminas chatas (7 cheio, 8 borda), `grass_spacing` 0,14. Metade x ≥ 0: tufo 3D de cilindros (mesh 0) com `right_spacing` 0,27 (`right_mesh_ids` no Terrain3D; vazio = campo todo igual).
+- Tufo 3D voltou ao formato original (antes do "mais fino e pontudo"): raio 0,14, `CYL_RADIUS` 1,2, ponta de bico arredondado `CYL_TIP` 2,4, sem `CYL_GAP`.
