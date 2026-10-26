@@ -30,8 +30,26 @@ global uniform float wind_strength;
 global uniform float wind_gust;
 global uniform vec3 player_pos;
 
+// Onda de luz dourada (mesma conta e mesmos valores do `grass_tuft.tres`, pelo
+// mundo e pelo TIME: passa pela grama e pelas flores juntas). 0 = desligado
+// (a flor branca do chão fica sem).
+uniform float shimmer_strength = 0.0;
+uniform vec3 shimmer_color : source_color = vec3(1.0, 0.93, 0.66);
+uniform float shimmer_speed = 18.0;
+uniform float shimmer_spacing = 160.0;
+uniform float shimmer_width = 22.0;
+varying vec3 v_world;
+
 float fhash(vec2 p) {
 	return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+float fnoise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(fhash(i), fhash(i + vec2(1.0, 0.0)), f.x),
+			mix(fhash(i + vec2(0.0, 1.0)), fhash(i + vec2(1.0, 1.0)), f.x), f.y);
 }
 
 void vertex() {
@@ -64,6 +82,7 @@ void vertex() {
 		push.y = -push_squash * p * w * max(VERTEX.y, 0.0);
 		VERTEX += inverse(mat3(MODEL_MATRIX)) * push;
 	}
+	v_world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
 void fragment() {
@@ -99,6 +118,17 @@ void fragment() {
 	ALPHA = a_out;
 	ALPHA_SCISSOR_THRESHOLD = alpha_cut;
 #endif
+	if (shimmer_strength > 0.0) {
+		vec2 sd = length(wind_direction) > 0.5 ? normalize(wind_direction) : normalize(vec2(1.0, 0.3));
+		float bend = (fnoise(v_world.xz * 0.03) - 0.5) * 28.0 + (fnoise(v_world.xz * 0.12 + 7.0) - 0.5) * 6.0;
+		float d = dot(v_world.xz, sd) + bend - TIME * shimmer_speed;
+		float pos = mod(d, shimmer_spacing);
+		float band = smoothstep(0.0, shimmer_width * 0.5, pos) * (1.0 - smoothstep(shimmer_width * 0.5, shimmer_width, pos));
+		float wave_id = floor(d / shimmer_spacing);
+		vec2 shift = vec2(fhash(vec2(wave_id, 1.3)), fhash(vec2(wave_id, 7.9))) * 500.0;
+		float blot = smoothstep(0.55, 0.8, fnoise(v_world.xz * 0.11 + shift) * 0.7 + fnoise(v_world.xz * 0.27 + shift + 3.0) * 0.3);
+		EMISSION += shimmer_color * band * blot * shimmer_strength;
+	}
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 }
