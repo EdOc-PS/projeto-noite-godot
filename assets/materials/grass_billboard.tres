@@ -6,9 +6,9 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_shader")
-shader_parameter/base_color = Color(0.57, 0.745, 0.004, 1)
-shader_parameter/tip_color = Color(0.76, 0.88, 0.32, 1)
-shader_parameter/mid_color = Color(0.6, 0.79, 0.1, 1)
+shader_parameter/base_color = Color(0.53, 0.7, 0.01, 1)
+shader_parameter/tip_color = Color(0.7, 0.82, 0.28, 1)
+shader_parameter/mid_color = Color(0.55, 0.73, 0.08, 1)
 shader_parameter/noise_scale = 20.0
 shader_parameter/shade_amount = 0.0
 shader_parameter/light_floor = 0.78

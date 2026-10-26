@@ -150,3 +150,8 @@ Implementado:
 - Meshes 4 `grass_bb_full` e 5 `grass_bb_edge` (um quad cada). Material `grass_billboard.tres` (`grass_body` com `billboard` + `use_sprite`): pé = verde do chão #91BE01, ponta (0.76,0.88,0.32), aquarela leve.
 - Só 2 tipos: `grass_mesh_ids` = 4 no meio, `edge_mesh_ids` = 5 onde a densidade < `edge_density`.
 - Removidas as cartas estrela/meia estrela/leque (`grass_card_*`, `grass_blades.png`).
+
+### Tufo cheio + raminho billboard (2026-10-26)
+- Por que o tufo parecia vazio de cima: uma carta só é uma faixa reta; vista de cima sobra chão em volta. Solução (pesquisa: hexaquo.at grass series parte 2 — várias lâminas/cartas por tufo em posições e alturas diferentes, pé afundado): o tufo agora tem VÁRIAS cartas billboard em lugares diferentes — cheio = 4 cartas (centro + 3 em volta, alturas variadas, espelhadas), borda = 2. Cada carta vira pra câmera em volta do PRÓPRIO centro (`UV2` = x, z do pé; shader `grass_body` `billboard`). Pé afundado 3 cm. Atlas cheio com 15–18 lâminas.
+- Cor um tiquinho mais escura: pé (0.53,0.7,0.01), ponta (0.7,0.82,0.28).
+- Raminho branco: novo `grass_sprig_bb` (mesh 6, "Raminho billboard"): o PNG `sprig_0093` (Kenney Shaded) numa carta billboard com o mesmo shader da grama (vento, jogador, `sprite_alpha` 0,85–0,95), tons brancos. O raminho 3D (mesh 1) continua guardado. `sprig_mesh_ids` = 6.

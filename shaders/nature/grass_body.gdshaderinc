@@ -98,12 +98,16 @@ void vertex() {
 	vec3 world_origin = MODEL_MATRIX[3].xyz;
 	v_rand = hash(world_origin.xz + vec2(3.1, 7.7));
 	if (billboard) {
-		// a largura da carta (x local) passa a seguir o "direita" da câmera
+		// cada carta vira pra câmera em volta do PRÓPRIO centro (UV2 = x, z do
+		// pé da carta no espaço do tufo): um tufo pode ter várias cartas em
+		// lugares diferentes, o que enche o tufo visto de cima
 		vec3 right = normalize(vec3(INV_VIEW_MATRIX[0].x, 0.0, INV_VIEW_MATRIX[0].z));
 		float sx = length(MODEL_MATRIX[0].xyz);
 		float sy = length(MODEL_MATRIX[1].xyz);
-		vec3 world_off = right * VERTEX.x * sx + vec3(0.0, VERTEX.y * sy, 0.0);
-		VERTEX = inverse(mat3(MODEL_MATRIX)) * world_off;
+		vec3 c = vec3(UV2.x, 0.0, UV2.y);
+		vec3 rel = VERTEX - c;
+		vec3 world_off = right * rel.x * sx + vec3(0.0, rel.y * sy, 0.0);
+		VERTEX = c + inverse(mat3(MODEL_MATRIX)) * world_off;
 	}
 	v_world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	float phase = TIME * sway_speed + dot(world_origin.xz, vec2(0.35, 0.21));

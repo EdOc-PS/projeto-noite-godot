@@ -195,22 +195,31 @@ def tuft_star(seed, cards, blades, half, height):
 # Normal pra cima: a luz do tufo é a mesma do chão. Dois tipos:
 #   grass_bb_full — tufo cheio (célula 0), meio das manchas
 #   grass_bb_edge — tufo ralo e baixo (célula 1), borda das manchas
+# Cada tufo tem VÁRIAS cartas em lugares diferentes (UV2 = centro da carta;
+# cada uma vira pra câmera em volta do próprio centro): visto de cima o tufo
+# fica cheio, sem buraco. O pé afunda 3 cm no chão pra não aparecer a linha reta.
 BILLBOARDS = {
-    # nome: (célula, largura (m), altura (m))
-    "grass_bb_full": (0, 0.6, 0.6),
-    "grass_bb_edge": (1, 0.5, 0.5),
+    # nome: [(célula, x, z, largura, altura, espelha)]  (célula 2 = atlas inteiro do raminho)
+    "grass_bb_full": [(0, 0.0, 0.0, 0.62, 0.6, False), (0, -0.15, -0.12, 0.5, 0.5, True),
+                      (1, 0.16, -0.08, 0.46, 0.44, False), (1, 0.02, 0.15, 0.48, 0.4, True)],
+    "grass_bb_edge": [(1, 0.0, 0.0, 0.5, 0.48, False), (1, -0.12, 0.1, 0.42, 0.38, True)],
+    "grass_sprig_bb": [(2, 0.0, 0.0, 0.5, 0.5, False)],
 }
+SINK = 0.03
 
 
-def tuft_billboard(cell, width, height):
+def tuft_billboard(cards):
     pos, nor, uv, col, edge = [], [], [], [], []
-    u0, u1 = cell * 0.5, cell * 0.5 + 0.5
-    q = [((-width / 2, 0.0, 0.0), (u0, 1.0)), ((width / 2, 0.0, 0.0), (u1, 1.0)),
-         ((width / 2, height, 0.0), (u1, 0.0)), ((-width / 2, height, 0.0), (u0, 0.0))]
-    for tri in ((0, 1, 2), (0, 2, 3)):
-        for i in tri:
-            pos.append(q[i][0]); nor.append((0.0, 1.0, 0.0)); uv.append(q[i][1])
-            col.append((1.0, 1.0, 1.0, 1.0)); edge.append((0.0, 0.0))
+    for cell, cx, cz, width, height, mirror in cards:
+        u0, u1 = (0.0, 1.0) if cell == 2 else (cell * 0.5, cell * 0.5 + 0.5)
+        if mirror:
+            u0, u1 = u1, u0
+        q = [((cx - width / 2, -SINK, cz), (u0, 1.0)), ((cx + width / 2, -SINK, cz), (u1, 1.0)),
+             ((cx + width / 2, height, cz), (u1, 0.0)), ((cx - width / 2, height, cz), (u0, 0.0))]
+        for tri in ((0, 1, 2), (0, 2, 3)):
+            for i in tri:
+                pos.append(q[i][0]); nor.append((0.0, 1.0, 0.0)); uv.append(q[i][1])
+                col.append((1.0, 1.0, 1.0, 1.0)); edge.append((cx, cz))
     return pos, nor, uv, col, edge
 
 
@@ -355,7 +364,7 @@ def main():
         print(os.path.abspath(path))
     for name, args in BILLBOARDS.items():
         path = os.path.join(OUT_DIR, name + ".gltf")
-        write_gltf(path, name, *tuft_billboard(*args))
+        write_gltf(path, name, *tuft_billboard(args))
         print(os.path.abspath(path))
     for name, (seed, height) in SPRIGS_3D.items():
         path = os.path.join(OUT_DIR, name + ".gltf")

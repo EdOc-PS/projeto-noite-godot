@@ -1,6 +1,6 @@
 """Gera o atlas dos tufos de grama BILLBOARD (carta que sempre vira pra câmera).
 Saída: assets/textures/vegetation/grass/grass_clumps.png (1024 × 512, 2 células):
-  célula 0 — tufo cheio: 11–14 lâminas em leque, pé junto, pontas abertas
+  célula 0 — tufo cheio: 15–18 lâminas em leque, pé junto, pontas abertas
   célula 1 — tufo de borda: 4–5 lâminas mais curtas e espaçadas
 Lâminas BRANCAS (a cor vem toda do shader: pé = cor do chão, ponta clara), com
 um cinza leve no pé só pra separar as lâminas. Alfa = máscara de borda suave.
@@ -27,7 +27,7 @@ def blade(rnd, x0, hmin, hmax, spread):
 def render():
     acc = [[0.0, 0.0] for _ in range(W * H)]  # (cobertura, cinza·cobertura)
     # célula: (lâminas, altura mín/máx, largura do pé, quanto abre, seed)
-    for cell, (count, hmin, hmax, base, opens, seed) in enumerate(((( 11, 14), 0.5, 0.95, 0.42, 0.9, 3), ((4, 5), 0.35, 0.7, 0.55, 0.6, 9))):
+    for cell, (count, hmin, hmax, base, opens, seed) in enumerate((((15, 18), 0.5, 0.95, 0.6, 0.9, 3), ((4, 5), 0.35, 0.7, 0.55, 0.6, 9))):
         rnd = random.Random(seed)
         n = rnd.randint(*count)
         mid = cell * CELL + CELL * 0.5
