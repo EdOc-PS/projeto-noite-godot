@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="KuwaharaMaterial"]
 shader = ExtResource("kuwa_shader")
-shader_parameter/_KernelSize = 6
+shader_parameter/_KernelSize = 12
 shader_parameter/_Hardness = 8.0
 shader_parameter/_Sharpness = 8.0
 shader_parameter/_ZeroCrossing = 0.58
