@@ -4,5 +4,6 @@
 [ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_red_stem.png" id="2_tex"]
 
 [resource]
+render_priority = 1
 shader = ExtResource("1_shader")
 shader_parameter/albedo_tex = ExtResource("2_tex")

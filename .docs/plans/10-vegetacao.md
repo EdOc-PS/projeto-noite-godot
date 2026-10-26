@@ -208,3 +208,8 @@ Implementado:
 - Ids: 3 branca, 4/5 azul (flor/caule), 6/7 rosa, 8/9 vermelha. Cada flor com caule usa o MESMO transform nas duas malhas.
 - Regras: montes de um tipo (45 montes, 4–10 flores, raio 0,9 m, pesos branca 3 : 1 : 1 : 1); com caule só onde a densidade da grama ≥ 0,8 (bem dentro); a branca só fora da grama.
 - Ajuste (2026-10-26): flor rosa fora do campo (ids 6/7 continuam no pincel); grama sem a opacidade (`fake_alpha` = false); tufo com 5 lâminas mais grossas (meia-largura 0,037–0,06; borda 0,032–0,05); menos tufos (`grass_spacing` 0,34).
+
+### Flores: borda, prioridade e movimento da grama (2026-10-26)
+- Borda nas flores (carta das flores): no `flower_card.gdshaderinc`, pixel vazio a até `outline_px` (3) pixels de uma pétala vira contorno `outline_color` (0.3,0.42,0.1). Caule sem borda.
+- `render_priority` 1 nos materiais `assets/materials/flowers/*` (só vale entre transparentes: o caule; a carta das flores é recorte opaco e fica por profundidade).
+- Movimento igual ao da grama: balanço em oval, dobra com rajada (rigidez e onda próprias por flor, `bend_limit`), jogador abre e achata — tudo pela origem de cada flor, então cada uma balança separada. Pela altura (y): flor e caule (mesmo transform) andam juntos.
