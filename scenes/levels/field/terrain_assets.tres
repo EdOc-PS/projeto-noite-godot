@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://dwr7xp8l0a501" path="res://assets/textures/terrain/grass.png" id="tex_ground"]
 [ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_tuft_2d.gltf" id="tuft2d"]
+[ext_resource type="PackedScene" path="res://assets/models/grass_old/grass_tuft_A.gltf" id="old_a"]
+[ext_resource type="PackedScene" path="res://assets/models/grass_old/grass_tuft_B.gltf" id="old_b"]
+[ext_resource type="Material" path="res://assets/materials/grass_old_tuft.tres" id="mat_old"]
 [ext_resource type="Material" path="res://assets/materials/grass_tuft_2d.tres" id="mat_tuft2d"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
 
@@ -39,6 +42,26 @@ last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
+[sub_resource type="Terrain3DMeshAsset" id="ma3"]
+name = "Tufo antigo A"
+id = 3
+scene_file = ExtResource("old_a")
+cast_shadows = 1
+material_override = ExtResource("mat_old")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
+[sub_resource type="Terrain3DMeshAsset" id="ma4"]
+name = "Tufo antigo B"
+id = 4
+scene_file = ExtResource("old_b")
+cast_shadows = 1
+material_override = ExtResource("mat_old")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 45.0
+
 [sub_resource type="Terrain3DTextureAsset" id="tex0"]
 name = "Grama"
 albedo_texture = ExtResource("tex_ground")
@@ -51,5 +74,5 @@ albedo_texture = ExtResource("tex_dirt")
 normal_texture = ExtResource("tex_ground_n")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])

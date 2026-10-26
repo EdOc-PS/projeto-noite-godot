@@ -124,3 +124,8 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 ### Tufo 2D refeito pela print (2026-10-25)
 - Lâminas em pé (abrem no máx. 5 cm), chatas, largas no pé e afinando até a ponta, curvinha suave pra frente (5 alturas por lâmina: `BLADE_T`/`BLADE_W`). 26 lâminas, 0,34–0,58 m.
 - Degradê liso sem aquarela (`paint_wobble` 0): pé verde (0.3,0.5,0.07) → meio (0.46,0.68,0.13) → ponta verde claro (0.62,0.82,0.3). Nada de amarelo vivo.
+
+### Tufo do jogo antigo (2026-10-25)
+- `assets/models/grass_old/grass_tuft_A/B.gltf` (+ .bin) copiados do projeto-noite-old (`tools/gen_models.py` de lá), sem a textura atlas (o shader pinta). Meshes 3 e 4 do pincel ("Tufo antigo A/B"), com sombra ligada (`cast_shadows` 1).
+- Material `grass_old_tuft.tres` = `grass_old.gdshader` (shader do jogo antigo) com as cores da área de teste: base (0.55,0.78,0.3) → ponta (0.88,0.96,0.58), manchas de ruído, rim, luz toon_light.
+- O terreno semeia com eles (`grass_mesh_ids` = 3, 4). Os tufos 3D (0) e 2D (2) continuam no pincel.
