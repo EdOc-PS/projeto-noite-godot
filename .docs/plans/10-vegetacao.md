@@ -186,3 +186,4 @@ Implementado:
 - `grass_iso3d_full` (mesh 9) e `grass_iso3d_edge` (mesh 10): mesmo arranjo do tufo de lâminas chatas (mesma seed: pés, curvas, pares iguais), mas cada lâmina vira um tubo de 5 lados seguindo a linha do meio, raio = meia-largura × 0,75, fechando na ponta. Material `grass_tuft.tres` (cor e borda do tufo 3D).
 - Metade x ≥ 0: `right_mesh_ids` = 9, `right_edge_mesh_ids` = 10 (novo), `right_spacing` 0,14. O tufo de cilindros antigo (mesh 0) fica guardado no pincel.
 - Ajuste (2026-10-26): `grass_area` 32 m (flores 16); metade 3D mais espaçada (`right_spacing` 0,2); tufo iso 3D mais em pé (`ISO3D_TILT` 0,4 da inclinação) e mais gordo (`ISO3D_ROUND` 1,1).
+- Metade direita de volta ao tufo de cilindros original e redondo (mesh 0: `CYL_BLADES` 0,6, `CYL_TIP` 2,4, `right_spacing` 0,27). Tufos iso 3D (9, 10) guardados no pincel.

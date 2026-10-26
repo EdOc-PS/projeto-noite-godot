@@ -115,9 +115,8 @@ top_level = true
 script = ExtResource("1_flat")
 grass_mesh_ids = PackedInt32Array(7)
 edge_mesh_ids = PackedInt32Array(8)
-right_mesh_ids = PackedInt32Array(9)
-right_edge_mesh_ids = PackedInt32Array(10)
-right_spacing = 0.2
+right_mesh_ids = PackedInt32Array(0)
+right_spacing = 0.27
 sprig_mesh_ids = PackedInt32Array(1)
 metadata/_edit_lock_ = true
 
