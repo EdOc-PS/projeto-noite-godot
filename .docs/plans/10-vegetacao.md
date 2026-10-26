@@ -135,3 +135,4 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Novo `grass_star` (mesh 3, "Tufo estrela", `tools/gen_grass_tufts.py`): 4 cartas em pé cruzando no centro (estrela de 8 pontas vista de cima), cada carta um pente de 16 lâminas finas em leque, mais altas no meio. De qualquer ângulo da câmera isométrica sempre há carta de frente: volume com poucos triângulos.
 - Material `grass_star.tres` (`grass_body`, dois lados, sem borda): verde levemente escuro no pé (0.34,0.52,0.14) → (0.5,0.67,0.2) → verde-amarelado suave (0.7,0.79,0.32), aquarela leve (`paint_wobble` 0,12).
 - Terreno semeia com ele (`grass_mesh_ids` = 3). Tufos 3D (0) e 2D (2) guardados no pincel.
+- Balanço/dobra/toque: mesmos do `grass_body` (vento global, rajada com `bend_limit`, jogador achata). `sway_height` 0,28 (tufo mais baixo: as lâminas curtas das pontas também balançam).
