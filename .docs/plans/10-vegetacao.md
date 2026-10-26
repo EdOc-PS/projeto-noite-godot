@@ -218,3 +218,4 @@ Implementado:
 - Pé da grama mais claro (2026-10-26): `base_color` (0.52,0.7,0.1), `mid_color` (0.56,0.74,0.14); ponta igual.
 - Correção (2026-10-26): o arredondado era o TOPO DA LÂMINA, não a borda. `outline_round` saiu; lâmina com topo em meia esfera (`CYL_TIP` 1, raio = √(1−t²), normais de esfera). A borda segue o topo redondo.
 - Ponta da lâmina voltou a ser fina (`CYL_TIP` 3,6). Onda de luz dourada também nas flores com caule (azul, rosa, vermelha: flor e caule, `shimmer_strength` 0,6, mesma conta e valores da grama); a branca do chão sem.
+- Ajuste (2026-10-26): topo mais redondo (`CYL_TIP` 2,6, perfil (1-t^1,8)^0,55), lâminas ~15% mais grossas (0,043-0,069; borda 0,037-0,058), menos tufos (`grass_spacing` 0,39).
