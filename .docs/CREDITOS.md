@@ -25,7 +25,7 @@ Só as nossas: `textures/terrain/grass.png` (verde liso, #91BE01), `dirt.png` (m
 
 | Pacote | Autor | Pasta | Licença |
 |---|---|---|---|
-| Foliage Sprites (`PNG/Shaded/sprite_0093` → `sprig_0093.png`; `sprite_0081/0086/0084` → folhas voando `leaf_drop/leaf_maple/leaf_lobed.png`; `sprite_0100/0101` → grama caída `litter_drops/litter_leaves.png`) | Kenney ([kenney.nl](https://www.kenney.nl)) | `textures/vegetation/`, `textures/effects/leaves/` (pacote completo em `projeto-noite_sources/textures/kenney_foliage_sprites/`) | CC0 |
+| Foliage Sprites (`PNG/Shaded/sprite_0093` → `sprig_0093.png`; `sprite_0081/0086/0084` → folhas voando `leaf_drop/leaf_maple/leaf_lobed.png`) | Kenney ([kenney.nl](https://www.kenney.nl)) | `textures/vegetation/`, `textures/effects/leaves/` (pacote completo em `projeto-noite_sources/textures/kenney_foliage_sprites/`) | CC0 |
 
 ## Shaders de terceiros
 
