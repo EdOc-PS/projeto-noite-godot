@@ -1,8 +1,8 @@
 extends GPUParticles3D
 ## Poeira no ar: bolinhas redondas e pequenas flutuando devagar (como os
 ## vagalumes do projeto antigo, mas de dia e sem brilho), levadas pelo vento.
-## O emissor segue o jogador. Com mais vento, andam mais rápido (grupo
-## `wind_fx`, controlado pelo wind.gd). Regras em .docs/plans/05-clima.md.
+## O emissor segue o jogador. Fora do grupo `wind_fx` de propósito: lá a
+## quantidade cai quase a zero no vento calmo, e a poeira tem que estar sempre. Regras em .docs/plans/05-clima.md.
 
 @export var mote_count: int = 40
 @export var area: Vector3 = Vector3(14.0, 1.2, 14.0)   ## meia-caixa em volta do jogador
@@ -15,7 +15,6 @@ extends GPUParticles3D
 var _player: Node3D
 
 func _ready() -> void:
-	add_to_group("wind_fx")
 	amount = mote_count
 	lifetime = 10.0
 	randomness = 1.0
