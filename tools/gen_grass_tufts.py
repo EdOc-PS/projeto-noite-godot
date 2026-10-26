@@ -17,16 +17,16 @@ ARC = 6  # segmentos do semicírculo da ponta
 
 TUFTS = {
     # nome: (seed, lâminas, raio, altura das lâminas (m), meia-largura)
-    "grass_tuft": (21, (14, 18), 0.14, (0.32, 0.52), (0.03, 0.05)),
+    "grass_tuft": (21, (14, 18), 0.2, (0.32, 0.52), (0.03, 0.05)),
 }
 # Cada lâmina do tufo é um CILINDRO (tubo que afina um pouco) com a ponta
 # pontuda de bico arredondado, curvando pra fora.
 CYL_SIDES = 6      # lados do tubo (mais lados = mais redondo, mais pesado)
 CYL_RINGS = 4      # anéis ao longo da altura
-CYL_RADIUS = 1.2   # raio do tubo no pé, em fração da meia-largura da lâmina (gordinho)
+CYL_RADIUS = 0.75  # raio do tubo no pé, em fração da meia-largura da lâmina (fino)
 CYL_BLADES = 0.6   # fração das lâminas do tufo de fita (lâmina gorda: menos lâminas)
 CYL_TAPER = 0.12   # quanto o tubo afina até em cima
-CYL_TIP = 2.4      # altura da ponta em raios (pontuda com bico arredondado; 1 = meia esfera)
+CYL_TIP = 4.5      # altura da ponta em raios (bem pontuda; 1 = meia esfera)
 # Shaded (como os sprites Shaded do Kenney): umas lâminas na cor cheia, outras
 # na MESMA cor mais escura. 40% das lâminas escuras, com tom 0,68–0,78.
 DARK_CHANCE = 0.4
@@ -77,9 +77,9 @@ def tuft_cyl(seed, blades, radius, height, width):
         for j in range(1, 6):
             t = j / 5
             y = body + cap * t
-            rr = rt * (1.0 - t ** 1.6) ** 0.6
+            rr = rt * (1.0 - t) ** 0.9  # cone levemente cheio: ponta fina
             slope = cap / max(rt, 1e-4)
-            rg = [(p, (n[0], 0.4 + 0.6 * t, n[2])) for p, n in ring(y, max(rr, rt * 0.08))]
+            rg = [(p, (n[0], 0.4 + 0.6 * t, n[2])) for p, n in ring(y, max(rr, rt * 0.03))]
             rings.append((rg, y))
         for (r_a, ya), (r_b, yb) in zip(rings, rings[1:]):
             for k in range(CYL_SIDES):

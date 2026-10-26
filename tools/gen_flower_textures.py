@@ -18,10 +18,10 @@ STEM_DARK = (0.36, 0.53, 0.08)
 # tipo: (cor das pétalas, cor do miolo, formato, raio da flor em px, n de flores,
 #        altura do topo das flores na imagem (0 = topo, 1 = base))
 KINDS = {
-    "white": ((0.97, 0.97, 0.93), (0.95, 0.88, 0.55), "daisy", 9, (7, 11), (0.55, 0.8)),     # branca baixinha, quase rente ao chão, muitas
-    "blue": ((0.56, 0.68, 0.96), (0.98, 0.9, 0.55), "daisy", 12, (4, 7), (0.2, 0.45)),       # azul, com caule
-    "pink": ((0.98, 0.66, 0.78), (0.98, 0.9, 0.55), "daisy", 13, (4, 6), (0.1, 0.4)),        # rosa, com caule
-    "red": ((0.94, 0.52, 0.5), (0.86, 0.42, 0.42), "spike", 13, (4, 6), (0.04, 0.35)),       # vermelho pastel em espiga reta
+    "white": ((0.97, 0.97, 0.93), (0.95, 0.88, 0.55), "daisy", 13, (6, 9), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
+    "blue": ((0.56, 0.68, 0.96), (0.98, 0.9, 0.55), "daisy", 16, (4, 7), (0.12, 0.4)),       # azul, com caule
+    "pink": ((0.98, 0.66, 0.78), (0.98, 0.9, 0.55), "daisy", 17, (4, 6), (0.06, 0.35)),        # rosa, com caule
+    "red": ((0.94, 0.52, 0.5), (0.86, 0.42, 0.42), "spike", 16, (4, 6), (0.04, 0.3)),       # vermelho pastel em espiga reta
 }
 
 

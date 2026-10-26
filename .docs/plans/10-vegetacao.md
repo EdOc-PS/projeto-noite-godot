@@ -82,3 +82,7 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - Tipos: **branca baixinha** (quase rente ao chão, a mais comum: 3 de 6 montes), **azul** com caule, **rosa** com caule e **vermelho pastel em espiga reta**. Caule no verde da grama.
 - **Onde nascem** (`placement`): a **branca baixinha só no chão** (fora da grama); **azul, rosa e vermelha só no meio da grama**. A grama é a mesma mancha de ruído da semeadura (seed 11, frequência 0,09, limite 0,06).
 - **Montes de um tipo só** (nunca misturar cores no mesmo monte): 45 montes em 36 × 36 m. Altura por tipo (`size_scales`: branca 0,45, azul/rosa 0,75, vermelha 0,85).
+
+### Ajuste 2026-10-25
+- Flores maiores (flor e caule): `size_scales` 0,7 (branca) / 1,15 (azul, rosa) / 1,3 (vermelha). A branca fica colada no chão (flores a 84–92% da altura da carta, caule escondido).
+- Tufo de grama mais fino e pontudo: `CYL_RADIUS` 0,75, `CYL_TIP` 4,5 (ponta em cone fino), lâminas espalhadas num raio de 0,2 m (menos coladas).
