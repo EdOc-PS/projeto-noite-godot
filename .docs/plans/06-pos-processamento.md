@@ -81,4 +81,5 @@ Testado e desfeito (visual piorou): transparência pontilhada (alpha hash), cili
 
 ## Aquarela viva (2026-10-26) — campo
 - `Environment`: tonemap **AgX** (`tonemap_mode` 4), saturação 1,3, **SSIL** ligado (raio 3, intensidade 0,8 — opcional: desligar `ssil_enabled` se o FPS cair; é o efeito mais pesado).
-- `paint_post.gdshader` (cena `scenes/vfx/paint_post.tscn`, CanvasLayer 1), em ordem: pincelada Kuwahara (`paint_amount` 0,85, raio 2) → borda escurecida da aquarela (`edge_darken` 0,35, largura 1,5 px; a tinta acumula: escurece e satura) → cor viva (sombras × `shadow_tint` azul, luzes × `light_tint` quente, `tint_amount` 0,6) → papel de aquarela procedural fixo na tela (grão + manchas + fibras, `paper_amount` 0,12). Nitidez desligada (brigava com a aquarela); saturação do shader 1 (a principal fica no Environment).
+- `paint_post.gdshader` (cena `scenes/vfx/paint_post.tscn`, CanvasLayer 1), em ordem: pincelada Kuwahara (`paint_amount` 0,85, raio 2) → borda escurecida da aquarela (`edge_darken` 0,35, largura 1,5 px; a tinta acumula: escurece e satura) → cor viva (sombras × `shadow_tint` azul, luzes × `light_tint` quente, `tint_amount` 0,6). Nitidez desligada (brigava com a aquarela); saturação do shader 1 (a principal fica no Environment).
+- Papel de aquarela removido (2026-10-26).

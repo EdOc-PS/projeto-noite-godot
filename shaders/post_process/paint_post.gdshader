@@ -3,8 +3,7 @@
 //  1. pincelada (Kuwahara: cada pixel vira a média do quadrante com menos
 //     variação → manchas de tinta, bordas mantidas);
 //  2. borda escurecida: onde uma cor encontra outra a tinta acumula e escurece;
-//  3. cor viva: sombras puxadas pro azul, luzes pro amarelo quente;
-//  4. textura de papel de aquarela (granulação + fibras), fixa na tela.
+//  3. cor viva: sombras puxadas pro azul, luzes pro amarelo quente.
 // Regras: .docs/plans/06-pos-processamento.md.
 shader_type canvas_item;
 
@@ -25,32 +24,8 @@ uniform vec3 shadow_tint : source_color = vec3(0.86, 0.92, 1.08);   // sombras p
 uniform vec3 light_tint : source_color = vec3(1.06, 1.02, 0.9);     // luzes pro amarelo quente
 uniform float tint_amount : hint_range(0.0, 1.0) = 0.6;
 
-group_uniforms papel;
-uniform float paper_amount : hint_range(0.0, 0.5) = 0.12;  // 10–15%: bem leve
-uniform float paper_scale = 1.0;                            // maior = grão mais fino
-
 group_uniforms nitidez;
 uniform float sharpen : hint_range(0.0, 1.0) = 0.0;
-
-float h21(vec2 p) {
-	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-}
-
-float vnoise(vec2 p) {
-	vec2 i = floor(p);
-	vec2 f = fract(p);
-	f = f * f * (3.0 - 2.0 * f);
-	return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), f.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), f.x), f.y);
-}
-
-// papel: grão miúdo + manchas largas + fibras compridas (ruído esticado)
-float paper(vec2 frag) {
-	vec2 p = frag * paper_scale;
-	float grain = h21(floor(p));
-	float blot = vnoise(p / 90.0) * 0.6 + vnoise(p / 30.0) * 0.4;
-	float fiber = vnoise(vec2(p.x / 3.0, p.y / 40.0)) * 0.5 + vnoise(vec2(p.x / 45.0, p.y / 2.5)) * 0.5;
-	return grain * 0.35 + blot * 0.4 + fiber * 0.25;  // ~0..1, média 0,5
-}
 
 vec3 kuwahara(vec2 uv, vec2 px) {
 	vec3 best = vec3(0.0);
@@ -113,8 +88,5 @@ void fragment() {
 	vec3 tint = mix(shadow_tint, light_tint, smoothstep(0.15, 0.75, lum));
 	col = mix(col, col * tint, tint_amount);
 	col = mix(vec3(luma(col)), col, saturation);
-	// papel: multiplica em volta de 1 (o claro clareia, o escuro escurece de leve)
-	float pp = paper(FRAGCOORD.xy);
-	col *= 1.0 + (pp - 0.5) * 2.0 * paper_amount;
 	COLOR = vec4(clamp(col, 0.0, 1.0), 1.0);
 }
