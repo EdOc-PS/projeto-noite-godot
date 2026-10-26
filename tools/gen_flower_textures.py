@@ -126,7 +126,7 @@ def make_stems(kind, seed):
         tx = bx + rng.uniform(-0.1, 0.1) * S
         mx = (bx + tx) / 2 + rng.uniform(-0.05, 0.05) * S
         stems.append((bx, S - 1, mx, (S + top_y) / 2, tx, top_y))
-    w = 1.6 * SS
+    w = 2.6 * SS  # caule mais grosso
     acc = [0.0] * (N * N * 4)
     for y in range(int(top_y) - 2, S):
         for x in range(S):

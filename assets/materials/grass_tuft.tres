@@ -31,7 +31,6 @@ shader_parameter/rim_glow = 0.35
 shader_parameter/backlight = 0.6
 shader_parameter/edge_amount = 0.0
 shader_parameter/edge_softness = 1.6
-shader_parameter/sprite_alpha = Vector2(0.8, 0.8)
 shader_parameter/alpha_by_height = false
 shader_parameter/shimmer_strength = 0.6
 shader_parameter/shimmer_speed = 18.0

@@ -24,7 +24,7 @@ const GRASS_MARKER := "grass_seeded.txt"
 
 @export_group("Grama inicial")
 @export var grass_area: float = 36.0                 ## lado do quadrado semeado (m)
-@export var grass_spacing: float = 0.26              ## distância média entre tufos na mancha
+@export var grass_spacing: float = 0.27              ## distância média entre tufos na mancha
 @export_range(-1.0, 1.0) var grass_threshold: float = 0.06  ## maior = menos manchas
 @export var grass_noise_frequency: float = 0.09      ## menor = manchas maiores
 ## Regras de tamanho: .docs/plans/10-vegetacao.md. A altura NÃO pode esticar

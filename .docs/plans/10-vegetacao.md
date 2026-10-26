@@ -96,3 +96,8 @@ Regras de como a vegetação é feita e posta. Recomeço do zero: só a grama po
 - `grass_spacing` de volta a 0,26 e borda de volta (`next_pass`).
 - Lâminas dentro do tufo menos coladas: pés a no mínimo 7 cm (`CYL_GAP`), raio do tufo 0,24 m, menos lâminas (`CYL_BLADES` 0,5), mais inclinadas pra fora.
 - Branca maior: `size_scales` 0,95.
+
+### Ajuste 2026-10-25 (4)
+- Tufo opaco de novo (tirado o teste de opacidade 0,8); `grass_spacing` 0,27.
+- Flores com caule: CADA flor (não só o centro do monte) precisa estar `grass_margin` (0,12) pra dentro da mancha de grama, onde ela é densa e alta; o caule não aparece mais na borda.
+- Caule das flores mais grosso (2,6 px).

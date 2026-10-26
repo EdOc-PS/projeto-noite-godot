@@ -34,6 +34,8 @@ const TOP_SIZE := 0.8    ## lado da carta deitada (fração da altura do tufo)
 @export var grass_seed: int = 11
 @export var grass_frequency: float = 0.09
 @export var grass_threshold: float = 0.06
+## Quanto pra dentro da mancha de grama as flores com caule ficam (maior = mais pro meio, onde a grama é densa e alta).
+@export var grass_margin: float = 0.12
 
 var _avoid: Array[Rect2] = []
 var _grass_noise := FastNoiseLite.new()
@@ -62,7 +64,7 @@ func _ready() -> void:
 		var found := false
 		for _try in 30:  # sorteia até cair no lugar certo (chão ou grama)
 			center = Vector3(rng.randf_range(-area_half_size, area_half_size), 0.0, rng.randf_range(-area_half_size, area_half_size))
-			var g := _in_grass(global_position + center)
+			var g := _in_grass(global_position + center, grass_margin if mode == 2 else 0.05)
 			if mode == 0 or (mode == 1 and not g) or (mode == 2 and g):
 				found = true
 				break
@@ -74,6 +76,12 @@ func _ready() -> void:
 			var a := rng.randf() * TAU
 			var q := center + Vector3(cos(a) * r, 0.0, sin(a) * r)
 			if _blocked(global_position + q):
+				continue
+			# flor com caule: cada uma tem que ficar BEM dentro da grama (nada de
+			# caule aparecendo na borda da mancha); a baixinha, bem fora dela
+			if mode == 2 and not _in_grass(global_position + q, grass_margin):
+				continue
+			if mode == 1 and _in_grass(global_position + q, -0.02):
 				continue
 			# mais baixinhas na borda do monte, mais altas no meio
 			var s := rng.randf_range(size_range.x, size_range.y) * lerpf(1.0, 0.75, r / clump_radius)
@@ -107,8 +115,8 @@ func _material(tex: Texture2D, flat: bool) -> ShaderMaterial:
 	return mat
 
 ## Mesma conta da semeadura: tem grama onde o ruído passa do limite.
-func _in_grass(p: Vector3) -> bool:
-	return _grass_noise.get_noise_2d(p.x, p.z) > grass_threshold + 0.05
+func _in_grass(p: Vector3, margin: float = 0.05) -> bool:
+	return _grass_noise.get_noise_2d(p.x, p.z) > grass_threshold + margin
 
 func _collect_rects(n: Node) -> void:
 	if n is MeshInstance3D:
