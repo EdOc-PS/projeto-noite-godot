@@ -32,6 +32,7 @@ Só as nossas: `textures/terrain/grass.png` (verde liso, #91BE01), `dirt.png` (m
 | Shader | Autor | Onde | Licença |
 |---|---|---|---|
 | Stylized Grass (cor da grama) | StayAtHomeDev | adaptado em `shaders/nature/grass_body.gdshaderinc` | MIT — texto em `.docs/licencas/stylized_grass_LICENSE.txt` |
+| Generalized Kuwahara (pincelada da aquarela) | Firerabbit, porte do original de Acerola ([godotshaders](https://godotshaders.com/shader/generalized-kuwahara/)) | `shaders/post_process/generalized_kuwahara.gdshader` | MIT — texto em `.docs/licencas/generalized_kuwahara_LICENSE.txt` |
 
 ## Plugins (`addons/`)
 
