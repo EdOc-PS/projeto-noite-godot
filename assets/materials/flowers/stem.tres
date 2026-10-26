@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3]
 
 [ext_resource type="Shader" path="res://shaders/nature/flower_stem.gdshader" id="1_shader"]
-[ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_red_stem.png" id="2_tex"]
+[ext_resource type="Texture2D" path="res://assets/textures/vegetation/flowers/flowers_stem.png" id="2_tex"]
 
 [resource]
 render_priority = 1

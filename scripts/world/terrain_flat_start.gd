@@ -49,8 +49,8 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## Flores no pincel do Terrain3D (aparecem no editor e no jogo). Cada tipo:
 ## carta deitada das flores (`flower_head_ids`) + caules (`flower_stem_ids`,
 ## -1 = sem caule, rente ao chão). Montes de um tipo só (10-vegetacao.md).
-@export var flower_head_ids: PackedInt32Array = [3, 4, 8]   ## branca, azul, vermelha (a rosa, 6/7, saiu do campo; fica no pincel)
-@export var flower_stem_ids: PackedInt32Array = [-1, 5, 9]
+@export var flower_head_ids: PackedInt32Array = [3, 4, 7]   ## branca, azul, vermelha (a rosa, 6, saiu do campo; fica no pincel)
+@export var flower_stem_ids: PackedInt32Array = [-1, 5, 5]   ## 5 = caule universal
 @export var flower_scales: PackedFloat32Array = [1.3, 1.15, 1.3]
 @export var flower_weights: PackedFloat32Array = [3.0, 1.0, 1.0]  ## chance de cada tipo por monte
 ## true = só BEM dentro da grama (densidade >= `flower_in_grass_density`); false = só fora dela
@@ -60,6 +60,9 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var flower_clump_size: Vector2i = Vector2i(4, 10)
 @export var flower_clump_radius: float = 0.9
 @export var flower_size: Vector2 = Vector2(0.8, 1.25)
+## Raio do desenho das flores na carta (fração da escala): duas cartas nunca
+## ficam mais perto que a soma dos raios (flor nunca dentro de outra flor).
+@export var flower_spread: float = 0.34
 @export_group("")
 ## Manchas de TERRA (textura 1) pintadas sozinhas no chão: formas irregulares
 ## (não círculos perfeitos), com degradê largo pra grama na borda. Dentro
@@ -234,6 +237,7 @@ func _seed_area(area: Rect2, ids: PackedInt32Array, edge_ids: PackedInt32Array, 
 func _seed_flowers(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite, per_mesh: Dictionary) -> void:
 	if flower_head_ids.is_empty():
 		return
+	var placed: Array[Vector3] = []  # (x, z, raio) de todas as flores já postas
 	var total := 0.0
 	for w in flower_weights:
 		total += w
@@ -261,6 +265,15 @@ func _seed_flowers(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite
 			if not _flower_spot_ok(k, q, noise):
 				continue
 			var sc := rng.randf_range(flower_size.x, flower_size.y) * lerpf(1.0, 0.75, r / flower_clump_radius) * flower_scales[k]
+			var rad := sc * flower_spread
+			var free := true
+			for o in placed:
+				if Vector2(q.x - o.x, q.y - o.y).length() < rad + o.z:
+					free = false
+					break
+			if not free:
+				continue
+			placed.append(Vector3(q.x, q.y, rad))
 			var p := Vector3(q.x, 0.0, q.y)
 			p.y = data.get_height(p)
 			var t := Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * sc), p)

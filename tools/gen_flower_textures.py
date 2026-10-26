@@ -1,11 +1,11 @@
 """Gera os PNGs das florzinhas do campo (estilo BotW: tufos de flores em tons
 pastel). A câmera é isométrica (de cima), então as flores ficam numa carta
 DEITADA, viradas pra cima: flowers_<tipo>.png são as cabeças vistas de cima.
-Os tipos com caule ganham flowers_<tipo>_stem.png (só caules, cartas cruzadas
-em pé até a altura HEAD). Shader: shaders/nature/flower_card.gdshader. Regras: .docs/plans/10-vegetacao.md.
+Os tipos com caule usam UM caule universal, flowers_stem.png (só caules, cartas
+cruzadas em pé até a altura HEAD). Shader: shaders/nature/flower_card.gdshader. Regras: .docs/plans/10-vegetacao.md.
 
 Uso: python tools/gen_flower_textures.py
-Saída: assets/textures/vegetation/flowers/flowers_<tipo>.png (+ _stem.png)
+Saída: assets/textures/vegetation/flowers/flowers_<tipo>.png + flowers_stem.png
 """
 import math, os, random, struct, zlib
 
@@ -116,11 +116,11 @@ def make_top(kind, seed):
     return _pack(acc)
 
 
-def make_stems(kind, seed):
+def make_stems(seed):
     """Só os caules (carta em pé), do chão até HEAD, onde a carta deitada das flores fica."""
     rng = random.Random(seed)
     S = N * SS
-    n = rng.randint(*KINDS[kind][4])
+    n = rng.randint(4, 6)
     top_y = S * (1.0 - HEAD)
     stems = []
     for i in range(n):
@@ -143,11 +143,10 @@ def make_stems(kind, seed):
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
+    path = os.path.join(OUT, "flowers_stem.png")  # caule universal (todas as flores com caule)
+    write_png(path, N, N, make_stems(201))
+    print("ok:", path)
     for j, kind in enumerate(KINDS):
         path = os.path.join(OUT, f"flowers_{kind}.png")
         write_png(path, N, N, make_top(kind, 100 + j))
         print("ok:", path)
-        if kind != "white":  # a branca é rente ao chão: sem caule
-            path = os.path.join(OUT, f"flowers_{kind}_stem.png")
-            write_png(path, N, N, make_stems(kind, 200 + j))
-            print("ok:", path)
