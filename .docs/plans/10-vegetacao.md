@@ -199,3 +199,5 @@ Implementado:
 - Cor (a do tufo de lâminas chatas): pé (0.4,0.58,0.05) → (0.48,0.66,0.1) → ponta (0.6,0.76,0.2), aquarela 0,1.
 - Opacidade igual à do raminho: `sprite_alpha` 0,4–0,5 sorteada por tufo (`SPRITE_ALPHA`), inclusive na borda (`grass_outline` com o mesmo sorteio).
 - Campo: `grass_area` 26 m, `grass_spacing` 0,27; flores `area_half_size` 13.
+- Correção (2026-10-26): a transparência de verdade piscava claro/escuro andando (o Terrain3D ordena os blocos de grama transparentes por distância e a ordem troca). Agora a grama é OPACA com transparência falsa (`fake_alpha` no `grass_body`): a cor (e a da borda) é misturada com a cor do chão (`ground_color` #91BE01) pela mesma opacidade sorteada por tufo (`sprite_alpha` 0,4–0,5). O raminho continua transparente de verdade (são poucos).
+- Raminho só no meio das manchas: `sprig_min_density` 0,7 (antes podia nascer na beirada rala, longe da grama).

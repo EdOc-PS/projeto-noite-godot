@@ -40,3 +40,4 @@ shader_parameter/shimmer_spacing = 160.0
 shader_parameter/shimmer_width = 22.0
 shader_parameter/paint_wobble = 0.1
 shader_parameter/sprite_alpha = Vector2(0.4, 0.5)
+shader_parameter/fake_alpha = true

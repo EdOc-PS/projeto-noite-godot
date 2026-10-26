@@ -35,6 +35,12 @@ uniform bool use_sprite = false;
 uniform sampler2D sprite : source_color, filter_linear_mipmap, repeat_disable;
 uniform float alpha_cut : hint_range(0.0, 1.0) = 0.5;
 uniform bool alpha_by_height = false;
+// Transparência FALSA (material opaco): mistura a cor com a do chão pela
+// opacidade sorteada por planta (`sprite_alpha`). Transparência de verdade
+// piscava claro/escuro andando (o Terrain3D ordena os blocos de grama
+// transparentes por distância e a ordem troca com a câmera).
+uniform bool fake_alpha = false;
+uniform vec3 ground_color : source_color = vec3(0.569, 0.745, 0.004);
 uniform vec2 sprite_alpha = vec2(1.0, 1.0);  // opacidade do sprite, sorteada por raminho entre x e y
 // Carta virada sempre pra câmera, girando só no eixo Y (raminho).
 uniform bool billboard = false;
@@ -214,6 +220,12 @@ void fragment() {
 	ALBEDO = outline_color;
 	EMISSION = vec3(0.0);
 #endif
+	// depois da borda: o tufo e a borda dele somem juntos no chão
+	if (fake_alpha) {
+		float fa = mix(sprite_alpha.x, sprite_alpha.y, v_rand);
+		ALBEDO = mix(ground_color, ALBEDO, fa);
+		EMISSION *= fa;
+	}
 }
 
 void light() {

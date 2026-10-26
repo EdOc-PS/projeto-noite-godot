@@ -43,6 +43,7 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var sprig_mesh_ids: PackedInt32Array = [1]
 @export_range(0.0, 1.0) var sprig_chance: float = 0.01  ## fração dos pontos de grama que viram raminho
 @export var sprig_min_distance: float = 3.0  ## distância mínima entre raminhos (m)
+@export_range(0.0, 1.0) var sprig_min_density: float = 0.7  ## raminho só no meio da mancha (grama densa em volta), nunca na beirada
 @export var sprig_over: Vector2 = Vector2(1.45, 1.65)  ## escala do raminho (×altura da grama no lugar)
 ## Manchas de TERRA (textura 1) pintadas sozinhas no chão: formas irregulares
 ## (não círculos perfeitos), com degradê largo pra grama na borda. Dentro
@@ -200,7 +201,7 @@ func _seed_area(area: Rect2, ids: PackedInt32Array, edge_ids: PackedInt32Array, 
 					# beiradinha (metade de baixo) = último tufo de borda; rala = o primeiro
 					var k := 0 if density > edge_density * 0.5 else edge_ids.size() - 1
 					id = edge_ids[k]
-				if not sprig_mesh_ids.is_empty() and rng.randf() < sprig_chance and _far_from(sprigs, p, sprig_min_distance):
+				if not sprig_mesh_ids.is_empty() and density >= sprig_min_density and rng.randf() < sprig_chance and _far_from(sprigs, p, sprig_min_distance):
 					sprigs.append(p)
 					id = sprig_mesh_ids[rng.randi() % sprig_mesh_ids.size()]
 					# sempre acima da grama em volta: cresce junto com os tufos (h) e
