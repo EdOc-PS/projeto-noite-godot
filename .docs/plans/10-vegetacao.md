@@ -235,3 +235,4 @@ Implementado:
 ### Arbusto do Stylized Nature no Terrain3D (2026-10-27)
 - Escolhido o `Bush_Common` (Quaternius); os arbustos feito do zero e do PNG saíram (modelos, materiais, cenas, `bush.gd`, `gen_bushes.py`). O nó `Bushes` saiu: o arbusto é a mesh 8 "Arbusto" do pincel do Terrain3D (projeta sombra), semeado por `_seed_bushes` (14, a ≥ 3,5 m um do outro, escala 0,7–1,1, fora do meio denso da grama).
 - Material `bush_pack.tres`: paleta Kenney, borda pelo recorte das folhas (`sprite_outline_px` 5, cor #126A54). Jogador passando: NÃO amassa (`push_squash` 0), só inclina pro lado (`push_strength` 0,14).
+- Flor azul sem o miolo amarelo (2026-10-27): miolo na mesma cor da pétala.
