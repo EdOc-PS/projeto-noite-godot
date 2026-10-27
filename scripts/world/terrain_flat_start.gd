@@ -22,6 +22,11 @@ const GRASS_MARKER := "grass_seeded.txt"
 		if v and Engine.is_editor_hint() and is_inside_tree():
 			_regenerate()
 
+@export_group("Relevo")
+## 0 = chão plano. Maior = morros (altura máxima em metros), por ruído suave.
+@export var hill_height: float = 0.0
+@export var hill_frequency: float = 0.025   ## menor = morros mais largos
+@export var hill_seed: int = 3
 @export_group("Grama inicial")
 @export var grass_area: float = 26.0                 ## lado do quadrado semeado (m)
 @export var grass_spacing: float = 0.39             ## distância média entre tufos na mancha
@@ -91,14 +96,12 @@ func _ready() -> void:
 		# import só criava a região de um quadrante e a grama em x/z positivos
 		# não tinha onde nascer
 		var rs := float(get_region_size()) * get_vertex_spacing()
-		var height := Image.create_empty(get_region_size(), get_region_size(), false, Image.FORMAT_RF)
-		height.fill(Color(0, 0, 0))
 		var images: Array[Image] = []
 		images.resize(Terrain3DRegion.TYPE_MAX)
-		images[Terrain3DRegion.TYPE_HEIGHT] = height
 		_make_dirt_patches()
 		for rx in [-1, 0]:
 			for rz in [-1, 0]:
+				images[Terrain3DRegion.TYPE_HEIGHT] = _height_image(Vector2(rx * rs, rz * rs))
 				images[Terrain3DRegion.TYPE_CONTROL] = _control_image(Vector2(rx * rs, rz * rs))
 				data.import_images(images, Vector3(rx * rs, 0, rz * rs), 0.0, 1.0)
 		changed = true
@@ -113,6 +116,24 @@ func _ready() -> void:
 		changed = true
 	if changed:
 		data.save_directory(data_directory)
+
+## Altura de uma região: plana, ou morros suaves (`hill_height` > 0).
+func _height_image(origin: Vector2) -> Image:
+	var n := get_region_size()
+	var img := Image.create_empty(n, n, false, Image.FORMAT_RF)
+	if hill_height <= 0.0:
+		img.fill(Color(0, 0, 0))
+		return img
+	var noise := FastNoiseLite.new()
+	noise.seed = hill_seed
+	noise.frequency = hill_frequency
+	noise.fractal_octaves = 3
+	var sp := get_vertex_spacing()
+	for y in n:
+		for x in n:
+			var h := (noise.get_noise_2d(origin.x + x * sp, origin.y + y * sp) + 1.0) * 0.5
+			img.set_pixel(x, y, Color(h * h * hill_height, 0, 0))  # h²: vales largos, morros redondos
+	return img
 
 ## Assinatura dos valores da semeadura: o texto do script + os exports.
 func _signature() -> String:

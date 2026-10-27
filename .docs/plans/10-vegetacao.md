@@ -237,3 +237,8 @@ Implementado:
 - Material `bush_pack.tres`: paleta Kenney, borda pelo recorte das folhas (`sprite_outline_px` 5, cor #126A54). Jogador passando: NÃO amassa (`push_squash` 0), só inclina pro lado (`push_strength` 0,14).
 - Flor azul sem o miolo amarelo (2026-10-27): miolo na mesma cor da pétala.
 - Flor branca do chão (2026-10-27): virou folhinhas em GOTA iguais às do raminho branco (forma `drop` no `gen_flower_textures.py`), 5–7 em CÍRCULO apontando pra fora, Shaded. Folhas no vento ganham também branco. Sombra de nuvem: 2 nuvens (era 3).
+- Flor branca do chão (2026-10-27): mesmo formato das azuis/vermelhas (`daisy`), em círculo, Shaded, sem borda.
+
+### Cenário de teste com relevo (2026-10-27) — `scenes/levels/field_hills/field_hills.tscn`
+- Cópia do field com morros: `terrain_flat_start.gd` ganhou o grupo "Relevo" (`hill_height` m, `hill_frequency`, `hill_seed`; 0 = plano, o field continua plano). Altura = ruído suave (3 oitavas) ao quadrado × `hill_height` (5 m): vales largos, morros redondos. Dados próprios em `scenes/levels/field_hills/terrain_data` (não mexe no do field).
+- Sem o chão infinito plano (WorldBoundary): colisão do próprio Terrain3D. Jogador nasce a 8 m e cai no terreno.
