@@ -4,8 +4,6 @@
 [ext_resource type="Script" uid="uid://c1aky232pgoqv" path="res://scripts/camera/isometric_camera.gd" id="2_cam"]
 [ext_resource type="Script" uid="uid://c6aexk83wb2jm" path="res://scripts/weather/wind.gd" id="4_wind"]
 [ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="6_player"]
-[ext_resource type="PackedScene" path="res://scenes/vfx/tilt_shift.tscn" id="8_tilt"]
-[ext_resource type="PackedScene" path="res://scenes/vfx/paint_post.tscn" id="9_paint"]
 [ext_resource type="Script" uid="uid://cwu8o08xhd4eo" path="res://scripts/weather/wind_leaves.gd" id="10_leaves"]
 [ext_resource type="Script" uid="uid://eraj037bwjjr" path="res://scripts/weather/wind_streaks.gd" id="11_streaks"]
 [ext_resource type="Script" uid="uid://bx3qh3ajlyfyd" path="res://scripts/weather/ground_fog.gd" id="12_haze"]
@@ -17,6 +15,7 @@
 [ext_resource type="PackedScene" path="res://scenes/props/bushes/bush_blob.tscn" id="bush_blob"]
 [ext_resource type="PackedScene" path="res://scenes/props/bushes/bush_card.tscn" id="bush_card"]
 [ext_resource type="PackedScene" path="res://scenes/props/bushes/bush_pack.tscn" id="bush_pack"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/tilt_shift.tscn" id="8_tilt"]
 [sub_resource type="ProceduralSkyMaterial" id="skymat"]
 sky_top_color = Color(0.38, 0.6, 0.9, 1)
 sky_horizon_color = Color(0.75, 0.85, 0.95, 1)
@@ -28,27 +27,21 @@ sky_material = SubResource("skymat")
 [sub_resource type="Environment" id="env"]
 background_mode = 2
 sky = SubResource("sky")
-ambient_light_source = 3
-tonemap_mode = 4
+ambient_light_source = 2
+ambient_light_color = Color(0.66, 0.66, 0.86, 1)
+ambient_light_energy = 1.15
+tonemap_mode = 0
 ssao_enabled = true
-ssao_radius = 1.2
-ssao_intensity = 1.6
-ssao_power = 1.3
-ssao_light_affect = 0.15
-ssil_enabled = true
-ssil_radius = 3.0
-ssil_intensity = 0.8
+ssao_radius = 1.6
+ssao_intensity = 2.4
+ssao_power = 1.2
+ssao_detail = 0.6
+ssao_light_affect = 0.2
 glow_enabled = true
-glow_intensity = 0.4
-glow_bloom = 0.05
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-volumetric_fog_length = 26.0
-volumetric_fog_detail_spread = 1.5
-volumetric_fog_ambient_inject = 0.6
-volumetric_fog_sky_affect = 0.0
+glow_intensity = 0.15
+glow_bloom = 0.0
 adjustment_enabled = true
-adjustment_saturation = 1.45
+adjustment_saturation = 1.0
 
 [sub_resource type="Gradient" id="Gradient_17idt"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -100,12 +93,12 @@ environment = SubResource("env")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1973918932]
 transform = Transform3D(0.86601907, -0.43302146, 0.25000688, 0, 0.5000028, 0.8660238, -0.500011, -0.74999315, 0.43301192, -11.793602, 10, -7.0998535)
-light_color = Color(1, 0.96, 0.88, 1)
-light_volumetric_fog_energy = 1.6
-light_angular_distance = 2.5
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 1.35
+light_angular_distance = 4.0
 shadow_enabled = true
-shadow_opacity = 0.75
-shadow_blur = 1.5
+shadow_opacity = 0.6
+shadow_blur = 2.5
 
 [node name="Terrain3D" type="Terrain3D" parent="." unique_id=325447439]
 data_directory = "res://scenes/levels/field/terrain_data"
@@ -143,9 +136,7 @@ script = ExtResource("4_wind")
 wind_dir = Vector2(1, -0.02)
 leaves_path = NodePath("../WindLeaves")
 
-[node name="PaintPost" parent="." unique_id=1192329711 instance=ExtResource("9_paint")]
 
-[node name="TiltShift" parent="." unique_id=219160979 instance=ExtResource("8_tilt")]
 
 [node name="WindLeaves" type="Node3D" parent="." unique_id=1307586731]
 script = ExtResource("10_leaves")
@@ -159,7 +150,7 @@ streak_count = 20
 speed = 5.0
 area = Vector2(22, 22)
 height_range = Vector2(2.2, 3.4)
-streak_color = Color(0.9, 0.95, 0.86, 1)
+streak_color = Color(0.95, 0.97, 1, 1)
 night_color = Color(0.85, 0.9, 1, 0.35)
 width = 0.07
 speed_range = Vector2(0.8, 1.25)
@@ -172,7 +163,7 @@ streak_count = 6
 speed = 5.0
 area = Vector2(22, 22)
 height_range = Vector2(2.2, 3.4)
-streak_color = Color(0.9, 0.95, 0.86, 1)
+streak_color = Color(0.95, 0.97, 1, 1)
 night_color = Color(0.85, 0.9, 1, 0.35)
 width = 0.07
 speed_range = Vector2(0.8, 1.05)
@@ -206,3 +197,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, -9)
 
 [node name="BushPack" parent="Bushes" instance=ExtResource("bush_pack")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, -9)
+
+[node name="TiltShift" parent="." instance=ExtResource("8_tilt")]

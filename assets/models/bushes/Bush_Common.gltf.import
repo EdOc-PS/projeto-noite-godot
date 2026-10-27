@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://dbre226hyhsid"
+path="res://.godot/imported/Bush_Common.gltf-e8119de79062b329c229c6d6174a66bc.scn"
 
 [deps]
 
 source_file="res://assets/models/bushes/Bush_Common.gltf"
+dest_files=["res://.godot/imported/Bush_Common.gltf-e8119de79062b329c229c6d6174a66bc.scn"]
 
 [params]
 

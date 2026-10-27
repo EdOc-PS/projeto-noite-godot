@@ -12,7 +12,7 @@ const SHADER := preload("res://shaders/weather/butterfly.gdshader")
 @export var area: Vector3 = Vector3(7.0, 0.6, 11.0)   ## meia-caixa onde voam (local)
 @export var height: float = 0.9                        ## altura média do voo
 @export var size: float = 0.14
-@export var colors: PackedColorArray = [Color(1.0, 0.95, 0.85), Color(1.0, 0.8, 0.25), Color(1.0, 0.55, 0.2), Color(0.55, 0.75, 1.0)]
+@export var colors: PackedColorArray = [Color(1.0, 1.0, 1.0), Color(1.000, 0.753, 0.267), Color(1.000, 0.494, 0.267), Color(0.404, 0.580, 0.851)]  ## paleta Kenney: branco, amarelo, laranja, azul
 
 func _ready() -> void:
 	add_to_group("day_fx")

@@ -12,7 +12,7 @@ Todos os assets de terceiros usados no projeto são **CC0** (domínio público):
 
 ## Texturas (`assets/textures/`)
 
-Só as nossas: `textures/terrain/grass.png` (verde liso, #91BE01), `dirt.png` (marrom claro liso) e `grass_normal.png` (normal lisa). Os pacotes de natureza anteriores (Quaternius, Stylized Grass and Dirt, Kenney Foliage) foram arquivados em `projeto-noite_sources/natureza-arquivada/`.
+Só as nossas: `textures/terrain/grass.png` (verde liso, #61CB8B da paleta Kenney), `dirt.png` (marrom claro liso) e `grass_normal.png` (normal lisa). Os pacotes de natureza anteriores (Quaternius, Stylized Grass and Dirt, Kenney Foliage) foram arquivados em `projeto-noite_sources/natureza-arquivada/`.
 
 
 ## Feitos no projeto
@@ -38,8 +38,6 @@ Só as nossas: `textures/terrain/grass.png` (verde liso, #91BE01), `dirt.png` (m
 | Shader | Autor | Onde | Licença |
 |---|---|---|---|
 | Stylized Grass (cor da grama) | StayAtHomeDev | adaptado em `shaders/nature/grass_body.gdshaderinc` | MIT — texto em `.docs/licencas/stylized_grass_LICENSE.txt` |
-| Hatching shader (lápis, adaptado pra pós-processamento) | annie ([godotshaders](https://godotshaders.com/shader/hatching-shader/)) | `shaders/post_process/hatching_post.gdshader` | MIT — texto em `.docs/licencas/hatching_LICENSE.txt` |
-| Generalized Kuwahara (pincelada da aquarela) | Firerabbit, porte do original de Acerola ([godotshaders](https://godotshaders.com/shader/generalized-kuwahara/)) | `shaders/post_process/generalized_kuwahara.gdshader` | MIT — texto em `.docs/licencas/generalized_kuwahara_LICENSE.txt` |
 
 ## Plugins (`addons/`)
 

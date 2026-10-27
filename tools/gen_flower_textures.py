@@ -13,16 +13,16 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "textures", "veget
 N = 256      # tamanho final
 SS = 2       # supersampling (borda lisa)
 
-STEM = (0.5, 0.68, 0.15)      # caule no verde da grama
-STEM_DARK = (0.36, 0.53, 0.08)
+STEM = (0.239, 0.655, 0.478)      # caule no verde da paleta (Kenney)
+STEM_DARK = (0.102, 0.518, 0.412)
 
 # tipo: (cor das pétalas, cor do miolo, formato, raio da flor em px, n de flores,
 #        altura do topo das flores na imagem (0 = topo, 1 = base))
 KINDS = {
-    "white": ((1.0, 1.0, 0.96), (1.0, 1.0, 1.0), "daisy", 16, (4, 6), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
-    "blue": ((0.56, 0.68, 0.96), (0.98, 0.9, 0.55), "daisy", 16, (4, 7), (0.12, 0.4)),       # azul, com caule
-    "pink": ((0.98, 0.66, 0.78), (0.98, 0.9, 0.55), "daisy", 17, (4, 6), (0.06, 0.35)),        # rosa, com caule
-    "red": ((0.94, 0.52, 0.5), (0.86, 0.42, 0.42), "spike", 16, (4, 6), (0.04, 0.3)),       # vermelho pastel em espiga reta
+    "white": ((1.0, 1.0, 1.0), (1.0, 1.0, 1.0), "daisy", 16, (4, 6), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
+    "blue": ((0.404, 0.58, 0.851), (1.0, 0.827, 0.388), "daisy", 16, (4, 7), (0.12, 0.4)),       # azul, com caule
+    "pink": ((0.953, 0.471, 0.941), (1.0, 0.827, 0.388), "daisy", 17, (4, 6), (0.06, 0.35)),        # rosa, com caule
+    "red": ((0.812, 0.325, 0.31), (0.827, 0.333, 0.302), "spike", 16, (4, 6), (0.04, 0.3)),       # vermelho pastel em espiga reta
 }
 
 

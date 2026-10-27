@@ -2,6 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
+uid="uid://dgi82rn1mdhtw"
+path.s3tc="res://.godot/imported/flowers_stem.png-1ef45680d09d5038e3e3ca1cc1c44d42.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -9,7 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/terrain/grass_kenney.png"
+source_file="res://assets/textures/vegetation/flowers/flowers_stem.png"
+dest_files=["res://.godot/imported/flowers_stem.png-1ef45680d09d5038e3e3ca1cc1c44d42.s3tc.ctex"]
 
 [params]
 
@@ -35,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

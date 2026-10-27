@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://upwmuvcg40t5"
+path="res://.godot/imported/bush_blob.gltf-5d63e39bf74eb9e0684696f4b2b8e6ba.scn"
 
 [deps]
 
 source_file="res://assets/models/bushes/bush_blob.gltf"
+dest_files=["res://.godot/imported/bush_blob.gltf-5d63e39bf74eb9e0684696f4b2b8e6ba.scn"]
 
 [params]
 
