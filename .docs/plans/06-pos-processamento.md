@@ -84,3 +84,9 @@ Testado e desfeito (visual piorou): transparência pontilhada (alpha hash), cili
 - `paint_post.gdshader` (cena `scenes/vfx/paint_post.tscn`, CanvasLayer 1), em ordem: pincelada Kuwahara (`paint_amount` 0,85, raio 2) → borda escurecida da aquarela (`edge_darken` 0,35, largura 1,5 px; a tinta acumula: escurece e satura) → cor viva (sombras × `shadow_tint` azul, luzes × `light_tint` quente, `tint_amount` 0,6). Nitidez desligada (brigava com a aquarela); saturação do shader 1 (a principal fica no Environment).
 - Papel de aquarela removido (2026-10-26).
 - Pincelada pronta (2026-10-26): primeiro passe = **Generalized Kuwahara** (Firerabbit/Acerola, MIT, `shaders/post_process/generalized_kuwahara.gdshader`, `_KernelSize` 6) no `KuwaharaRect`; um `BackBufferCopy` e depois o `PaintRect` (`paint_post` com o Kuwahara próprio desligado, `paint_amount` 0: só borda e cor). Cores mais vivas: saturação do Environment 1,45, do filtro 1,15, `tint_amount` 0,75.
+
+## Field estilo Kenney (2026-10-27) — `scenes/levels/field/field_kenney.tscn`
+Cópia do field com o visual dos previews do Kenney (low poly de brinquedo, cor chapada, luz macia). Mesma grama/flores/arbustos e o MESMO `terrain_data` (a semeadura é igual); só muda a aparência:
+- Sem filtro de aquarela (`PaintPost`) e sem tilt-shift. Sem borda na grama e nos arbustos, sem onda dourada, sem aquarela no degradê.
+- Luz: sol branco quente 1,15, sombra macia (`shadow_blur` 2,5, `light_angular_distance` 4, opacidade 0,6); luz ambiente LILÁS (0.66,0.66,0.86) → sombras azuladas; SSAO forte e macio (2,4, raio 1,6, `light_affect` 0,35) = cara de maquete; AgX, saturação 1,05, glow 0,15.
+- Cores Kenney: chão `grass_kenney.png` (verde menta #5CC778), grama `grass_tuft_kenney.tres` (0.27,0.62,0.4 → 0.46,0.85,0.55), arbustos `bush_*_kenney.tres` (verde-árvore 0.17,0.5,0.36 → 0.33,0.74,0.5). Pincel `terrain_assets_kenney.tres`.
