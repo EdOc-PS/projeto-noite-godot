@@ -10,14 +10,20 @@ shader_type canvas_item;
 uniform sampler2D screen_tex : hint_screen_texture, repeat_disable, filter_linear_mipmap;
 
 uniform vec3 line_color : source_color = vec3(0.16, 0.14, 0.22);  // cor do lápis
-uniform float strength : hint_range(0.0, 1.0) = 0.55;             // quanto o risco escurece
+uniform float strength : hint_range(0.0, 1.0) = 0.7;             // quanto o risco escurece
 uniform float range : hint_range(0.0, 1.0) = 0.55;                // luminância abaixo da qual começa a hachura
-uniform float softness : hint_range(0.0, 1.0) = 0.12;             // borda do risco (macio)
+uniform float softness : hint_range(0.0, 1.0) = 0.06;             // borda do risco (macio)
 uniform float angle : hint_range(0.0, 360.0) = 45.0;
-uniform float pattern_scale : hint_range(1.0, 40.0) = 6.0;        // pixels entre riscos
-uniform float line_thickness : hint_range(0.0, 1.0) = 0.15;       // grossura no começo da sombra
-uniform float dark_thickness : hint_range(0.0, 1.0) = 0.55;       // grossura extra no mais escuro
-uniform bool cross_hatch = true;                                  // segunda camada cruzada no bem escuro
+uniform float pattern_scale : hint_range(1.0, 40.0) = 3.5;        // pixels entre riscos
+uniform float line_thickness : hint_range(0.0, 1.0) = 0.06;       // grossura no começo da sombra
+uniform float dark_thickness : hint_range(0.0, 1.0) = 0.22;       // grossura extra no mais escuro
+uniform bool cross_hatch = false;                                  // segunda camada cruzada no bem escuro
+// contorno de lápis: onde a cor muda de repente (borda do objeto), um traço
+// fino e tremido (deslocado pelo ruído, muda junto com o "baixo FPS")
+uniform float outline_strength : hint_range(0.0, 1.0) = 0.85;
+uniform float outline_width : hint_range(0.5, 4.0) = 1.2;     // pixels
+uniform float outline_threshold : hint_range(0.0, 1.0) = 0.12; // diferença de cor que vira borda
+uniform float outline_wobble : hint_range(0.0, 4.0) = 1.2;     // quanto o traço treme (pixels)
 // aleatoriedade (o "à mão")
 uniform float random_thickness : hint_range(0.0, 2.0) = 0.4;
 uniform float random_offset : hint_range(0.0, 10.0) = 1.5;
@@ -65,5 +71,20 @@ void fragment() {
 			lines = max(lines, hatch(FRAGCOORD.xy, angle + 90.0, n, fps_var, line_thickness + dark_thickness * (dark - 0.5)) * smoothstep(0.5, 0.7, dark));
 		}
 	}
-	COLOR = vec4(mix(col, col * line_color * 2.0, lines * strength), 1.0);
+	vec3 outc = mix(col, col * line_color * 2.0, lines * strength);
+	if (outline_strength > 0.0) {
+		vec2 px = SCREEN_PIXEL_SIZE;
+		vec2 wob = (vec2(vnoise(FRAGCOORD.xy * 0.05 + frame_time * 3.1), vnoise(FRAGCOORD.yx * 0.05 - frame_time * 2.3)) - 0.5) * 2.0 * outline_wobble;
+		vec2 uv = SCREEN_UV + wob * px;
+		vec2 o = px * outline_width;
+		vec3 l = textureLod(screen_tex, uv - vec2(o.x, 0.0), 0.0).rgb;
+		vec3 r = textureLod(screen_tex, uv + vec2(o.x, 0.0), 0.0).rgb;
+		vec3 u = textureLod(screen_tex, uv - vec2(0.0, o.y), 0.0).rgb;
+		vec3 d = textureLod(screen_tex, uv + vec2(0.0, o.y), 0.0).rgb;
+		float e = smoothstep(outline_threshold, outline_threshold * 2.0, length(r - l) + length(d - u));
+		// traço de grafite: falha um pouco (ruído) como lápis no papel
+		e *= mix(0.6, 1.0, vnoise(FRAGCOORD.xy * 0.3));
+		outc = mix(outc, line_color, e * outline_strength);
+	}
+	COLOR = vec4(outc, 1.0);
 }
