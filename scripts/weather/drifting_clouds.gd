@@ -13,7 +13,7 @@ extends Node3D
 ## Grupo `cloud_fx`: o WeatherCycle chama `set_strength()` (dia 1, noite 0).
 ## Regras em .docs/plans/06-clima.md.
 
-@export var cloud_count: int = 3                     ## poucas: céu "parcialmente nublado"
+@export var cloud_count: int = 2                     ## poucas: céu "parcialmente nublado"
 @export var radius: float = 30.0                     ## distância máx. do jogador antes de renascer
 @export var size_range: Vector2 = Vector2(12.0, 26.0) ## tamanho das nuvens (m)
 @export var speed: float = 0.5                       ## m/s (devagar)

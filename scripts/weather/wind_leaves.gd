@@ -19,7 +19,7 @@ const SHADER := preload("res://shaders/weather/wind_leaf.gdshader")
 ]
 ## Cores das folhas (cada folha sorteia UMA destas, sem tons no meio): verde
 ## claro da grama, verde do pé/caule da grama, verde amarelado e branco (o dos raminhos).
-@export var leaf_colors: PackedColorArray = [Color(0.380, 0.796, 0.545), Color(0.102, 0.518, 0.412), Color(1.000, 0.753, 0.267), Color(1.000, 0.494, 0.267), Color(0.812, 0.325, 0.310)]  ## paleta Kenney: verde, verde escuro, amarelo, laranja, vermelho
+@export var leaf_colors: PackedColorArray = [Color(0.380, 0.796, 0.545), Color(0.102, 0.518, 0.412), Color(1.000, 0.753, 0.267), Color(1.000, 0.494, 0.267), Color(0.812, 0.325, 0.310), Color(1.0, 1.0, 1.0)]  ## paleta Kenney: verde, verde escuro, amarelo, laranja, vermelho, branco
 @export_range(0.0, 1.0) var leaf_alpha: float = 0.9  ## opacidade das folhas
 @export var leaves_per_texture: int = 6
 @export var area: Vector2 = Vector2(12.0, 10.0)   ## área em volta do jogador onde nascem

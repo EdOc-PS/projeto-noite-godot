@@ -19,7 +19,7 @@ STEM_DARK = (0.102, 0.518, 0.412)
 # tipo: (cor das pétalas, cor do miolo, formato, raio da flor em px, n de flores,
 #        altura do topo das flores na imagem (0 = topo, 1 = base))
 KINDS = {
-    "white": ((1.0, 1.0, 1.0), (1.0, 1.0, 1.0), "daisy", 16, (4, 6), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
+    "white": ((1.0, 1.0, 1.0), (1.0, 1.0, 1.0), "drop", 16, (4, 6), (0.84, 0.92)),    # branca, colada no chão (caule escondido), muitas
     "blue": ((0.404, 0.58, 0.851), (0.404, 0.58, 0.851), "daisy", 16, (4, 7), (0.12, 0.4)),       # azul, com caule
     "pink": ((0.953, 0.471, 0.941), (1.0, 0.827, 0.388), "daisy", 17, (4, 6), (0.06, 0.35)),        # rosa, com caule
     "red": ((0.812, 0.325, 0.31), (0.827, 0.333, 0.302), "spike", 16, (4, 6), (0.04, 0.3)),       # vermelho pastel em espiga reta
@@ -53,6 +53,12 @@ def flower_hit(dx, dy, r, shape):
         e = (dx / (r * 0.42)) ** 2 + ((dy - r * 0.9) / (r * 1.9)) ** 2
         bump = 0.85 + 0.15 * math.cos(dy * 0.9)
         return (2 if (int((dy + 100) / (r * 0.35)) % 2 == 0 and abs(dx) < r * 0.12) else 1) if e < bump else 0
+    if shape == "drop":        # folhinha em gota do raminho branco: comprida no eixo x, mais larga perto da ponta
+        L, w = r * 1.7, r * 0.6
+        t = (dx + L / 2) / L
+        if t < 0.0 or t > 1.0:
+            return 0
+        return 1 if abs(dy) < w * math.sin(math.pi * t) * (0.55 + 0.45 * t) else 0
     if shape == "ball":        # bolinha rechonchuda
         return 1 if d < r * (0.92 + 0.08 * math.cos(a * 7)) else 0
     if shape == "puff":        # bolinha com borda franjada
@@ -88,6 +94,17 @@ def make_top(kind, seed):
     rng = random.Random(seed)
     S = N * SS
     heads = []
+    if kind == "white":
+        # branca: folhinhas em gota (iguais às do raminho) em CÍRCULO, apontando pra fora
+        n = rng.randint(5, 7)
+        ring = S * 0.2
+        for i in range(n):
+            a = i * math.tau / n + rng.uniform(-0.2, 0.2)
+            d = ring * rng.uniform(0.85, 1.1)
+            r = radius * SS * 1.2 * rng.uniform(0.85, 1.1)
+            shade = rng.uniform(0.8, 0.88) if rng.random() < 0.4 else 1.0
+            heads.append((S / 2 + math.cos(a) * d, S / 2 + math.sin(a) * d, r, a, shade))
+        count = (0, 0)
     for _ in range(rng.randint(*count)):
         for _try in range(40):
             d = S * (0.4 if kind == "white" else 0.33) * math.sqrt(rng.random()); a = rng.uniform(0, math.tau)
