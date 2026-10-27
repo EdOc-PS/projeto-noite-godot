@@ -93,3 +93,4 @@ Cópia do field com o visual dos previews do Kenney (low poly de brinquedo, cor 
 - Hachura de lápis no field Kenney (2026-10-27): `HatchingPost` (`scenes/vfx/hatching_post.tscn`, `hatching_post.gdshader`, adaptado do Hatching shader de annie, MIT). Riscos diagonais nas sombras (luminância < `range` 0,55), mais grossos no mais escuro, cruzados no bem escuro, tremendo a cada 0,15 s; cor do lápis roxo-escuro.
 - Hachura ajustada (2026-10-27): riscos FINOS e densos (3,5 px, grossura 0,06–0,28, sem cruzado) e contorno de lápis nos objetos (borda por diferença de cor, 1,2 px, tremido pelo ruído no ritmo de 0,15 s, falhado como grafite).
 - Hachura de lápis removida do field Kenney (2026-10-27).
+- Correção (2026-10-27): o que saiu foi só a HACHURA (riscos nas sombras). O `HatchingPost` voltou com só o contorno de lápis tremido nos objetos.
