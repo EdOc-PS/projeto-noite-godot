@@ -34,6 +34,9 @@ uniform float outline_width = 1.5;  // espessura da borda em pixels
 uniform bool use_sprite = false;
 uniform sampler2D sprite : source_color, filter_linear_mipmap, repeat_disable;
 uniform float alpha_cut : hint_range(0.0, 1.0) = 0.5;
+// borda do SPRITE (cartas com PNG, ex. arbustos): pixel vazio a até
+// `sprite_outline_px` pixels de um pixel cheio vira `outline_color` (0 = sem)
+uniform float sprite_outline_px = 0.0;
 uniform bool alpha_by_height = false;
 // Transparência FALSA (material opaco): mistura a cor com a do chão pela
 // opacidade sorteada por planta (`sprite_alpha`). Transparência de verdade
@@ -179,10 +182,22 @@ void fragment() {
 		: mix(mid_color, tip_color, smoothstep(mid_pos, 1.0, t));
 	col *= mix(1.0, mix(0.9, 1.05, n), noise_amount);
 	col *= mix(1.0, COLOR.r, shade_amount);
+	bool sprite_edge = false;
 	if (use_sprite) {
 		vec4 t = texture(sprite, UV);
 		if (t.a < alpha_cut) {
-			discard;
+			float near = 0.0;
+			if (sprite_outline_px > 0.0) {
+				vec2 px = sprite_outline_px / vec2(textureSize(sprite, 0));
+				for (int i = 0; i < 8; i++) {
+					float ang = float(i) * 0.785398;
+					near = max(near, texture(sprite, UV + vec2(cos(ang), sin(ang)) * px).a);
+				}
+			}
+			if (near < alpha_cut) {
+				discard;
+			}
+			sprite_edge = true;
 		}
 		col *= mix(0.75, 1.0, t.r);
 	}
@@ -232,6 +247,10 @@ void fragment() {
 	ALBEDO = outline_color;
 	EMISSION = vec3(0.0);
 #endif
+	if (sprite_edge) {
+		ALBEDO = outline_color;
+		EMISSION = vec3(0.0);
+	}
 	// depois da borda: o tufo e a borda dele somem juntos no chão
 	if (fake_alpha) {
 		float fa = mix(sprite_alpha.x, sprite_alpha.y, v_rand);

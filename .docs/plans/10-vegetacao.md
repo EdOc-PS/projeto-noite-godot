@@ -230,3 +230,4 @@ Implementado:
 - `BushPack` (Quaternius `Bush_Common`, CC0): cartas de folha do pacote com as regras da grama (degradê, vento, jogador), sem borda.
 - Os três: cores da grama, degradê pela ALTURA (`gradient_height`, novo no `grass_body`), normal "de bola" (`sphere_normal`: luz macia de arbusto fofo), balanço fraco, projetam sombra. Script `scripts/vegetation/bush.gd` (@tool) troca o material do modelo.
 - Flor branca: monte = 1–2 cartas soltas (`flower_clump_mult` 0,2); cada carta já é um grupinho solto de 4–6 flores, como a referência.
+- Borda nos 3 arbustos (2026-10-27): blob pela casca (`bush_outline`); os de carta (card e pack) pelo recorte do PNG: `sprite_outline_px` (novo no `grass_body`: pixel vazio colado no desenho vira `outline_color`), 6 px no card e 4 no pack, mesma cor da borda da grama.

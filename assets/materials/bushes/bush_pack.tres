@@ -48,3 +48,5 @@ shader_parameter/alpha_cut = 0.2
 shader_parameter/shade_amount = 0.0
 shader_parameter/use_sprite = true
 shader_parameter/sprite = ExtResource("3_sprite")
+shader_parameter/sprite_outline_px = 4.0
+shader_parameter/outline_color = Color(0.36, 0.55, 0.08, 1)
