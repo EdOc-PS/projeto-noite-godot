@@ -231,3 +231,7 @@ Implementado:
 - Os três: cores da grama, degradê pela ALTURA (`gradient_height`, novo no `grass_body`), normal "de bola" (`sphere_normal`: luz macia de arbusto fofo), balanço fraco, projetam sombra. Script `scripts/vegetation/bush.gd` (@tool) troca o material do modelo.
 - Flor branca: monte = 1–2 cartas soltas (`flower_clump_mult` 0,2); cada carta já é um grupinho solto de 4–6 flores, como a referência.
 - Borda nos 3 arbustos (2026-10-27): blob pela casca (`bush_outline`); os de carta (card e pack) pelo recorte do PNG: `sprite_outline_px` (novo no `grass_body`: pixel vazio colado no desenho vira `outline_color`), 6 px no card e 4 no pack, mesma cor da borda da grama.
+
+### Arbusto do Stylized Nature no Terrain3D (2026-10-27)
+- Escolhido o `Bush_Common` (Quaternius); os arbustos feito do zero e do PNG saíram (modelos, materiais, cenas, `bush.gd`, `gen_bushes.py`). O nó `Bushes` saiu: o arbusto é a mesh 8 "Arbusto" do pincel do Terrain3D (projeta sombra), semeado por `_seed_bushes` (14, a ≥ 3,5 m um do outro, escala 0,7–1,1, fora do meio denso da grama).
+- Material `bush_pack.tres`: paleta Kenney, borda pelo recorte das folhas (`sprite_outline_px` 5, cor #126A54). Jogador passando: NÃO amassa (`push_squash` 0), só inclina pro lado (`push_strength` 0,14).

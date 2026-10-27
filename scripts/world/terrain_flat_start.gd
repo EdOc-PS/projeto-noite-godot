@@ -45,6 +45,13 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var sprig_min_distance: float = 3.0  ## distância mínima entre raminhos (m)
 @export_range(0.0, 1.0) var sprig_min_density: float = 0.7  ## raminho só no meio da mancha (grama densa em volta), nunca na beirada
 @export var sprig_over: Vector2 = Vector2(1.45, 1.65)  ## escala do raminho (×altura da grama no lugar)
+@export_group("Arbustos")
+## Arbusto (mesh 8: Bush_Common do Stylized Nature) espalhado pelo campo,
+## cada um longe dos outros, na borda/fora das manchas de grama.
+@export var bush_mesh_ids: PackedInt32Array = [8]
+@export var bush_count: int = 14
+@export var bush_min_distance: float = 3.5
+@export var bush_scale: Vector2 = Vector2(0.7, 1.1)
 @export_group("Flores")
 ## Flores no pincel do Terrain3D (aparecem no editor e no jogo). Cada tipo:
 ## carta deitada das flores (`flower_head_ids`) + caules (`flower_stem_ids`,
@@ -185,13 +192,14 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids + flower_head_ids + flower_stem_ids:
+	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids + flower_head_ids + flower_stem_ids + bush_mesh_ids:
 		if id >= 0:
 			per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
 	var half := grass_area / 2.0
 	_seed_area(Rect2(-half, -half, grass_area, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
 	_seed_flowers(half, rng, noise, per_mesh)
+	_seed_bushes(half, rng, noise, per_mesh)
 	for id in per_mesh:
 		if not (per_mesh[id] as Array).is_empty():
 			instancer.add_transforms(id, per_mesh[id])
@@ -291,6 +299,25 @@ func _seed_flowers(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite
 			(per_mesh[flower_head_ids[k]] as Array[Transform3D]).append(t)
 			if flower_stem_ids[k] >= 0:
 				(per_mesh[flower_stem_ids[k]] as Array[Transform3D]).append(t)
+
+func _seed_bushes(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite, per_mesh: Dictionary) -> void:
+	if bush_mesh_ids.is_empty():
+		return
+	var spots: Array[Vector3] = []
+	for _try in bush_count * 40:
+		if spots.size() >= bush_count:
+			break
+		var p := Vector3(rng.randf_range(-half, half), 0.0, rng.randf_range(-half, half))
+		# fora do meio denso da grama (na borda ou no chão limpo)
+		if noise.get_noise_2d(p.x, p.z) > grass_threshold + 0.15:
+			continue
+		if not _far_from(spots, p, bush_min_distance):
+			continue
+		spots.append(p)
+		p.y = data.get_height(p)
+		var s := rng.randf_range(bush_scale.x, bush_scale.y)
+		var id: int = bush_mesh_ids[rng.randi() % bush_mesh_ids.size()]
+		(per_mesh[id] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * s), p))
 
 func _flower_spot_ok(k: int, q: Vector2, noise: FastNoiseLite) -> bool:
 	var density := clampf((noise.get_noise_2d(q.x, q.y) - grass_threshold) / 0.25, 0.0, 1.0)

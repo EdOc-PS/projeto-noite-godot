@@ -12,9 +12,6 @@
 [ext_resource type="Terrain3DAssets" uid="uid://liqswcgmjtxf" path="res://scenes/levels/field/terrain_assets.tres" id="assets_file"]
 [ext_resource type="Script" path="res://scripts/weather/drifting_clouds.gd" id="drifting_clouds"]
 
-[ext_resource type="PackedScene" path="res://scenes/props/bushes/bush_blob.tscn" id="bush_blob"]
-[ext_resource type="PackedScene" path="res://scenes/props/bushes/bush_card.tscn" id="bush_card"]
-[ext_resource type="PackedScene" path="res://scenes/props/bushes/bush_pack.tscn" id="bush_pack"]
 [ext_resource type="PackedScene" path="res://scenes/vfx/tilt_shift.tscn" id="8_tilt"]
 [sub_resource type="ProceduralSkyMaterial" id="skymat"]
 sky_top_color = Color(0.38, 0.6, 0.9, 1)
@@ -95,10 +92,12 @@ environment = SubResource("env")
 transform = Transform3D(0.86601907, -0.43302146, 0.25000688, 0, 0.5000028, 0.8660238, -0.500011, -0.74999315, 0.43301192, -11.793602, 10, -7.0998535)
 light_color = Color(1, 0.97, 0.92, 1)
 light_energy = 1.35
-light_angular_distance = 4.0
 shadow_enabled = true
-shadow_opacity = 0.6
-shadow_blur = 2.5
+shadow_bias = 0.08
+shadow_normal_bias = 1.6
+shadow_opacity = 0.82
+shadow_blur = 1.0
+directional_shadow_blend_splits = true
 
 [node name="Terrain3D" type="Terrain3D" parent="." unique_id=325447439]
 data_directory = "res://scenes/levels/field/terrain_data"
@@ -187,15 +186,5 @@ script = ExtResource("15_motes")
 script = ExtResource("drifting_clouds")
 sun = NodePath("../Sun")
 
-[node name="Bushes" type="Node3D" parent="."]
-
-[node name="BushBlob" parent="Bushes" instance=ExtResource("bush_blob")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75, 0, -9)
-
-[node name="BushCard" parent="Bushes" instance=ExtResource("bush_card")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, 0, -9)
-
-[node name="BushPack" parent="Bushes" instance=ExtResource("bush_pack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, -9)
 
 [node name="TiltShift" parent="." instance=ExtResource("8_tilt")]

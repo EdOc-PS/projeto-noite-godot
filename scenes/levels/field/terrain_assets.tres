@@ -15,6 +15,8 @@
 [ext_resource type="Material" path="res://assets/materials/flowers/stem.tres" id="m_stem"]
 [ext_resource type="Material" path="res://assets/materials/flowers/head_pink.tres" id="m_head_pink"]
 [ext_resource type="Material" path="res://assets/materials/flowers/head_red.tres" id="m_head_red"]
+[ext_resource type="PackedScene" path="res://assets/models/bushes/Bush_Common.gltf" id="bush"]
+[ext_resource type="Material" path="res://assets/materials/bushes/bush_pack.tres" id="mat_bush"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
 
 [sub_resource type="Terrain3DMeshAsset" id="ma0"]
@@ -96,6 +98,16 @@ last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
+[sub_resource type="Terrain3DMeshAsset" id="ma8"]
+name = "Arbusto"
+id = 8
+scene_file = ExtResource("bush")
+cast_shadows = 1
+material_override = ExtResource("mat_bush")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 60.0
+
 [sub_resource type="Terrain3DTextureAsset" id="tex0"]
 name = "Grama"
 albedo_texture = ExtResource("tex_ground")
@@ -108,5 +120,5 @@ albedo_texture = ExtResource("tex_dirt")
 normal_texture = ExtResource("tex_ground_n")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])
