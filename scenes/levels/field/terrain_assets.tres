@@ -3,7 +3,6 @@
 [ext_resource type="Material" path="res://assets/materials/grass_sprig.tres" id="mat_sprig"]
 [ext_resource type="Material" uid="uid://bkye1nki5tjc1" path="res://assets/materials/grass_tuft.tres" id="mat_tuft"]
 [ext_resource type="PackedScene" uid="uid://27o0kn2472au" path="res://assets/models/grass/grass_sprig.gltf" id="sprig"]
-[ext_resource type="Texture2D" uid="uid://bxfbmjyfk0u8u" path="res://assets/textures/terrain/dirt.png" id="tex_dirt"]
 [ext_resource type="Texture2D" uid="uid://dwr7xp8l0a501" path="res://assets/textures/terrain/grass.png" id="tex_ground"]
 [ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
 [ext_resource type="PackedScene" path="res://assets/models/grass/grass_tuft_edge.gltf" id="tuft_edge"]
@@ -13,7 +12,6 @@
 [ext_resource type="Material" path="res://assets/materials/flowers/head_white.tres" id="m_head_white"]
 [ext_resource type="Material" path="res://assets/materials/flowers/head_blue.tres" id="m_head_blue"]
 [ext_resource type="Material" path="res://assets/materials/flowers/stem.tres" id="m_stem"]
-[ext_resource type="Material" path="res://assets/materials/flowers/head_pink.tres" id="m_head_pink"]
 [ext_resource type="Material" path="res://assets/materials/flowers/head_red.tres" id="m_head_red"]
 [ext_resource type="PackedScene" path="res://assets/models/bushes/Bush_Common.gltf" id="bush"]
 [ext_resource type="Material" path="res://assets/materials/bushes/bush_pack.tres" id="mat_bush"]
@@ -79,18 +77,8 @@ last_shadow_lod = 0
 lod0_range = 45.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma6"]
-name = "Flor rosa"
-id = 6
-scene_file = ExtResource("fh_high")
-cast_shadows = 0
-material_override = ExtResource("m_head_pink")
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 45.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma7"]
 name = "Flor vermelha"
-id = 7
+id = 6
 scene_file = ExtResource("fh_high")
 cast_shadows = 0
 material_override = ExtResource("m_head_red")
@@ -98,9 +86,9 @@ last_lod = 0
 last_shadow_lod = 0
 lod0_range = 45.0
 
-[sub_resource type="Terrain3DMeshAsset" id="ma8"]
+[sub_resource type="Terrain3DMeshAsset" id="ma7"]
 name = "Arbusto"
-id = 8
+id = 7
 scene_file = ExtResource("bush")
 cast_shadows = 1
 material_override = ExtResource("mat_bush")
@@ -113,12 +101,6 @@ name = "Grama"
 albedo_texture = ExtResource("tex_ground")
 normal_texture = ExtResource("tex_ground_n")
 
-[sub_resource type="Terrain3DTextureAsset" id="tex1"]
-name = "Terra"
-id = 1
-albedo_texture = ExtResource("tex_dirt")
-normal_texture = ExtResource("tex_ground_n")
-
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8")])
-texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0"), SubResource("tex1")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0")])

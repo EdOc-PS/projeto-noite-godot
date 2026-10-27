@@ -51,17 +51,17 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export_range(0.0, 1.0) var sprig_min_density: float = 0.7  ## raminho só no meio da mancha (grama densa em volta), nunca na beirada
 @export var sprig_over: Vector2 = Vector2(1.45, 1.65)  ## escala do raminho (×altura da grama no lugar)
 @export_group("Arbustos")
-## Arbusto (mesh 8: Bush_Common do Stylized Nature) espalhado pelo campo,
+## Arbusto (mesh 7: Bush_Common do Stylized Nature) espalhado pelo campo,
 ## cada um longe dos outros, na borda/fora das manchas de grama.
-@export var bush_mesh_ids: PackedInt32Array = [8]
+@export var bush_mesh_ids: PackedInt32Array = [7]
 @export var bush_count: int = 14
 @export var bush_min_distance: float = 3.5
-@export var bush_scale: Vector2 = Vector2(0.7, 1.1)
+@export var bush_scale: Vector2 = Vector2(0.45, 1.5)  ## tamanhos bem diferentes
 @export_group("Flores")
 ## Flores no pincel do Terrain3D (aparecem no editor e no jogo). Cada tipo:
 ## carta deitada das flores (`flower_head_ids`) + caules (`flower_stem_ids`,
 ## -1 = sem caule, rente ao chão). Montes de um tipo só (10-vegetacao.md).
-@export var flower_head_ids: PackedInt32Array = [3, 4, 7]   ## branca, azul, vermelha (a rosa, 6, saiu do campo; fica no pincel)
+@export var flower_head_ids: PackedInt32Array = [3, 4, 6]   ## branca, azul, vermelha
 @export var flower_stem_ids: PackedInt32Array = [-1, 5, 5]   ## 5 = caule universal
 @export var flower_scales: PackedFloat32Array = [1.3, 1.15, 1.3]
 @export var flower_weights: PackedFloat32Array = [2.0, 1.0, 1.0]  ## chance de cada tipo por monte

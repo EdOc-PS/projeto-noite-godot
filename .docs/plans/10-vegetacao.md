@@ -242,3 +242,10 @@ Implementado:
 ### Cenário de teste com relevo (2026-10-27) — `scenes/levels/field_hills/field_hills.tscn`
 - Cópia do field com morros: `terrain_flat_start.gd` ganhou o grupo "Relevo" (`hill_height` m, `hill_frequency`, `hill_seed`; 0 = plano, o field continua plano). Altura = ruído suave (3 oitavas) ao quadrado × `hill_height` (5 m): vales largos, morros redondos. Dados próprios em `scenes/levels/field_hills/terrain_data` (não mexe no do field).
 - Sem o chão infinito plano (WorldBoundary): colisão do próprio Terrain3D. Jogador nasce a 8 m e cai no terreno.
+
+### Limpeza e ajustes (2026-10-27)
+- Arbustos de tamanhos bem diferentes (`bush_scale` 0,45–1,5).
+- Flores branca e azul no formato da vermelha (`spike`, vista de cima = bolinha); branca continua em círculo e Shaded. Flor rosa apagada (textura, material, mesh do pincel). Pincel agora: 0 tufo, 1 raminho, 2 tufo borda, 3 branca, 4 azul, 5 caule, 6 vermelha, 7 arbusto.
+- Textura de terra (`dirt.png`, textura 1 do Terrain3D) apagada: não era usada. Referência quebrada ao `sprig_0093.png` tirada do `grass_sprig.tres`.
+- Céu: skybox de DIA (`assets/textures/skyboxes/basic/skybox-day.png`, panorama) no field e no field_hills; os outros skyboxes ficam guardados.
+- Shaders de aquarela (`paint_post` + `generalized_kuwahara`) e de contorno de lápis (`hatching_post`) voltaram pro projeto como arquivos guardados (não usados em cena).

@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxfbmjyfk0u8u"
-path.s3tc="res://.godot/imported/dirt.png-67313fa97fa5b9369bec725f203ba6a9.s3tc.ctex"
+uid="uid://6p2fbbg62ben"
+path="res://.godot/imported/skybox-space-day.png-9d73c12c42e188c4131fe9943cdb6cea.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/terrain/dirt.png"
-dest_files=["res://.godot/imported/dirt.png-67313fa97fa5b9369bec725f203ba6a9.s3tc.ctex"]
+source_file="res://assets/skyboxes/space/skybox-space-day.png"
+dest_files=["res://.godot/imported/skybox-space-day.png-9d73c12c42e188c4131fe9943cdb6cea.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -24,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

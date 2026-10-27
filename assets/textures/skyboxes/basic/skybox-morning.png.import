@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c64q1ey8ecomx"
-path.s3tc="res://.godot/imported/flowers_pink.png-8a1705212e8b6f02c982624f97270b71.s3tc.ctex"
+uid="uid://y4eydjtwm75c"
+path.s3tc="res://.godot/imported/skybox-morning.png-0009dcc6577c0e052fdb455687824ac3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/vegetation/flowers/flowers_pink.png"
-dest_files=["res://.godot/imported/flowers_pink.png-8a1705212e8b6f02c982624f97270b71.s3tc.ctex"]
+source_file="res://assets/skyboxes/basic/skybox-morning.png"
+dest_files=["res://.godot/imported/skybox-morning.png-0009dcc6577c0e052fdb455687824ac3.s3tc.ctex"]
 
 [params]
 
