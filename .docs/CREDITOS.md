@@ -31,7 +31,8 @@ Só as nossas: `textures/terrain/grass.png` (verde liso, #61CB8B da paleta Kenne
 
 | Modelo | Autor | Pasta | Licença |
 |---|---|---|---|
-| `Bush_Common` + `Leaves_TwistedTree_C.png` (Stylized Nature MegaKit) | Quaternius ([quaternius.com](https://quaternius.com)) | `assets/models/bushes/` (teste de arbusto; pacote em `projeto-noite_sources/natureza-arquivada/`) | CC0 |
+| `Bush_Common`, `Bush_Common_Flowers` (+ texturas de folha e flor) (Stylized Nature MegaKit) | Quaternius ([quaternius.com](https://quaternius.com)) | `assets/models/bushes/` (pacote em `projeto-noite_sources/natureza-arquivada/`) | CC0 |
+| `Rock_Medium_1–3`, `Pebble_Round_1–5`, `Pebble_Square_1–6` (+ `Rocks_Diffuse`, `PathRocks_Diffuse`) (Stylized Nature MegaKit) | Quaternius | `assets/models/rocks/` | CC0 |
 
 ## Shaders de terceiros
 

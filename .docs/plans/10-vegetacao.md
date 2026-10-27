@@ -249,3 +249,8 @@ Implementado:
 - Textura de terra (`dirt.png`, textura 1 do Terrain3D) apagada: não era usada. Referência quebrada ao `sprig_0093.png` tirada do `grass_sprig.tres`.
 - Céu: skybox de DIA (`assets/textures/skyboxes/basic/skybox-day.png`, panorama) no field e no field_hills; os outros skyboxes ficam guardados.
 - Shaders de aquarela (`paint_post` + `generalized_kuwahara`) e de contorno de lápis (`hatching_post`) voltaram pro projeto como arquivos guardados (não usados em cena).
+
+### Pedras e arbusto com flores (2026-10-27)
+- Do Stylized Nature (Quaternius, CC0), sem as pedras de caminho (`RockPath_*`): pedras médias `Rock_Medium_1–3` (pincel 9–11) e pedrinhas `Pebble_Round_1–5` / `Pebble_Square_1–6` (12–22), com as texturas do pacote. `assets/models/rocks/`.
+- `_seed_rocks`: só no chão SEM grama; 8 pedras médias (escala 0,3–0,65, ≥ 5 m entre si, projetam sombra) e 45 pedrinhas (0,6–1,6, ≥ 1 m). Grupo "Pedras" no Terrain3D.
+- Arbusto com flores `Bush_Common_Flowers` (pincel 8): 40% dos arbustos (`bush_flower_chance`). As folhas dele usam `bush_flowers_leaves.tres` (mesmo material do arbusto: paleta, borda, balança sem amassar) pelo import (material externo); as flores ficam com o material do pacote.

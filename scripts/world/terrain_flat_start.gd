@@ -54,9 +54,21 @@ const GRASS_MARKER := "grass_seeded.txt"
 ## Arbusto (mesh 7: Bush_Common do Stylized Nature) espalhado pelo campo,
 ## cada um longe dos outros, na borda/fora das manchas de grama.
 @export var bush_mesh_ids: PackedInt32Array = [7]
+@export var bush_flower_mesh_ids: PackedInt32Array = [8]   ## arbusto com flores (Bush_Common_Flowers)
+@export_range(0.0, 1.0) var bush_flower_chance: float = 0.4
 @export var bush_count: int = 14
 @export var bush_min_distance: float = 3.5
 @export var bush_scale: Vector2 = Vector2(0.45, 1.5)  ## tamanhos bem diferentes
+@export_group("Pedras")
+## Pedras do Stylized Nature (sem as de caminho), só no chão SEM grama.
+@export var rock_mesh_ids: PackedInt32Array = [9, 10, 11]           ## pedras médias
+@export var rock_count: int = 8
+@export var rock_min_distance: float = 5.0
+@export var rock_scale: Vector2 = Vector2(0.3, 0.65)
+@export var pebble_mesh_ids: PackedInt32Array = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]  ## pedrinhas
+@export var pebble_count: int = 45
+@export var pebble_min_distance: float = 1.0
+@export var pebble_scale: Vector2 = Vector2(0.6, 1.6)
 @export_group("Flores")
 ## Flores no pincel do Terrain3D (aparecem no editor e no jogo). Cada tipo:
 ## carta deitada das flores (`flower_head_ids`) + caules (`flower_stem_ids`,
@@ -213,7 +225,7 @@ func _seed_grass() -> void:
 	height_noise.seed = grass_seed + 7
 	height_noise.frequency = 0.35
 	var per_mesh := {}
-	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids + flower_head_ids + flower_stem_ids + bush_mesh_ids:
+	for id in grass_mesh_ids + edge_mesh_ids + sprig_mesh_ids + flower_head_ids + flower_stem_ids + bush_mesh_ids + bush_flower_mesh_ids + rock_mesh_ids + pebble_mesh_ids:
 		if id >= 0:
 			per_mesh[id] = [] as Array[Transform3D]
 	var sprigs: Array[Vector3] = []
@@ -221,6 +233,8 @@ func _seed_grass() -> void:
 	_seed_area(Rect2(-half, -half, grass_area, grass_area), grass_mesh_ids, edge_mesh_ids, grass_spacing, rng, noise, height_noise, per_mesh, sprigs)
 	_seed_flowers(half, rng, noise, per_mesh)
 	_seed_bushes(half, rng, noise, per_mesh)
+	_seed_rocks(half, rng, noise, per_mesh, rock_mesh_ids, rock_count, rock_min_distance, rock_scale)
+	_seed_rocks(half, rng, noise, per_mesh, pebble_mesh_ids, pebble_count, pebble_min_distance, pebble_scale)
 	for id in per_mesh:
 		if not (per_mesh[id] as Array).is_empty():
 			instancer.add_transforms(id, per_mesh[id])
@@ -338,7 +352,29 @@ func _seed_bushes(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite,
 		p.y = data.get_height(p)
 		var s := rng.randf_range(bush_scale.x, bush_scale.y)
 		var id: int = bush_mesh_ids[rng.randi() % bush_mesh_ids.size()]
+		if not bush_flower_mesh_ids.is_empty() and rng.randf() < bush_flower_chance:
+			id = bush_flower_mesh_ids[rng.randi() % bush_flower_mesh_ids.size()]
 		(per_mesh[id] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * s), p))
+
+## Pedras no chão limpo (fora das manchas de grama), longe umas das outras.
+func _seed_rocks(half: float, rng: RandomNumberGenerator, noise: FastNoiseLite, per_mesh: Dictionary,
+		ids: PackedInt32Array, count: int, min_dist: float, scale: Vector2) -> void:
+	if ids.is_empty():
+		return
+	var spots: Array[Vector3] = []
+	for _try in count * 40:
+		if spots.size() >= count:
+			break
+		var p := Vector3(rng.randf_range(-half, half), 0.0, rng.randf_range(-half, half))
+		if noise.get_noise_2d(p.x, p.z) > grass_threshold - 0.04:
+			continue
+		if not _far_from(spots, p, min_dist):
+			continue
+		spots.append(p)
+		p.y = data.get_height(p)
+		var sc := rng.randf_range(scale.x, scale.y)
+		var id: int = ids[rng.randi() % ids.size()]
+		(per_mesh[id] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * sc), p))
 
 func _flower_spot_ok(k: int, q: Vector2, noise: FastNoiseLite) -> bool:
 	var density := clampf((noise.get_noise_2d(q.x, q.y) - grass_threshold) / 0.25, 0.0, 1.0)

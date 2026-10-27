@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxfdnlal6jml0"
-path="res://.godot/imported/skybox-space-galaxy.png-4e68fa4c4647763fbb752e73bb7568b0.ctex"
+path="res://.godot/imported/skybox-space-galaxy.png-36f37ed6e4832e7aaaf6b425c25f4204.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/skyboxes/space/skybox-space-galaxy.png"
-dest_files=["res://.godot/imported/skybox-space-galaxy.png-4e68fa4c4647763fbb752e73bb7568b0.ctex"]
+source_file="res://assets/textures/skyboxes/space/skybox-space-galaxy.png"
+dest_files=["res://.godot/imported/skybox-space-galaxy.png-36f37ed6e4832e7aaaf6b425c25f4204.ctex"]
 
 [params]
 

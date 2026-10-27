@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6p2fbbg62ben"
-path="res://.godot/imported/skybox-space-day.png-9d73c12c42e188c4131fe9943cdb6cea.ctex"
+path="res://.godot/imported/skybox-space-day.png-9ede59945756f8cf0c6e9ef77145925a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/skyboxes/space/skybox-space-day.png"
-dest_files=["res://.godot/imported/skybox-space-day.png-9d73c12c42e188c4131fe9943cdb6cea.ctex"]
+source_file="res://assets/textures/skyboxes/space/skybox-space-day.png"
+dest_files=["res://.godot/imported/skybox-space-day.png-9ede59945756f8cf0c6e9ef77145925a.ctex"]
 
 [params]
 

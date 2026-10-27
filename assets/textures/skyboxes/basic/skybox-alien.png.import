@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://binv8pcq33wma"
-path="res://.godot/imported/skybox-alien.png-37566201f92c289a53f8d2d86e9fcd43.ctex"
+path="res://.godot/imported/skybox-alien.png-de31870656e5c4e88b6633ac2fd474f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/skyboxes/basic/skybox-alien.png"
-dest_files=["res://.godot/imported/skybox-alien.png-37566201f92c289a53f8d2d86e9fcd43.ctex"]
+source_file="res://assets/textures/skyboxes/basic/skybox-alien.png"
+dest_files=["res://.godot/imported/skybox-alien.png-de31870656e5c4e88b6633ac2fd474f9.ctex"]
 
 [params]
 
