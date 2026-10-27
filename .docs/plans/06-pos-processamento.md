@@ -94,3 +94,4 @@ Cópia do field com o visual dos previews do Kenney (low poly de brinquedo, cor 
 - Hachura ajustada (2026-10-27): riscos FINOS e densos (3,5 px, grossura 0,06–0,28, sem cruzado) e contorno de lápis nos objetos (borda por diferença de cor, 1,2 px, tremido pelo ruído no ritmo de 0,15 s, falhado como grafite).
 - Hachura de lápis removida do field Kenney (2026-10-27).
 - Correção (2026-10-27): o que saiu foi só a HACHURA (riscos nas sombras). O `HatchingPost` voltou com só o contorno de lápis tremido nos objetos.
+- Field Kenney mais vivo (2026-10-27): contorno de lápis de leve (força 0,4, 1 px, tremido 0,8). Cores mais vivas e claras como os previews: tonemap Filmic (o AgX apagava os claros) com exposição 1,12, saturação 1,3, brilho 1,04, contraste 1,05; sol 1,35, ambiente 1,15; SSAO escurece menos a luz (`light_affect` 0,2); grama Kenney um tom mais clara.
