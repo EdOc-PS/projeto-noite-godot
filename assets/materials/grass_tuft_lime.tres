@@ -1,0 +1,43 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" uid="uid://vyf2wx8cf1tw" path="res://shaders/nature/grass_tuft.gdshader" id="1_shader"]
+[ext_resource type="Material" path="res://assets/materials/grass_tuft_outline_lime.tres" id="2_outline"]
+
+[resource]
+next_pass = ExtResource("2_outline")
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/base_color = Color(0.371, 0.588, 0.368, 1)
+shader_parameter/tip_color = Color(0.621, 0.802, 0.480, 1)
+shader_parameter/mid_color = Color(0.505, 0.715, 0.447, 1)
+shader_parameter/noise_scale = 20.0
+shader_parameter/shade_amount = 1.0
+shader_parameter/light_floor = 0.78
+shader_parameter/sway_strength = 0.06
+shader_parameter/sway_speed = 1.6
+shader_parameter/sway_start = 0.0
+shader_parameter/sway_height = 0.35
+shader_parameter/wind_dir = Vector2(1, -0.02)
+shader_parameter/orbit = 0.35
+shader_parameter/bend_max = 1.1
+shader_parameter/push_strength = 0.08
+shader_parameter/push_radius = 0.9
+shader_parameter/push_squash = 0.5
+shader_parameter/outline_only = false
+shader_parameter/outline_width = 1.5
+shader_parameter/noise_amount = 0.6
+shader_parameter/noise_scale = 6.0
+shader_parameter/tip_glow = 0.25
+shader_parameter/rim_glow = 0.35
+shader_parameter/backlight = 0.6
+shader_parameter/edge_amount = 0.0
+shader_parameter/edge_softness = 1.6
+shader_parameter/alpha_by_height = false
+shader_parameter/shimmer_strength = 0.6
+shader_parameter/shimmer_speed = 18.0
+shader_parameter/shimmer_color = Color(1.000, 0.827, 0.388, 1)
+shader_parameter/shimmer_spacing = 160.0
+shader_parameter/shimmer_width = 22.0
+shader_parameter/paint_wobble = 0.0
+shader_parameter/sprite_alpha = Vector2(0.4, 0.5)
+shader_parameter/fake_alpha = false
