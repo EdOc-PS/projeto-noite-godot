@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://ik5f1lxvcy7y"
+path="res://.godot/imported/Rock_Medium_2.gltf-bf40f7e10aa06fb2027577ec64be2e78.scn"
 
 [deps]
 
 source_file="res://assets/models/rocks/Rock_Medium_2.gltf"
+dest_files=["res://.godot/imported/Rock_Medium_2.gltf-bf40f7e10aa06fb2027577ec64be2e78.scn"]
 
 [params]
 

@@ -254,3 +254,4 @@ Implementado:
 - Do Stylized Nature (Quaternius, CC0), sem as pedras de caminho (`RockPath_*`): pedras médias `Rock_Medium_1–3` (pincel 9–11) e pedrinhas `Pebble_Round_1–5` / `Pebble_Square_1–6` (12–22), com as texturas do pacote. `assets/models/rocks/`.
 - `_seed_rocks`: só no chão SEM grama; 8 pedras médias (escala 0,3–0,65, ≥ 5 m entre si, projetam sombra) e 45 pedrinhas (0,6–1,6, ≥ 1 m). Grupo "Pedras" no Terrain3D.
 - Arbusto com flores `Bush_Common_Flowers` (pincel 8): 40% dos arbustos (`bush_flower_chance`). As folhas dele usam `bush_flowers_leaves.tres` (mesmo material do arbusto: paleta, borda, balança sem amassar) pelo import (material externo); as flores ficam com o material do pacote.
+- Pedrinhas (2026-10-28): só 3 redondas + 3 quadradas (pincel 12–17; as outras apagadas), 36 no campo (era 45), tamanho 0,3–1,6 (atual até bem menor).

@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://cvn48n1wv7xih"
+path="res://.godot/imported/Bush_Common_Flowers.gltf-3398f9a78ef2e339cfe311356c6c2c7e.scn"
 
 [deps]
 
 source_file="res://assets/models/bushes/Bush_Common_Flowers.gltf"
+dest_files=["res://.godot/imported/Bush_Common_Flowers.gltf-3398f9a78ef2e339cfe311356c6c2c7e.scn"]
 
 [params]
 
@@ -40,6 +43,7 @@ _subresources={
 "materials": {
 "Leaves_NormalTree": {
 "use_external/enabled": true,
+"use_external/fallback_path": "res://assets/materials/bushes/bush_flowers_leaves.tres",
 "use_external/path": "res://assets/materials/bushes/bush_flowers_leaves.tres"
 }
 }

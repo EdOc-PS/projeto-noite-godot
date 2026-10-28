@@ -3,10 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
+uid="uid://rciop8iej6n6"
+path="res://.godot/imported/Pebble_Square_2.gltf-5123c009c671432014f5c0bfb4178328.scn"
 
 [deps]
 
 source_file="res://assets/models/rocks/Pebble_Square_2.gltf"
+dest_files=["res://.godot/imported/Pebble_Square_2.gltf-5123c009c671432014f5c0bfb4178328.scn"]
 
 [params]
 

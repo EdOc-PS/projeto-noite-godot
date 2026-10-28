@@ -65,10 +65,10 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var rock_count: int = 8
 @export var rock_min_distance: float = 5.0
 @export var rock_scale: Vector2 = Vector2(0.3, 0.65)
-@export var pebble_mesh_ids: PackedInt32Array = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]  ## pedrinhas
-@export var pebble_count: int = 45
+@export var pebble_mesh_ids: PackedInt32Array = [12, 13, 14, 15, 16, 17]  ## pedrinhas: 3 redondas + 3 quadradas
+@export var pebble_count: int = 36
 @export var pebble_min_distance: float = 1.0
-@export var pebble_scale: Vector2 = Vector2(0.6, 1.6)
+@export var pebble_scale: Vector2 = Vector2(0.3, 1.6)  ## do tamanho atual até bem menor
 @export_group("Flores")
 ## Flores no pincel do Terrain3D (aparecem no editor e no jogo). Cada tipo:
 ## carta deitada das flores (`flower_head_ids`) + caules (`flower_stem_ids`,

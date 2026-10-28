@@ -4,16 +4,16 @@
 [ext_resource type="Script" uid="uid://c1aky232pgoqv" path="res://scripts/camera/isometric_camera.gd" id="2_cam"]
 [ext_resource type="Script" uid="uid://c6aexk83wb2jm" path="res://scripts/weather/wind.gd" id="4_wind"]
 [ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="6_player"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/tilt_shift.tscn" id="8_tilt"]
 [ext_resource type="Script" uid="uid://cwu8o08xhd4eo" path="res://scripts/weather/wind_leaves.gd" id="10_leaves"]
 [ext_resource type="Script" uid="uid://eraj037bwjjr" path="res://scripts/weather/wind_streaks.gd" id="11_streaks"]
 [ext_resource type="Script" uid="uid://bx3qh3ajlyfyd" path="res://scripts/weather/ground_fog.gd" id="12_haze"]
-[ext_resource type="Script" path="res://scripts/weather/butterflies.gd" id="13_butterflies"]
-[ext_resource type="Script" path="res://scripts/weather/dust_motes.gd" id="15_motes"]
+[ext_resource type="Script" uid="uid://dukrlv31ygb0j" path="res://scripts/weather/butterflies.gd" id="13_butterflies"]
+[ext_resource type="Script" uid="uid://djstt6qsxrosy" path="res://scripts/weather/dust_motes.gd" id="15_motes"]
 [ext_resource type="Terrain3DAssets" uid="uid://liqswcgmjtxf" path="res://scenes/levels/field/terrain_assets.tres" id="assets_file"]
-[ext_resource type="Script" path="res://scripts/weather/drifting_clouds.gd" id="drifting_clouds"]
+[ext_resource type="Script" uid="uid://by1q42sgxepp8" path="res://scripts/weather/drifting_clouds.gd" id="drifting_clouds"]
+[ext_resource type="Texture2D" uid="uid://mjwbm8e1s1t6" path="res://assets/textures/skyboxes/basic/skybox-day.png" id="sky_day"]
 
-[ext_resource type="PackedScene" path="res://scenes/vfx/tilt_shift.tscn" id="8_tilt"]
-[ext_resource type="Texture2D" path="res://assets/textures/skyboxes/basic/skybox-day.png" id="sky_day"]
 [sub_resource type="PanoramaSkyMaterial" id="skymat"]
 panorama = ExtResource("sky_day")
 
@@ -26,7 +26,6 @@ sky = SubResource("sky")
 ambient_light_source = 2
 ambient_light_color = Color(0.66, 0.66, 0.86, 1)
 ambient_light_energy = 1.15
-tonemap_mode = 0
 ssao_enabled = true
 ssao_radius = 1.6
 ssao_intensity = 2.4
@@ -35,9 +34,7 @@ ssao_detail = 0.6
 ssao_light_affect = 0.2
 glow_enabled = true
 glow_intensity = 0.15
-glow_bloom = 0.0
 adjustment_enabled = true
-adjustment_saturation = 1.0
 
 [sub_resource type="Gradient" id="Gradient_17idt"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -95,7 +92,6 @@ shadow_enabled = true
 shadow_bias = 0.08
 shadow_normal_bias = 1.6
 shadow_opacity = 0.82
-shadow_blur = 1.0
 directional_shadow_blend_splits = true
 
 [node name="Terrain3D" type="Terrain3D" parent="." unique_id=325447439]
@@ -107,6 +103,15 @@ script = ExtResource("1_flat")
 grass_mesh_ids = PackedInt32Array(0)
 edge_mesh_ids = PackedInt32Array(2)
 sprig_mesh_ids = PackedInt32Array(1)
+bush_mesh_ids = PackedInt32Array(7)
+bush_flower_mesh_ids = PackedInt32Array(8)
+rock_mesh_ids = PackedInt32Array(9, 10, 11)
+pebble_mesh_ids = PackedInt32Array(12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22)
+flower_head_ids = PackedInt32Array(3, 4, 6)
+flower_stem_ids = PackedInt32Array(-1, 5, 5)
+flower_scales = PackedFloat32Array(1.3, 1.15, 1.3)
+flower_weights = PackedFloat32Array(2, 1, 1)
+flower_clump_mult = PackedFloat32Array(0.2, 1, 1)
 metadata/_edit_lock_ = true
 
 [node name="GroundCollision" type="StaticBody3D" parent="Terrain3D" unique_id=1294420160]
@@ -133,8 +138,6 @@ far = 200.0
 script = ExtResource("4_wind")
 wind_dir = Vector2(1, -0.02)
 leaves_path = NodePath("../WindLeaves")
-
-
 
 [node name="WindLeaves" type="Node3D" parent="." unique_id=1307586731]
 script = ExtResource("10_leaves")
@@ -172,18 +175,16 @@ width_range = Vector2(0.3, 1.3)
 visible = false
 script = ExtResource("12_haze")
 
-[node name="Butterflies" type="GPUParticles3D" parent="."]
+[node name="Butterflies" type="GPUParticles3D" parent="." unique_id=1616877332]
 script = ExtResource("13_butterflies")
 butterfly_count = 20
 area = Vector3(16, 0.6, 16)
 
-
-[node name="DustMotes" type="GPUParticles3D" parent="."]
+[node name="DustMotes" type="GPUParticles3D" parent="." unique_id=1233404440]
 script = ExtResource("15_motes")
 
-[node name="DriftingClouds" type="Node3D" parent="." node_paths=PackedStringArray("sun")]
+[node name="DriftingClouds" type="Node3D" parent="." unique_id=1672567911 node_paths=PackedStringArray("sun")]
 script = ExtResource("drifting_clouds")
 sun = NodePath("../Sun")
 
-
-[node name="TiltShift" parent="." instance=ExtResource("8_tilt")]
+[node name="TiltShift" parent="." unique_id=613369247 instance=ExtResource("8_tilt")]

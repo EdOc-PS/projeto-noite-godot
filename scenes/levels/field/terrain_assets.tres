@@ -1,36 +1,31 @@
 [gd_resource type="Terrain3DAssets" format=3 uid="uid://liqswcgmjtxf"]
 
+[ext_resource type="PackedScene" uid="uid://dbre226hyhsid" path="res://assets/models/bushes/Bush_Common.gltf" id="bush"]
+[ext_resource type="PackedScene" uid="uid://dym4ul8ttv5ml" path="res://assets/models/flowers/flower_head_high.gltf" id="fh_high"]
+[ext_resource type="PackedScene" uid="uid://82ms6iwf1b1a" path="res://assets/models/flowers/flower_head_low.gltf" id="fh_low"]
+[ext_resource type="PackedScene" uid="uid://bxoiviv5vyiwx" path="res://assets/models/flowers/flower_stems.gltf" id="f_stems"]
+[ext_resource type="Material" path="res://assets/materials/bushes/bush_pack.tres" id="mat_bush"]
 [ext_resource type="Material" path="res://assets/materials/grass_sprig.tres" id="mat_sprig"]
 [ext_resource type="Material" uid="uid://bkye1nki5tjc1" path="res://assets/materials/grass_tuft.tres" id="mat_tuft"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_blue.tres" id="m_head_blue"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_red.tres" id="m_head_red"]
+[ext_resource type="Material" path="res://assets/materials/flowers/head_white.tres" id="m_head_white"]
+[ext_resource type="Material" path="res://assets/materials/flowers/stem.tres" id="m_stem"]
+[ext_resource type="PackedScene" uid="uid://cvn48n1wv7xih" path="res://assets/models/bushes/Bush_Common_Flowers.gltf" id="sc8"]
+[ext_resource type="PackedScene" uid="uid://bjqeqr2ni30bb" path="res://assets/models/rocks/Rock_Medium_1.gltf" id="sc9"]
+[ext_resource type="PackedScene" uid="uid://ik5f1lxvcy7y" path="res://assets/models/rocks/Rock_Medium_2.gltf" id="sc10"]
+[ext_resource type="PackedScene" uid="uid://ybqaimy30jih" path="res://assets/models/rocks/Rock_Medium_3.gltf" id="sc11"]
+[ext_resource type="PackedScene" uid="uid://mlltnff12imq" path="res://assets/models/rocks/Pebble_Round_1.gltf" id="sc12"]
+[ext_resource type="PackedScene" uid="uid://dtchqrhgf5csr" path="res://assets/models/rocks/Pebble_Round_2.gltf" id="sc13"]
+[ext_resource type="PackedScene" uid="uid://1tgnsmb3xx85" path="res://assets/models/rocks/Pebble_Round_3.gltf" id="sc14"]
+[ext_resource type="PackedScene" uid="uid://cssypccvnh1k0" path="res://assets/models/rocks/Pebble_Square_1.gltf" id="sc17"]
+[ext_resource type="PackedScene" uid="uid://rciop8iej6n6" path="res://assets/models/rocks/Pebble_Square_2.gltf" id="sc18"]
+[ext_resource type="PackedScene" uid="uid://dvm1oqrhxc8j7" path="res://assets/models/rocks/Pebble_Square_3.gltf" id="sc19"]
 [ext_resource type="PackedScene" uid="uid://27o0kn2472au" path="res://assets/models/grass/grass_sprig.gltf" id="sprig"]
 [ext_resource type="Texture2D" uid="uid://dwr7xp8l0a501" path="res://assets/textures/terrain/grass.png" id="tex_ground"]
 [ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
-[ext_resource type="PackedScene" path="res://assets/models/grass/grass_tuft_edge.gltf" id="tuft_edge"]
-[ext_resource type="PackedScene" path="res://assets/models/flowers/flower_head_low.gltf" id="fh_low"]
-[ext_resource type="PackedScene" path="res://assets/models/flowers/flower_head_high.gltf" id="fh_high"]
-[ext_resource type="PackedScene" path="res://assets/models/flowers/flower_stems.gltf" id="f_stems"]
-[ext_resource type="Material" path="res://assets/materials/flowers/head_white.tres" id="m_head_white"]
-[ext_resource type="Material" path="res://assets/materials/flowers/head_blue.tres" id="m_head_blue"]
-[ext_resource type="Material" path="res://assets/materials/flowers/stem.tres" id="m_stem"]
-[ext_resource type="Material" path="res://assets/materials/flowers/head_red.tres" id="m_head_red"]
-[ext_resource type="PackedScene" path="res://assets/models/bushes/Bush_Common.gltf" id="bush"]
-[ext_resource type="Material" path="res://assets/materials/bushes/bush_pack.tres" id="mat_bush"]
-[ext_resource type="PackedScene" path="res://assets/models/bushes/Bush_Common_Flowers.gltf" id="sc8"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Rock_Medium_1.gltf" id="sc9"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Rock_Medium_2.gltf" id="sc10"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Rock_Medium_3.gltf" id="sc11"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_1.gltf" id="sc12"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_2.gltf" id="sc13"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_3.gltf" id="sc14"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_4.gltf" id="sc15"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_5.gltf" id="sc16"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Square_1.gltf" id="sc17"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Square_2.gltf" id="sc18"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Square_3.gltf" id="sc19"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Square_4.gltf" id="sc20"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Square_5.gltf" id="sc21"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Square_6.gltf" id="sc22"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
+[ext_resource type="PackedScene" uid="uid://dikdrkkeemqqv" path="res://assets/models/grass/grass_tuft_edge.gltf" id="tuft_edge"]
 
 [sub_resource type="Terrain3DMeshAsset" id="ma0"]
 name = "Tufo"
@@ -105,7 +100,7 @@ lod0_range = 45.0
 name = "Arbusto"
 id = 7
 scene_file = ExtResource("bush")
-cast_shadows = 1
+density = 1.6800613
 material_override = ExtResource("mat_bush")
 last_lod = 0
 last_shadow_lod = 0
@@ -115,7 +110,7 @@ lod0_range = 60.0
 name = "Arbusto com flores"
 id = 8
 scene_file = ExtResource("sc8")
-cast_shadows = 1
+density = 1.6800613
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
@@ -124,7 +119,7 @@ lod0_range = 60.0
 name = "Pedra média 1"
 id = 9
 scene_file = ExtResource("sc9")
-cast_shadows = 1
+density = 0.4590238
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
@@ -133,7 +128,7 @@ lod0_range = 60.0
 name = "Pedra média 2"
 id = 10
 scene_file = ExtResource("sc10")
-cast_shadows = 1
+density = 0.6967363
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
@@ -142,7 +137,7 @@ lod0_range = 60.0
 name = "Pedra média 3"
 id = 11
 scene_file = ExtResource("sc11")
-cast_shadows = 1
+density = 0.36314332
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
@@ -175,72 +170,27 @@ last_shadow_lod = 0
 lod0_range = 60.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma15"]
-name = "Pedrinha redonda 4"
-id = 15
-scene_file = ExtResource("sc15")
-cast_shadows = 0
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 60.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma16"]
-name = "Pedrinha redonda 5"
-id = 16
-scene_file = ExtResource("sc16")
-cast_shadows = 0
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 60.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma17"]
 name = "Pedrinha quadrada 1"
-id = 17
+id = 15
 scene_file = ExtResource("sc17")
 cast_shadows = 0
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
 
-[sub_resource type="Terrain3DMeshAsset" id="ma18"]
+[sub_resource type="Terrain3DMeshAsset" id="ma16"]
 name = "Pedrinha quadrada 2"
-id = 18
+id = 16
 scene_file = ExtResource("sc18")
 cast_shadows = 0
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
 
-[sub_resource type="Terrain3DMeshAsset" id="ma19"]
+[sub_resource type="Terrain3DMeshAsset" id="ma17"]
 name = "Pedrinha quadrada 3"
-id = 19
+id = 17
 scene_file = ExtResource("sc19")
-cast_shadows = 0
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 60.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma20"]
-name = "Pedrinha quadrada 4"
-id = 20
-scene_file = ExtResource("sc20")
-cast_shadows = 0
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 60.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma21"]
-name = "Pedrinha quadrada 5"
-id = 21
-scene_file = ExtResource("sc21")
-cast_shadows = 0
-last_lod = 0
-last_shadow_lod = 0
-lod0_range = 60.0
-
-[sub_resource type="Terrain3DMeshAsset" id="ma22"]
-name = "Pedrinha quadrada 6"
-id = 22
-scene_file = ExtResource("sc22")
 cast_shadows = 0
 last_lod = 0
 last_shadow_lod = 0
@@ -252,5 +202,5 @@ albedo_texture = ExtResource("tex_ground")
 normal_texture = ExtResource("tex_ground_n")
 
 [resource]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8"), SubResource("ma9"), SubResource("ma10"), SubResource("ma11"), SubResource("ma12"), SubResource("ma13"), SubResource("ma14"), SubResource("ma15"), SubResource("ma16"), SubResource("ma17"), SubResource("ma18"), SubResource("ma19"), SubResource("ma20"), SubResource("ma21"), SubResource("ma22")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("ma0"), SubResource("ma1"), SubResource("ma2"), SubResource("ma3"), SubResource("ma4"), SubResource("ma5"), SubResource("ma6"), SubResource("ma7"), SubResource("ma8"), SubResource("ma9"), SubResource("ma10"), SubResource("ma11"), SubResource("ma12"), SubResource("ma13"), SubResource("ma14"), SubResource("ma15"), SubResource("ma16"), SubResource("ma17")])
 texture_list = Array[Terrain3DTextureAsset]([SubResource("tex0")])
