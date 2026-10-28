@@ -100,7 +100,11 @@ const GRASS_MARKER := "grass_seeded.txt"
 @export var grass_seed: int = 11
 
 func _ready() -> void:
-	if not Engine.is_editor_hint() or data == null or data_directory == "":
+	if not Engine.is_editor_hint():
+		if data != null:
+			_build_rock_collision.call_deferred()
+		return
+	if data == null or data_directory == "":
 		return
 	var changed := false
 	if data.get_region_count() == 0:
@@ -216,6 +220,15 @@ func _control_image(origin: Vector2) -> Image:
 	return Image.create_from_data(n, n, false, Image.FORMAT_RF, bytes)
 
 func _seed_grass() -> void:
+	var per_mesh := _plan_seed()
+	for id in per_mesh:
+		if not (per_mesh[id] as Array).is_empty():
+			instancer.add_transforms(id, per_mesh[id])
+
+## Conta toda a semeadura (mesmo sorteio sempre) e devolve {mesh id: transforms},
+## sem pôr nada no terreno. Usada pra semear (editor) e pra recriar a colisão
+## das pedras no jogo (o Instancer do Terrain3D não tem colisão).
+func _plan_seed() -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = grass_seed
 	var noise := FastNoiseLite.new()
@@ -235,9 +248,27 @@ func _seed_grass() -> void:
 	_seed_bushes(half, rng, noise, per_mesh)
 	_seed_rocks(half, rng, noise, per_mesh, rock_mesh_ids, rock_count, rock_min_distance, rock_scale)
 	_seed_rocks(half, rng, noise, per_mesh, pebble_mesh_ids, pebble_count, pebble_min_distance, pebble_scale)
-	for id in per_mesh:
-		if not (per_mesh[id] as Array).is_empty():
-			instancer.add_transforms(id, per_mesh[id])
+	return per_mesh
+
+## Colisão das pedras (médias e pedrinhas): um StaticBody com a casca convexa
+## da malha de cada pedra, no mesmo lugar/escala da semeadura. Só no jogo.
+## Pedra pintada à mão no editor (fora da semeadura) não ganha colisão.
+func _build_rock_collision() -> void:
+	var per_mesh := _plan_seed()
+	var body := StaticBody3D.new()
+	body.name = "RockCollision"
+	add_child(body)
+	for id in rock_mesh_ids + pebble_mesh_ids:
+		var ma := assets.get_mesh_asset(id) if assets else null
+		var mesh: Mesh = ma.get_mesh(0) if ma else null
+		if mesh == null:
+			continue
+		var shape := mesh.create_convex_shape()
+		for t: Transform3D in per_mesh.get(id, []):
+			var cs := CollisionShape3D.new()
+			cs.shape = shape
+			cs.transform = t
+			body.add_child(cs)
 
 ## Semeia o retângulo `area` (x, z) com os tufos `ids` (e `edge_ids` na borda das manchas).
 func _seed_area(area: Rect2, ids: PackedInt32Array, edge_ids: PackedInt32Array, spacing: float, rng: RandomNumberGenerator,
