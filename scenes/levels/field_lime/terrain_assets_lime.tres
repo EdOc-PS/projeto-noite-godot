@@ -18,12 +18,14 @@
 [ext_resource type="PackedScene" uid="uid://mlltnff12imq" path="res://assets/models/rocks/Pebble_Round_1.gltf" id="sc12"]
 [ext_resource type="PackedScene" uid="uid://dtchqrhgf5csr" path="res://assets/models/rocks/Pebble_Round_2.gltf" id="sc13"]
 [ext_resource type="PackedScene" uid="uid://1tgnsmb3xx85" path="res://assets/models/rocks/Pebble_Round_3.gltf" id="sc14"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_4.gltf" id="sc15"]
-[ext_resource type="PackedScene" path="res://assets/models/rocks/Pebble_Round_5.gltf" id="sc16"]
 [ext_resource type="PackedScene" uid="uid://cssypccvnh1k0" path="res://assets/models/rocks/Pebble_Square_1.gltf" id="sc17"]
+[ext_resource type="PackedScene" uid="uid://rciop8iej6n6" path="res://assets/models/rocks/Pebble_Square_2.gltf" id="sc18"]
+[ext_resource type="PackedScene" uid="uid://dvm1oqrhxc8j7" path="res://assets/models/rocks/Pebble_Square_3.gltf" id="sc19"]
 [ext_resource type="PackedScene" uid="uid://27o0kn2472au" path="res://assets/models/grass/grass_sprig.gltf" id="sprig"]
 [ext_resource type="Texture2D" path="res://assets/textures/terrain/grass_lime.png" id="tex_ground"]
 [ext_resource type="Texture2D" uid="uid://b4hrsvg0ck7tr" path="res://assets/textures/terrain/grass_normal.png" id="tex_ground_n"]
+[ext_resource type="Material" path="res://assets/materials/rocks/rock.tres" id="mat_rock"]
+[ext_resource type="Material" path="res://assets/materials/rocks/pebble.tres" id="mat_pebble"]
 [ext_resource type="PackedScene" uid="uid://csiun6rtiwcf8" path="res://assets/models/grass/grass_tuft.gltf" id="tuft"]
 [ext_resource type="PackedScene" uid="uid://dikdrkkeemqqv" path="res://assets/models/grass/grass_tuft_edge.gltf" id="tuft_edge"]
 
@@ -119,6 +121,7 @@ lod0_range = 60.0
 name = "Pedra média 1"
 id = 9
 scene_file = ExtResource("sc9")
+material_override = ExtResource("mat_rock")
 density = 0.4590238
 last_lod = 0
 last_shadow_lod = 0
@@ -128,6 +131,7 @@ lod0_range = 60.0
 name = "Pedra média 2"
 id = 10
 scene_file = ExtResource("sc10")
+material_override = ExtResource("mat_rock")
 density = 0.6967363
 last_lod = 0
 last_shadow_lod = 0
@@ -137,6 +141,7 @@ lod0_range = 60.0
 name = "Pedra média 3"
 id = 11
 scene_file = ExtResource("sc11")
+material_override = ExtResource("mat_rock")
 density = 0.36314332
 last_lod = 0
 last_shadow_lod = 0
@@ -147,6 +152,7 @@ name = "Pedrinha redonda 1"
 id = 12
 scene_file = ExtResource("sc12")
 cast_shadows = 0
+material_override = ExtResource("mat_pebble")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
@@ -156,6 +162,7 @@ name = "Pedrinha redonda 2"
 id = 13
 scene_file = ExtResource("sc13")
 cast_shadows = 0
+material_override = ExtResource("mat_pebble")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
@@ -165,33 +172,37 @@ name = "Pedrinha redonda 3"
 id = 14
 scene_file = ExtResource("sc14")
 cast_shadows = 0
+material_override = ExtResource("mat_pebble")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma15"]
-name = "Pedrinha redonda 4"
+name = "Pedrinha quadrada 1"
 id = 15
-scene_file = ExtResource("sc15")
+scene_file = ExtResource("sc17")
 cast_shadows = 0
+material_override = ExtResource("mat_pebble")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma16"]
-name = "Pedrinha redonda 5"
+name = "Pedrinha quadrada 2"
 id = 16
-scene_file = ExtResource("sc16")
+scene_file = ExtResource("sc18")
 cast_shadows = 0
+material_override = ExtResource("mat_pebble")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
 
 [sub_resource type="Terrain3DMeshAsset" id="ma17"]
-name = "Pedrinha quadrada 1"
+name = "Pedrinha quadrada 3"
 id = 17
-scene_file = ExtResource("sc17")
+scene_file = ExtResource("sc19")
 cast_shadows = 0
+material_override = ExtResource("mat_pebble")
 last_lod = 0
 last_shadow_lod = 0
 lod0_range = 60.0
