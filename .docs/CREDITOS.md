@@ -31,6 +31,7 @@ Só as nossas: `textures/terrain/grass.png` (verde liso, #61CB8B da paleta Kenne
 
 | Modelo | Autor | Pasta | Licença |
 |---|---|---|---|
+| City Kit (Commercial) 2.1, City Kit (Industrial) 2.0, City Kit (Suburban) 2.0, City Kit (Roads) | Kenney ([kenney.nl](https://www.kenney.nl)) | `assets/models/city/` (commercial, industrial, suburban, roads; pacotes completos em `projeto-noite_sources/city/`) | CC0 |
 | `Bush_Common`, `Bush_Common_Flowers` (+ texturas de folha e flor) (Stylized Nature MegaKit) | Quaternius ([quaternius.com](https://quaternius.com)) | `assets/models/bushes/` (pacote em `projeto-noite_sources/natureza-arquivada/`) | CC0 |
 | `Rock_Medium_1–3`, `Pebble_Round_1–3`, `Pebble_Square_1–3` (+ `Rocks_Diffuse`, `PathRocks_Diffuse`) (Stylized Nature MegaKit) | Quaternius | `assets/models/rocks/` | CC0 |
 
